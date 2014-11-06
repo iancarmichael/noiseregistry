@@ -77,6 +77,3 @@ These terms are compatible with the Creative Commons Attribution License 4.0 and
 Further context, best practice and guidance can be found in the UK Government Licensing Framework section on The National Archives website.
 Open Government License for public sector information
 
-Go to the version 1 of the licence.
-Go to the version 2 of the licence.
-
