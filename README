@@ -2,3 +2,11 @@ This is the JNCC Noise Registry Play application
 ================================================
 
 This file will be packaged with your application, when using `activator dist`.
+
+
+Dev Mode
+========
+To launch unsing the dev.conf configuration settings, run the application using the command line:
+
+	>activator -Dconfig.file=conf/dev.conf ~run
+
