@@ -2,7 +2,7 @@ Development Environment Setup
 
 1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on which eclipse platform will be used) - verify by opening a command prompt and running: "javac -version" or "java -version" - the response should be something like: "javac 1.7.0_71".
 2. Install the latest version of eclipse (Luna, v4.4 - should be available on the filesystem?)
-3. Open eclipse and import the git repository as a new project by following these steps:
+3. Open eclipse and import the Git repository as a new project by following these steps:
 	3.1 File - Import - Git\Projects from GIT
 	3.2 Select the "Clone URI" option and click "Next"
 	3.3 Enter the Location URI as "https://github.com/JNCC-dev-team/noiseregistry.git" (Host and Repository Path should then be populated)
@@ -11,6 +11,11 @@ Development Environment Setup
 	3.6 Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
 	3.7 Select "Import as general project" and click "Next"
 	3.8 The project name should have defaulted to the directory name used in 3.6, so click "Finish"
+
+NOTE: always do a Pull before a Push, to make sure that any changes to the same branch have been merged into 
+	  your local repository before Pushing to the remote repository.  If this is not done, it will appear in the 
+	  workspace as though all your changes have been committed correctly, but there will be local changes that have 
+	  not been synchronised with the remote repository. 
 
 Application Launch
 
