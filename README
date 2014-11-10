@@ -1,0 +1,4 @@
+This is the JNCC Noise Registry Play application
+================================================
+
+This file will be packaged with your application, when using `activator dist`.
