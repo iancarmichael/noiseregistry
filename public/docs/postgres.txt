@@ -1,0 +1,8 @@
+Development PostGreSQL
+
+create user jncc with password 'tronsystems!';
+create database jncc;
+\connect jncc;
+create schema authorization jncc;
+grant all on schema jncc to jncc;
+grant all on all tables in schema jncc to jncc;
