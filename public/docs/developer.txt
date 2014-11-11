@@ -24,3 +24,9 @@ To start the application open a command prompt, change to the directory entered 
 
 This will take a bit of time on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
 	http://localhost:9000
+	
+Optional: 
+Scala provides editors that "understand" the content for application routes, scala template files etc. To install this:
+	- From "Help, Install New Software..." menu item in eclipse, add a new site, title "Scala", uri: http://download.scala-ide.org/sdk/lithium/e44/scala211/dev/site
+	- When you get the list of available items, select the all the entries except for the "Scala IDE for Eclipse Development Support"
+After eclipse restarts, you should find that the routes file in conf has a custom editor, as do the *.scala.html template files in the app\views folder.
