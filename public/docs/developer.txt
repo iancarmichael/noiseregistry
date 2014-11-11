@@ -1,24 +1,23 @@
 Development Environment Setup
-
-1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on which eclipse platform will be used) - verify by opening a command prompt and running: "javac -version" or "java -version" - the response should be something like: "javac 1.7.0_71".
-2. Install the latest version of eclipse (Luna, v4.4 - should be available on the filesystem?)
-3. Open eclipse and import the Git repository as a new project by following these steps:
-	3.1 File - Import - Git\Projects from GIT
-	3.2 Select the "Clone URI" option and click "Next"
-	3.3 Enter the Location URI as "https://github.com/JNCC-dev-team/noiseregistry.git" (Host and Repository Path should then be populated)
-	3.4 Add the user name and password (as used to sign in to GitHub) and click "Next"
-	3.5 In the branch selection, make sure that "master" has been selected and click "Next"
-	3.6 Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
-	3.7 Select "Import as general project" and click "Next"
-	3.8 The project name should have defaulted to the directory name used in 3.6, so click "Finish"
-
-NOTE: always do a Pull before a Push, to make sure that any changes to the same branch have been merged into 
-	  your local repository before Pushing to the remote repository.  If this is not done, it will appear in the 
-	  workspace as though all your changes have been committed correctly, but there will be local changes that have 
-	  not been synchronised with the remote repository. 
+1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on your version of Windows) 
+	- Download the Java SE Development Kit 7 ( jdk-7u71-windows-1586.exe or jdk-7u71-windows-x64.exe)
+	- Follow the installation instructions at https://docs.oracle.com/javase/7/docs/webnotes/install/windows/jdk-installation-windows.html
+	- Add C:\Program Files\Java\jdk1.7.0_71\bin to your PATH system variable in environment variables
+	- Verify the path is set correctly by opening a command prompt and running: "javac -version" - the response should be something like: "javac 1.7.0_71".
+2. Install the latest version of eclipse (Luna, v4.4)
+	- Download the "Eclipse IDE for Java Developers" (eclipse-java-luna-SR1-win32-x86_64.zip)
+	- Extract the zip file to the required file location (e.g., C:\Prog\eclipse44)
+3. Open eclipse and import the git repository as a new project by following these steps:
+	- File - Import - Git\Projects from GIT
+	- Select the "Clone URI" option and click "Next"
+	- Enter the Location URI as "https://github.com/JNCC-dev-team/noiseregistry.git" (Host and Repository Path should then be populated)
+	- Add the user name and password (as used to sign in to GitHub) and click "Next"
+	- In the branch selection, make sure that "master" has been selected and click "Next"
+	- Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
+	- Select "Import as general project" and click "Next"
+	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
 
 Application Launch
-
 To start the application open a command prompt, change to the directory entered in 3.6 then run: 
 	activator -Dconfig.file=conf/dev.conf ~run
 
