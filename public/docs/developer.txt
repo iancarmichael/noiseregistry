@@ -19,11 +19,13 @@ Development Environment Setup
 	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
 
 JNCC Noise Registry Application Launch
-To start the application open a command prompt, change to the directory entered in 3.6 then run:
-	activator eclipse (one time only during configuration)
-	activator -Dconfig.file=conf/dev.conf ~run (needed every time application to be launched)
+To start the JNCC application:
+	- Open a command prompt
+	- Change to the directory entered in 3.6
+	- Run activator eclipse (one time only during configuration)
+	- Run activator -Dconfig.file=conf/dev.conf ~run (needed every time application to be launched)
 
-This will take a bit of time on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
+This will take a bit of time (possibly up to half an hour) on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
 	http://localhost:9000
 	
 Optional: 
