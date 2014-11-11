@@ -18,9 +18,10 @@ Development Environment Setup
 	- Select "Import as general project" and click "Next"
 	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
 
-Application Launch
-To start the application open a command prompt, change to the directory entered in 3.6 then run: 
-	activator -Dconfig.file=conf/dev.conf ~run
+JNCC Noise Registry Application Launch
+To start the application open a command prompt, change to the directory entered in 3.6 then run:
+	activator eclipse (one time only during configuration)
+	activator -Dconfig.file=conf/dev.conf ~run (needed every time application to be launched)
 
 This will take a bit of time on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
 	http://localhost:9000
