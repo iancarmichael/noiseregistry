@@ -16,8 +16,8 @@ resolvers += "Postgres Repository" at "http://mvnrepository.com/artifact"
 
 libraryDependencies ++= Seq(
   "org.postgresql" % "postgresql" % "9.3-1102-jdbc41",
-  javaJdbc,
-  javaEbean,
+  javaJpa,
+  "org.hibernate" % "hibernate-entitymanager" % "4.3.7.Final",
   cache,
   javaWs
 )
