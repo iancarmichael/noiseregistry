@@ -13,4 +13,4 @@ This generates the .war file in the target directory.  The .war file contains a 
 which causes Tomcat to fail to load the application.  This needs to be removed prior to 
 deploying the .war file.  Open the file (unzip) and delete the 
 WEB-INF\lib\org.apache.tomcat.tomcat-servlet-api-8.0.5.jar file.
-The .war file can then be deployed to the Tomcat 7 server using the Tomcat manager interface.   
+The .war file can then be deployed to the Tomcat 7 server using the Tomcat manager interface. 
