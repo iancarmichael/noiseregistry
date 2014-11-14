@@ -17,9 +17,9 @@ public class Application extends Controller {
 	         Xuser.email = "david.simpson@tronsystems.co.uk";
 	         Xuser.fullname = "David Simpson";
 
-	         JPA.em().getTransaction().begin();
+	         //JPA.em().getTransaction().begin();
 	         JPA.em().persist(Xuser);
-	         JPA.em().getTransaction().commit();
+	         //JPA.em().getTransaction().commit();
 	         message = "User created!";
 		} else {
 			message = "User already exists!";
