@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet author="david.simpson (generated)" id="1415898809195-1" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable tableName="xuser">
+            <column name="email" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fullname" type="TEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="david.simpson (generated)" id="1415898809195-2" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addPrimaryKey columnNames="email" constraintName="email_pk" tableName="xuser"/>
+    </changeSet>
+</databaseChangeLog>
