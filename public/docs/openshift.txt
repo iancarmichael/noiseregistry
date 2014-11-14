@@ -1,0 +1,1 @@
+The application will push to openshift correctly, but manual steps are needed to get it to run.
