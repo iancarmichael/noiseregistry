@@ -1,7 +1,10 @@
 WAR File Generation
 
 The Play Framework application does not need any servlet container to run the application.  However,
-in order to generate a WAR file and deply this to Tomcat 7 follow the steps below.
+in order to generate a WAR file and deply this to Tomcat 7 follow the steps below.  This assumes that 
+a Tomcat 7 server is already installed (http://tomcat.apache.org/tomcat-7.0-doc/setup.html) and
+that a PostgreSQL database is also installed and 
+configured (https://wiki.postgresql.org/wiki/Detailed_installation_guides).
 
 From the root of the project (containing the activator file) in a command prompt run:
 activator war
