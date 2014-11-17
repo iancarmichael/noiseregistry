@@ -6,7 +6,9 @@ version := "1.0-SNAPSHOT"
 
 Play2WarPlugin.play2WarSettings
 
-Play2WarKeys.servletVersion := "3.0"
+Play2WarKeys.servletVersion := "2.5"
+
+Play2WarKeys.filteredArtifacts ++= Seq(("javax.servlet", "servlet-api"))
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
