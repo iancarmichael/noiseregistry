@@ -1,0 +1,102 @@
+INSTALL.txt
+
+This document describes the required steps for the installation of a web application running under Apache Tomcat 7.
+
+In addition to the Tomcat server, a Postgres 9.3 database server is required.  The Postgres server can be on the same 
+server as Tomcat or on another server.  The Tomcat server must be able to access the Postgres server on the configured
+port for Postgres (the default is 5432) - any firewall(s) between the two servers must be configured appropriately.
+
+1. Install an Apache Tomcat 7 server
+
+The Apache Tomcat 7 installation is available from: 
+	http://tomcat.apache.org/download-70.cgi
+	 
+and instructions on the installation process can be found at: 
+	http://tomcat.apache.org/tomcat-7.0-doc/setup.html
+
+To allow application deployments through the manager web interface, follow the additional steps described here:
+	http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html
+
+
+2. Install Postgres 9.3 server
+
+The Postgres server install is available from:
+	http://www.postgresql.org/download/ 
+	
+Detailed steps for installation can be found at:
+	https://wiki.postgresql.org/wiki/Detailed_installation_guides
+
+
+3. Configure the Postgres database/ schema/ user
+
+A new database, schema and user are needed for the application - a sample SQL script to create these
+can be found in the file "public/docs/postgres.txt" - the password for the new user should be changed to a suitable value.
+The modified script can then be run from a psql command prompt on the server or via any additional Postgres tools installed 
+(e.g. pgAdmin).
+
+
+4. Configure the Apache Tomcat server to allow access to the Postgres database
+
+To allow the web application to access the Postgres database, the Tomcat server requires additional configuration and the
+inclusion of a Java library containing the Postgres JDBC Driver.  
+ 
+The server.xml document is found in the "conf" folder under the main Tomcat application folder on Windows platforms.
+
+A JNDI resource named "jdbc/NoiseRegistryDS" should be created to link to the Postgres database.  This should 
+be configured in the "GlobalNamingResources" section of the server.xml file, e.g:
+
+	<GlobalNamingResources>
+		<Resource name="jdbc/NoiseRegistryDS"
+			username="<postgres_username>"
+			password="<postgres_password>"
+			url="jdbc:postgresql://<postgres_server>:<postgres_port>/<postgres_database>"
+			auth="Container"
+			type="javax.sql.DataSource"
+	        maxActive="100" 
+			maxIdle="30" 
+			maxWait="10000"
+			driverClassName="org.postgresql.Driver"
+			factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+			removeAbandoned="true"
+	        removeAbandonedTimeout="20"
+	        logAbandoned="true" />
+	...
+	</GlobalNamingResources>
+ 
+"<postgres_database>", "<postgres_username>" and "<postgres_password>" should match the configuration created in step 3 above.
+"<postgres_server>" should be the name or ip address of the server configured in step 2.
+"<postgres_port>" is the port that the postgres server responds on - the default is 5432 so this should be used unless a different
+port has been configured for Postgres.
+
+The Postgres JDBC driver is required by Tomcat - the driver can be downloaded from:
+	http://jdbc.postgresql.org/download.html
+	
+Select the version with support for JDBC41. The downloaded file must then be copied to the Tomcat "lib" folder under the main
+Tomcat application folder.
+
+
+5. Deploy the application war file
+
+This assumes that a war file containing the application has been provided.  For instructions on creating a war file from the 
+application source, see the document "public/docs/war.txt".
+
+Open the Tomcat manager interface on: 
+	http://<tomcat_server>:<tomcat_port>/manager
+
+"<tomcat_server>" is the name or ip address of the server configured in step 1.
+"<tomcat_port>" is the port that tomcat responds on - the default is 8080 so this should be used unless a different port was
+configured for tomcat.
+	
+Login with the details configured in step 1 and scroll down to the "Deploy" section.
+Click on the "Choose File" button at the "Select WAR file to upload" prompt, locate the war file and click on "Open".
+Click on the "Deploy" button and wait for the server to complete the deployment process.  Any errors will be reported in the
+"Message" field at the top of the page - this will read "OK" when the application has been successfully deployed.
+
+
+6. Test the application
+
+The Tomcat server should now respond on:
+	http://<tomcat_server>:<tomcat_port>/<application_name>
+	
+Where <tomcat_server> and <tomcat_port> are as described above and <application_name> is the name of the war file
+without the ".war" extension.  

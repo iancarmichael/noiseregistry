@@ -5,23 +5,6 @@ in order to generate a WAR file and deply this to Tomcat 7 follow the steps belo
 a Tomcat 7 server is already installed (http://tomcat.apache.org/tomcat-7.0-doc/setup.html) and
 that a PostgreSQL database is also installed and 
 configured (https://wiki.postgresql.org/wiki/Detailed_installation_guides).
-A JNDI resource named "jdbc/NoiseRegistryDS" should be created to link to the Postgres database.  This should 
-be configured in the "GlobalNamingResources" section of the server.xml file, e.g:
-
-	<Resource name="jdbc/NoiseRegistryDS"
-		username="jncc"
-		password="tronsystems!"
-		url="jdbc:postgresql://tweed.liv.tronsystems.co.uk:5432/jncc"
-		auth="Container"
-		type="javax.sql.DataSource"
-        maxActive="100" 
-		maxIdle="30" 
-		maxWait="10000"
-		driverClassName="org.postgresql.Driver"
-		factory="org.apache.commons.dbcp.BasicDataSourceFactory"
-		removeAbandoned="true"
-        removeAbandonedTimeout="20"
-        logAbandoned="true" />
 
 From the root of the project (containing the activator file) in a command prompt run:
 activator war
