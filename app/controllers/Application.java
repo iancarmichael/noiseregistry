@@ -1,10 +1,10 @@
 package controllers;
 
-import play.db.jpa.JPA;
-import play.db.jpa.Transactional;
+//import play.db.jpa.JPA;
+//import play.db.jpa.Transactional;
 import play.mvc.*;
 import views.html.*;
-import models.Xuser;
+//import models.Xuser;
 
 public class Application extends Controller {
 	//@Transactional
