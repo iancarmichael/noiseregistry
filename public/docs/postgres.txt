@@ -4,7 +4,7 @@ To create the required user, empty database, and schema, the following SQL may b
 
 ----------------- SQL below here -----------------------
 
-create user jncc with password 'tronsystems!';
+create user jncc with password 'change_this_to_suit';
 create database jncc;
 \connect jncc;
 create schema authorization jncc;
