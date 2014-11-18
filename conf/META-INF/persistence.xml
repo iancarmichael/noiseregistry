@@ -20,4 +20,19 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
         </properties>
     </persistence-unit>
+    
+    <!-- Non-JNDI data source for liquibase/ hibernate plugin -->
+    <persistence-unit name="defaultPersistenceUnitLB" transaction-type="RESOURCE_LOCAL">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	<class>models.Xuser</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://tweed.liv.tronsystems.co.uk:5432/jncc" />
+			<property name="javax.persistence.jdbc.user" value="jncc" />
+			<property name="javax.persistence.jdbc.password" value="tronsystems!" />
+			<property name="javax.persistence.jdbc.schema" value="jncc" />
+			<property name="hibernate.show_sql" value="true" />
+        </properties>
+    </persistence-unit>
 </persistence>

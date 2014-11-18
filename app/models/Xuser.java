@@ -10,4 +10,5 @@ public class Xuser {
 
     public String fullname;
 
+    public String forename;
 }
