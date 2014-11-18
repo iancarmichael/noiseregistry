@@ -1,15 +1,17 @@
 OpenShift Staging
 =================
 
-The application will push to openshift correctly, but manual steps are needed to get it to run.
+OpenShift is being used for initial pre-QA review.  Pushing the application to OpenShift is a Tron Systems task.
+ 
+The application will push to OpenShift correctly, but manual steps are needed to get it to run.
 
-The openshift repository settings can be found by logging in to openshift - for details, see the passwords database.
+The OpenShift repository settings can be found by logging in to OpenShift.
 
 To avoid any problems with eclipse pushing to multiple remote locations, it is recommended that this is run from a command line.
 
 >git push openshift master
 
-This will take a long time to complete, with messages from the remote end as activator performs its resource resooving
+This will take a long time to complete, with messages from the remote end as activator performs its resource resolving
 and compilation steps.  This normally seems to fail after the packaging of the javadoc jar file is complete - in that case,
 open an ssh connection to the openshift server (ssh 5465d6974382ec4ebe0001c5@jncc-trondev1.rhcloud.com)
 
