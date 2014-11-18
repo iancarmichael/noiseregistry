@@ -1,10 +1,15 @@
 This is the JNCC Noise Registry Play application
 ================================================
 
-This file will be packaged with your application, when using `activator dist`.
+This file will be packaged with your application when using `activator dist`.
 
-Installation instructions are contained in install.txt.
+INSTALLATION
+============
+Installation instructions are contained in:
+INSTALL.txt
 
+DETAILED DOCUMENTATION
+======================
 For more detailed documentation, check the public\docs folder:
 1) developer.txt
 This contains information regarding how to set up the environment for further development
