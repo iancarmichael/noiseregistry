@@ -3,7 +3,6 @@ Development Environment Setup
 
 The following instructions should be used by a developer wishing to set up a development environment on their client:
 
-
 1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on your version of Windows) 
 	- Download the Java SE Development Kit 7 ( jdk-7u71-windows-1586.exe or jdk-7u71-windows-x64.exe)
 	- Follow the installation instructions at https://docs.oracle.com/javase/7/docs/webnotes/install/windows/jdk-installation-windows.html
