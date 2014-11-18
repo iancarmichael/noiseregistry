@@ -1,4 +1,5 @@
 Development Environment Setup
+=============================
 
 1. Ensure that a Java 1.7 JDK is available (as 32 bit or 64 bit depending on your version of Windows) 
 	- Download the Java SE Development Kit 7 ( jdk-7u71-windows-1586.exe or jdk-7u71-windows-x64.exe)

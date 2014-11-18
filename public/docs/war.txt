@@ -1,4 +1,5 @@
 WAR File Generation
+===================
 
 The Play Framework application does not need any servlet container to run the application.  However,
 in order to generate a WAR file and deploy this to Tomcat 7 follow the steps below.  This assumes that 

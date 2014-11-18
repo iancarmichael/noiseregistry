@@ -1,6 +1,9 @@
 Liquibase
+=========
 
-Liquibase can be downloaded from http://www.liquibase.org/download/index.html.
+Liquibase is used for version control of both schema and data database changes. 
+
+Liquibase can be downloaded from http://www.liquibase.org/download/index.html to a client with access to PostgreSQL on port 5432.
 
 Once downloaded and installed the Liquibase update can be run and rerun at any time.  Liquibase 
 records which changes have been executed on the database and so updates will always only be applied if
