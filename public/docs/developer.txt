@@ -18,7 +18,7 @@ The following instructions should be used by a developer wishing to set up a dev
 	- Enter the Location URI as "https://github.com/JNCC-dev-team/noiseregistry.git" (Host and Repository Path should then be populated)
 	- Add the user name and password (as used to sign in to GitHub) and click "Next"
 	- In the branch selection, make sure that "master" has been selected and click "Next"
-	- Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
+	- Enter the local directory to use, e.g., C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
 	- Select "Import as general project" and click "Next"
 	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
 
