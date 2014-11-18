@@ -7,11 +7,11 @@ import views.html.*;
 import models.Xuser;
 
 public class Application extends Controller {
-	@Transactional
+	//@Transactional
     public static Result index() {
 		
 		String message = "";
-		
+		/*
 		if (JPA.em().find(Xuser.class, "david.simpson@tronsystems.co.uk")==null) {
 			final Xuser Xuser = new Xuser();
 	         Xuser.email = "david.simpson@tronsystems.co.uk";
@@ -24,7 +24,8 @@ public class Application extends Controller {
 		} else {
 			message = "User already exists!";
 		}
-    	 
+    	*/
+    	
         return ok(index.render(message));
     }
 

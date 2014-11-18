@@ -1,5 +1,9 @@
 Development PostGreSQL
 
+To create the required user, empty database, and schema, the following SQL may be used.
+
+----------------- SQL below here -----------------------
+
 create user jncc with password 'tronsystems!';
 create database jncc;
 \connect jncc;
