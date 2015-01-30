@@ -1,6 +1,33 @@
-@(message: String)
-@main("Welcome") {
-    <p>Welcome to the JNCC Noise Registry Home Page</p>
+@(appUser: AppUser, activeTab: String)
 
-	<p>@message</p>
+@import layouts.govuk_template
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+} 
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, activeTab)	
+}
+	
+@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		<a id="content"></a>
+		<h1 class="heading-large">@play.twirl.api.Html(Messages("application.service_name"))</h1>
+    	@play.twirl.api.Html(Messages("welcome.message_before_button"))
+    	<a class="button button-get-started" href="@if((appUser!=null) && ((appUser.getUserOrgType()=="REGULATOR") ||(appUser.getUserOrgType()=="NOISEPRODUCER"))){@routes.ApplicationController.home()}else{@routes.RegistrationController.read()}">@play.twirl.api.Html(Messages("buttons.start_now"))</a>
+    	@play.twirl.api.Html(Messages("welcome.message_after_button"))
+ 	</main><!-- / #page-container -->
+ 	<!-- Your new application is ready - leave for test purposes -->
 }

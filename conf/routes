@@ -2,8 +2,85 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                           controllers.Application.index()
+# Home pages
+GET     /                           		controllers.ApplicationController.index()
+GET     /home								controllers.ApplicationController.home()
+
+# Info pages
+GET     /feedback							controllers.ApplicationController.feedback()
+GET     /help								controllers.ApplicationController.help()
+GET     /cookies							controllers.ApplicationController.cookies()
+GET     /contact							controllers.ApplicationController.contact()
+GET     /terms								controllers.ApplicationController.terms()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET     /assets/*file               		controllers.Assets.at(path="/public", file)
+
+# Activity list and edit actions
+GET		/activity/index						controllers.ActivityApplicationController.index()
+GET		/activity/draft						controllers.ActivityApplicationController.findDraft()
+GET		/activity/delete/:id				controllers.ActivityApplicationController.preDelete(id:Long)
+POST	/activity/delete/:id				controllers.ActivityApplicationController.delete(id:Long)
+GET		/activity/completed					controllers.ActivityApplicationController.findCompleted()
+GET		/activity/add						controllers.ActivityApplicationController.add()
+GET		/activity/confirmadd/:id			controllers.ActivityApplicationController.confirmadd(id)
+GET		/activity/read/:id					controllers.ActivityApplicationController.read(id:Long)
+GET		/activity/edit/:id					controllers.ActivityApplicationController.edit(id:Long)
+GET		/activity/link/:id					controllers.ActivityApplicationController.createLinked(id:Long)
+POST	/activity/save						controllers.ActivityApplicationController.save()
+POST	/activity/save/:id					controllers.ActivityApplicationController.update(id:Long)
+POST	/activity/cancel					controllers.ActivityApplicationController.cancelApplication()
+GET		/activity/cancel/:id				controllers.ActivityApplicationController.cancel(id)
+GET		/activity/closeout/:id				controllers.ActivityApplicationController.closeOut(id:Long)
+POST	/activity/closeout/:id				controllers.ActivityApplicationController.closeOutApplication(id:Long)
+
+# User Registration and login
+GET 	/registration/add					controllers.RegistrationController.add()
+POST	/registration/save					controllers.RegistrationController.save()
+GET		/registration/confirmadd/:id		controllers.RegistrationController.confirmadd(id)
+GET		/registration/verify/:ver_token		controllers.RegistrationController.verify(ver_token)
+GET		/registration/read					controllers.RegistrationController.read()
+GET		/mydetails							controllers.RegistrationController.edit()
+POST	/mydetails/:id						controllers.RegistrationController.update(id:Long)
+GET		/mydetails/confirmupdate			controllers.RegistrationController.confirmupdate()
+
+GET     /login                  			controllers.LoginController.index()
+POST    /login                      		controllers.LoginController.authenticate()
+GET 	/logout								controllers.LoginController.logout()
+
+GET		/changepassword						controllers.ChangePasswordController.index()
+POST	/changepassword						controllers.ChangePasswordController.save()
+GET		/changepassword/confirm				controllers.ChangePasswordController.confirmchange()
+GET		/forgot								controllers.ChangePasswordController.forgot()
+POST	/forgot								controllers.ChangePasswordController.generate()
+GET		/forgot/confirm						controllers.ChangePasswordController.confirmreset()
+
+#Organisations
+GET		/organisation/edit/:id				controllers.OrganisationController.edit(id)
+GET		/organisation/read/:id				controllers.OrganisationController.read(id)
+GET		/organisation/getuser/:id			controllers.OrganisationController.getuser(id)
+POST	/organisation/save					controllers.OrganisationController.save()
+POST	/organisation/saveuser				controllers.OrganisationController.saveuser()
+POST	/organisation/deleteuser			controllers.OrganisationController.deleteuser()
+GET		/organisation/list					controllers.OrganisationController.list()
+GET		/organisation/join/:id				controllers.OrganisationController.join(id:Long)
+POST	/organisation/join/:id				controllers.OrganisationController.addUser(id:Long)
+GET		/organisation/adminorgs				controllers.OrganisationController.adminorgs()
+
+GET		/noiseproducer/add					controllers.NoiseproducerController.add()
+POST	/noiseproducer/save					controllers.NoiseproducerController.save()
+
+# Swagger api documentation
+GET     /api-docs               			controllers.ApiHelpController.getResources
+
+GET		/api-docs/aas         				controllers.ApiHelpController.getResource(path = "/aas")
+GET     /api-docs/login        				controllers.ApiHelpController.getResource(path = "/login")
+GET		/api/v1/aas/noiseproducers			controllers.ActivityApplicationController.noiseProducerOptions()
+GET		/api/v1/aas/regulators				controllers.ActivityApplicationController.regulatorOptions()
+GET     /api/v1/aas/activitytypes 			controllers.ActivityApplicationController.activityTypeOptions()
+GET     /api/v1/aas/bystatus				controllers.ActivityApplicationController.findByStatus(status:String)
+GET     /api/v1/aas/:id						controllers.ActivityApplicationController.read(id:Long)
+POST	/api/v1/aas							controllers.ActivityApplicationController.save()
+GET     /api/v1/aas/closeout/:id			controllers.ActivityApplicationController.closeOut(id:Long)
+POST 	/api/v1/aas/closeout/:id			controllers.ActivityApplicationController.closeOutApplication(id:Long)
+POST	/api/v1/login						controllers.LoginController.authenticate()

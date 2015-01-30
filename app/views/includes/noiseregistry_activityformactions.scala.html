@@ -1,0 +1,41 @@
+@(activityapp:ActivityApplication, orgType:String, userRole:String, ctx:String)
+
+@if(orgType=="NOISEPRODUCER") {
+	@if(ctx=="confirmadd" && activityapp.getParent()==null && 
+		(activityapp.getStatus()=="Proposed"  || activityapp.getStatus()=="Interim Close-out")) {
+		<div class="noiseregistry-noprint">
+			<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+			<nav>
+				<ul class="related-actions">
+					<li><a href="@routes.ActivityApplicationController.createLinked(activityapp.getId())">@play.twirl.api.Html(Messages("actions.create_linked_application"))</a></li>
+				</ul>
+			</nav>
+		</div>			
+	} else {
+		@if((activityapp.getStatus()=="Proposed"  || activityapp.getStatus()=="Interim Close-out" || activityapp.getStatus()=="Draft") 
+ 			&& (ctx!="confirmadd")) {
+ 			<div class="noiseregistry-noprint">
+			<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+			<nav>
+				<ul class="related-actions">
+					@if(activityapp.getStatus()=="Draft") {
+						<li><a href="@routes.ActivityApplicationController.edit(activityapp.getId())">@play.twirl.api.Html(Messages("actions.edit_draft_application"))</a></li>
+						<li><a href="@routes.ActivityApplicationController.delete(activityapp.getId())">@play.twirl.api.Html(Messages("actions.delete_draft_application"))</a></li>
+					} else {
+						@if(activityapp.getStatus()=="Proposed") {
+							<li><a href="@routes.ActivityApplicationController.cancel(Long.toString(activityapp.getId()))">@play.twirl.api.Html(Messages("actions.cancel_application"))</a></li>
+						}
+						<li><a href="@routes.ActivityApplicationController.closeOut(activityapp.getId())">@play.twirl.api.Html(Messages("actions.submit_closeout_data"))</a></li>
+					
+						@if(activityapp.getParent()==null) {
+							<li><a href="@routes.ActivityApplicationController.createLinked(activityapp.getId())">@play.twirl.api.Html(Messages("actions.create_linked_application"))</a></li>
+						}
+					}
+				</ul>
+			</nav>
+			</div>
+ 		}
+	}
+}
+		
+

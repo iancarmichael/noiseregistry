@@ -1,0 +1,13 @@
+@(ou:OrgUser, host:String)
+<div>
+@play.twirl.api.Html(Messages("userremovaladmin.mail.salutation", ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("userremovaladmin.mail.preamble", ou.getAu().getFullname(), ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.footer"))
+</div>
+

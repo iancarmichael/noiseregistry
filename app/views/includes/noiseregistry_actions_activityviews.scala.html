@@ -1,0 +1,28 @@
+@(orgType:String, userRole:String, context:String="")
+<div class="noiseregistry-noprint">
+<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.actions"))</h2>
+
+@if((orgType=="REGULATOR") || (orgType=="NOISEPRODUCER")) {
+	<nav>
+		<ul class="related-actions">
+			@if(orgType=="NOISEPRODUCER") {
+				@if(context=="PROPOSEDAPPLS" || context=="COMPLETEDAPPLS" || context=="DRAFTAPPLS") {
+					<li><a href="@routes.ActivityApplicationController.add()">@play.twirl.api.Html(Messages("actions.create_new_application"))</a></li>
+				}
+				@if(context!="DRAFTAPPLS") {
+					<li><a href="@routes.ActivityApplicationController.findDraft()">@play.twirl.api.Html(Messages("actions.view_draft_applications"))</a></li>
+				}
+			}
+			@if(context!="PROPOSEDAPPLS") {
+				<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications"))</a></li>
+			}
+			@if(context!="COMPLETEDAPPLS") {
+				<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("actions.view_completed_applications"))</a></li>
+			}
+		</ul>
+	</nav>
+}
+
+</div>
+		
+

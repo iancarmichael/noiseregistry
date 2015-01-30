@@ -20,6 +20,10 @@ The following instructions should be used by a developer wishing to set up a dev
 	- Enter the local directory to use e.g. C:\Data\eclipse4.4\workspace\noiseregistry and click "Next"
 	- Select "Import as general project" and click "Next"
 	- The project name should have defaulted to the directory name used in 3.6, so click "Finish"
+4. Update the govuk_frontend_toolkit submodule
+	- Use git submodule update 
+	OR 
+	- Right-click on "Submodules" in the "Git Repositories" window and use menu "Update Submodule"
 
 JNCC Noise Registry Application Launch
 To start the JNCC application:
@@ -36,3 +40,16 @@ Scala provides editors that "understand" the content for application routes, sca
 	- From "Help, Install New Software..." menu item in eclipse, add a new site, title "Scala", uri: http://download.scala-ide.org/sdk/lithium/e44/scala211/dev/site
 	- When you get the list of available items, select the all the entries except for the "Scala IDE for Eclipse Development Support"
 After eclipse restarts, you should find that the routes file in conf has a custom editor, as do the *.scala.html template files in the app\views folder.
+
+Optional:
+For running automated tests inside eclipse, modify the Run Configuration for each of the test files as follows:
+- Right click on the test file (e.g., ApplicationTest.java) below the test folder
+- Select Properties, Run/Debug Settings
+- Create or edit a launch configuration
+- On the Arguments tab add the following to the VM arguments: -Dconfig.file=conf/test.conf
+You can then right click the test file and use Run As\JUnit Test to run the tests.  All dependencies need to be up-to-date first.
+
+Stylesheets:
+SASS is used for stylesheets.  This can be installed from http://sass-lang.com/  
+To compile use "sass --watch app/assets/sass:public/stylesheets" in a command line from the noise registry folder.  
+

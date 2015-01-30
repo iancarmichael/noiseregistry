@@ -1,0 +1,30 @@
+@(appForm:Form[_])
+@* 
+ * This partial is used on the close out activity application form to allow the user to 
+ * add additional activity locations and to record dates of actual activity
+ *@	
+<fieldset id="activitylocations">
+ 	<legend class="form-label-bold">@Messages("activityform.field_heading.activity_location_date_entry")</legend>
+ 	<span class="form-hint">@Messages("activityform.field_hint.activity_location_date_entry")</span>
+	@helper.repeat(appForm("pa"), min=0) { pa =>
+		@location_entry_group(pa, parentId=appForm("id").value, closeOut = true)
+	}
+    <div id="nolocations" @if((appForm("pa").indexes.size) > 0){class="js-hidden"}>@Messages("activityform.nolocations")</div>
+           
+	@**
+	 * Keep an hidden block that will be used as template for Javascript copy code
+	 **@
+	@location_entry_group(appForm("pa[x]"), className = "pa_template js-hidden", parentId=appForm("id").value, creationType = "Additional", closeOut = true)
+          
+</fieldset>
+<br />	
+ 	
+@includes.location_input_fields(appForm, 
+   		Messages("activityformcloseout.heading.location_entry"), 
+   		Messages("activityformcloseout.field_hint.location_entry_type"),
+   		Messages("activityformcloseout.text.location_entry")
+)
+  
+<div class="manage">
+	<input class="button" type="button" id="addPa" value="@Messages("activityform.add_location")">
+</div>	

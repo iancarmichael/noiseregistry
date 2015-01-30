@@ -1,0 +1,13 @@
+@(ou:OrgUser, host:String)
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.salutation", ou.getAu().getFullname()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.preamble", ou.getOrg().getOrganisation_name()))
+</div>
+<div>
+<a href="http://@(host + routes.LoginController.index())">@Messages("useraccept.mail.linktext")</a>
+</div>
+<div>
+@play.twirl.api.Html(Messages("useraccept.mail.footer"))
+</div>

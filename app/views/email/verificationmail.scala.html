@@ -1,0 +1,14 @@
+@(user:AppUser, host:String)
+<div>
+@play.twirl.api.Html(Messages("registration.mail.salutation", user.getFullname()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("registration.mail.preamble"))
+</div>
+<div>
+<a href="http://@(host + routes.RegistrationController.verify(user.getVerification_token()))">@Messages("registration.mail.linktext")</a>
+</div>
+<br/>
+<div>
+@play.twirl.api.Html(Messages("registration.mail.footer"))
+</div>

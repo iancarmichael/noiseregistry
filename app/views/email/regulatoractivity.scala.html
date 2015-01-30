@@ -1,0 +1,17 @@
+@(aa:ActivityApplication, host:String, statusKey: String, overrideEmail:String, reg:Regulator, np:NoiseProducer)
+@if(!overrideEmail.equals("")) {
+	<div>Email for intended regulator address: @reg.getOrganisation().getContact_email() (Regulator email override has been configured to prevent mail going out)</div>
+	<br />
+}
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.salutation", reg.getOrganisation().getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.preamble", np.getOrganisation().getOrganisation_name(), aa.getId(), ActivityTypes.get(aa.getActivitytype_id()), aa.getDate_start().format("dd-MM-yyyy"), aa.getDate_due().format("dd-MM-yyyy")))
+</div>
+<div>
+<a href="http://@(host + routes.ActivityApplicationController.read(aa.getId()))">@Messages("regulator.activity." + statusKey + ".mail.linktext")</a>
+</div>
+<div>
+@play.twirl.api.Html(Messages("regulator.activity." + statusKey + ".mail.footer"))
+</div>

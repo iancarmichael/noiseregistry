@@ -1,0 +1,141 @@
+@(dateStart: Option[Date] = None, dateEnd: Option[Date] = None)
+<script src="@routes.Assets.at("javascripts/glDatePicker.min.js")"></script>
+<script type="text/javascript">
+
+var dpOptions = {
+	    			selectableDateRange: [
+	      					{ from: new Date(@dateStart.getOrElse(new Date()).getTime()),
+	      	                  to: new Date(@dateEnd.getOrElse(new Date()).getTime()) },
+	      	            ],
+	      	            todayDate: new Date(@dateStart.getOrElse(new Date()).getTime()),
+	      	            onShow: function(calendar) {  $(window).resize(); calendar.show(); },
+	      			    onClick: function(target, cell, date, data) {
+	      			    	s = target.val();
+	      			    	m = date.getMonth()+1;
+	      			    	if (s!="")
+	      			    		s+=", ";
+	      			        target.val(s+date.getDate()+"/"+m+"/"+date.getFullYear());
+	      			    }
+	      			};
+	      			
+function datepicker_init() {
+	$('.pa .closeoutdate').glDatePicker(dpOptions);
+}
+
+datepicker_init();
+
+$('#addPa').on('click', function(e) {
+	if ($( "input:radio[name=entrytype]:checked" ).length>0) {
+		var entryType=$( "input:radio[name=entrytype]:checked" ).val();
+		
+		if (entryType=="ogb" && ($( "#entered_ogb_code" ).val().length==0)) {
+			return;
+		}
+		if (entryType=="latlng" && ($( "#lat" ).val().length==0 || $( "#lng" ).val().length==0)) {
+			return;
+		}
+		
+	    var template = $('.pa_template');
+	    template.before('<div class="pa">' + template.html() + '</div>');
+	    var last = renumber();
+	    populateEntry(last);
+	    $(".pa").on("click", ".BtnMinus", deleteRow);
+	    $("#nolocations").addClass("js-hidden");
+	    
+	    
+	    //As we may have added radio buttons, call the code to handle dynamic display.
+	    var $blockLabels = $(".block-label input[type='radio'], .block-label input[type='checkbox']");
+	  	new GOVUK.SelectionButtons($blockLabels);
+	    var toggleContent = new ShowHideContent();
+	    if (toggleContent) {
+	    	toggleContent.showHideRadioToggledContent();
+	    }
+    }
+});
+    
+$('#form').submit(function() {
+    $('.pa_template').remove();
+});
+    
+var renumber = function() {
+ 	var idxLast=0;
+    $('.pa').each(function(i) {
+        $('input', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/pa\[.+?\]/g, 'pa[' + i + ']'));
+            if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        	}
+        });
+        
+        $('textarea', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/pa\[.+?\]/g, 'pa[' + i + ']'));
+            $(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        });
+        $('label', this).each(function() {
+            $(this).attr('for', $(this).attr('for').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        });
+        $('div', this).each(function() {
+        	if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        	}
+        	if ($(this).attr('gldp-el')) {
+            	$(this).attr('gldp-el', $(this).attr('gldp-el').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        	}
+        });
+        
+        $('.closeoutdate', this).each(function() {
+        	if ($(this).attr('gldp-id')) {
+            	$(this).attr('gldp-id', $(this).attr('gldp-id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+        	}
+        	$('#pa_'+i+'_activitydate').glDatePicker(dpOptions);
+        });
+        idxLast = i;
+    });
+    
+    return idxLast;
+}
+function deleteRow() {
+    var par = $(this).closest(".pa");
+    par.remove();
+    renumber();
+    if ($(".pa").length == 0) {
+    	$("#nolocations").removeClass("js-hidden");
+    }
+};
+$(".pa").on("click", ".BtnMinus", deleteRow);
+
+var populateEntry= function(id) {
+	var entryType=$( "input:radio[name=entrytype]:checked" ).val();
+	$('input[name="pa[' + id + '].entrytype"]').val(entryType);
+	
+	if (entryType=="ogb") {
+		$('input[name="pa[' + id + '].entered_ogb_code"]').val($( "#entered_ogb_code" ).val());
+	}
+	if (entryType=="latlng") {
+		$('input[name="pa[' + id + '].lat"]').val($( "#lat" ).val());
+		$('input[name="pa[' + id + '].lng"]').val($( "#lng" ).val());
+	}
+	if (entryType=="wktgeom") {
+		$('input[name="pa[' + id + '].wktgeom"]').val($( "#wktgeom" ).val());
+	}
+	
+	//Set a description also:
+	var desc = "";
+	desc = $( "input:radio[name=entrytype]:checked" ).attr("data-display-name");
+	if (entryType=="ogb") {
+		desc += ": " + $( "#entered_ogb_code" ).val();
+	}
+	if (entryType=="latlng") {
+		desc += ": " + $( "#lat" ).val() + " / " + $( "#lng" ).val()
+	}
+	$('input[name="pa[' + id + '].description"]').val(desc);
+	$('input[name="pa[' + id + '].description"]').closest(".pa").find(".rowdescriptor").html(desc);
+	locationEntryReset();
+}
+var locationEntryReset = function() {
+	$( "#lat" ).val("");
+	$( "#lng" ).val("");
+	$( "#entered_ogb_code" ).val("");
+	$( "#wktgeom" ).val("");
+}
+</script>

@@ -8,11 +8,6 @@ both a Tomcat 7 server and a PostgreSQL database are installed and configured (s
 From the root of the project (containing the activator file) in a command prompt run:
 activator war
 
-This generates the .war file in the target directory.  The .war file contains a servlet class 
-which causes Tomcat to fail to load the application.  This needs to be removed prior to 
-deploying the .war file.  Open the file (unzip) and delete the 
-WEB-INF\lib\org.apache.tomcat.tomcat-servlet-api-8.0.5.jar file.
-The .war file can then be deployed to the Tomcat 7 server using the Tomcat manager interface. 
+This generates the .war file in the target directory.  
 
-NOTE: Since setting the build to servlet specification 2.5 the deletion of the jar file above does not seem to be necessary.  
-However, this has not been used extensively at this point.
+To allow the application to run as the root ("/") context rename the generated war file as "ROOT.war".

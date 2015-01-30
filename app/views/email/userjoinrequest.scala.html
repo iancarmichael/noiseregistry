@@ -1,0 +1,13 @@
+@(org:Organisation, user:AppUser, host:String)
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.salutation", org.getOrganisation_name()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.preamble", org.getOrganisation_name(), user.getFullname(), user.getEmail_address()))
+</div>
+<div>
+<a href="http://@(host + routes.LoginController.index())">@Messages("userjoinrequest.mail.linktext")</a>
+</div>
+<div>
+@play.twirl.api.Html(Messages("userjoinrequest.mail.footer"))
+</div>

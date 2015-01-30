@@ -5,30 +5,58 @@
 
 	<!-- JNDI data source managed by the container -->
     <persistence-unit name="defaultPersistenceUnit" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>java:comp/env/jdbc/NoiseRegistryDS</non-jta-data-source>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect"/>
         </properties>
     </persistence-unit>
 
 	<!-- JNDI data source defined and managed in the Play Framework for stand-alone operation -->
 	<persistence-unit name="defaultPersistenceUnitLocal" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>NoiseRegistryDS</non-jta-data-source>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect"/>
+            <!--  <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" /> -->
+        </properties>
+    </persistence-unit>
+     
+	<persistence-unit name="defaultPersistenceUnitLocaltest" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <non-jta-data-source>NoiseRegistryDStest</non-jta-data-source>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect"/>
+			<!-- <property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />  -->
         </properties>
     </persistence-unit>
     
     <!-- Non-JNDI data source for liquibase/ hibernate plugin -->
     <persistence-unit name="defaultPersistenceUnitLB" transaction-type="RESOURCE_LOCAL">
-    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    	<class>models.Xuser</class>
+    	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    	<class>models.ActivityAcousticDD</class>
+    	<class>models.ActivityApplication</class>
+    	<class>models.ActivityExplosives</class>
+    	<class>models.ActivityGeophysical</class>
+    	<class>models.ActivityMultibeamES</class>
+    	<class>models.ActivityPiling</class>
+    	<class>models.ActivitySeismic</class>
+    	<class>models.ActivityMoD</class>
+    	<class>models.ActivityType</class>
+    	<class>models.ActivityLocation</class>
+    	<class>models.ActivityLocationDate</class>
+    	<class>models.AppUser</class>
+    	<class>models.OilAndGasBlock</class>
+    	<class>models.Organisation</class>
+    	<class>models.OrgUser</class>
+    	<class>models.NoiseProducer</class>
+    	<class>models.Regulator</class>
         <properties>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.dialect" value="org.hibernate.spatial.dialect.postgis.PostgisDialect" />
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://tweed.liv.tronsystems.co.uk:5432/jncc" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://annan.liv.tronsystems.co.uk:5432/jncc" />
 			<property name="javax.persistence.jdbc.user" value="jncc" />
 			<property name="javax.persistence.jdbc.password" value="tronsystems!" />
 			<property name="javax.persistence.jdbc.schema" value="jncc" />

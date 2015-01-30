@@ -1,0 +1,12 @@
+@(ou:OrgUser, host:String, messagereject:String)
+<div>
+@play.twirl.api.Html(Messages("userreject.mail.salutation", ou.getAu().getFullname()))
+</div>
+<div>
+@play.twirl.api.Html(Messages("userreject.mail.preamble", ou.getOrg().getOrganisation_name(), messagereject))
+</div>
+<div>
+</div>
+<div>
+@play.twirl.api.Html(Messages("userreject.mail.footer"))
+</div>

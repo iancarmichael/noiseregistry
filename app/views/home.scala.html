@@ -1,0 +1,79 @@
+@(appUser: AppUser, activeTab: String)
+
+@import layouts.govuk_template
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+	
+@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@noiseregistry_breadcrumb("HOME")
+		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+       			<div class="text">
+       				<h1 class="heading-large">@play.twirl.api.Html(Messages("home.title")) @appUser.getFullname()</h1>
+					<p class="font-small">
+  						@play.twirl.api.Html(Messages("home.intro"))
+					</p>
+
+					@if((appUser.getUserOrgType()=="REGULATOR") || (appUser.getUserOrgType()=="NOISEPRODUCER")) {
+						<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.org_actions"))</h2>
+						<nav>
+							<ul class="related-actions">
+								@if(appUser.getUserOrgType()=="REGULATOR") {
+									<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications"))</a></li>
+									<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("actions.view_completed_applications"))</a></li>
+								}
+								@if(appUser.getUserOrgType()=="NOISEPRODUCER") {
+									<li><a href="@routes.ActivityApplicationController.add()">@play.twirl.api.Html(Messages("actions.create_new_application"))</a></li>
+									<li><a href="@routes.ActivityApplicationController.findDraft()">@play.twirl.api.Html(Messages("actions.view_draft_applications"))</a></li>
+									<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications"))</a></li>
+									<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("actions.view_completed_applications"))</a></li>
+								}
+							</ul>
+						</nav>
+					}
+					@if(appUser.getOrgRole()=="ADMIN") {
+						<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.admin_actions"))</h2>
+						<nav>
+							<ul  class="related-actions">
+								<li><a href="@routes.OrganisationController.adminorgs()">@play.twirl.api.Html(Messages("actions.organisation_administration"))</a></li>
+							</ul>
+						</nav>
+					} 
+
+					<h2 class="heading-medium">@play.twirl.api.Html(Messages("actions.user_actions"))</h2>
+					<nav>
+						<ul  class="related-actions">
+							<li><a href="@routes.RegistrationController.read()">@play.twirl.api.Html(Messages("actions.edit_user_details"))</a></li>
+							<li><a href="@routes.ChangePasswordController.index()">@play.twirl.api.Html(Messages("actions.change_password"))</a></li>
+							@if(appUser.getUserOrgType()!="REGULATOR") {
+								<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("actions.join_organisation"))</a></li>
+							}
+						</ul>
+					</nav> 
+				</div>
+    		</div>
+    		<div class="column-third">
+    		</div>
+  		</div>
+    	    	
+    </main><!-- / #page-container -->
+}

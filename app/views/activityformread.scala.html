@@ -1,0 +1,189 @@
+@(appUser: AppUser, activityapp: ActivityApplication, ctx: String)
+@import layouts.govuk_template
+@import scala._
+@import java.math.BigInteger; var l:Long=0; var pre=""; var dts=""
+@import includes._
+@head={
+	@noiseregistry_head()
+	@noiseregistry_googleanalytics()
+}
+@bodyEnd={
+	@noiseregistry_scripts()
+}  
+@insideHeader={}
+@afterHeader={}
+@footerTop={}
+@footerLinks={
+	@noiseregistry_footer()
+}
+@headerClass={with-proposition}
+@propositionHeader={
+  	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
+}
+
+@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+	<main id="page-container" role="main">
+		@noiseregistry_phasebanner()
+		@if(activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Interim Close-out") {
+			@noiseregistry_breadcrumb("PROPOSEDAPPL")
+  		} else {
+	  		@if(activityapp.getStatus()=="Draft") {
+				@noiseregistry_breadcrumb("DRAFTAPPL")
+	  		} else {
+  				@noiseregistry_breadcrumb("COMPLETEDAPPL")
+  			}
+  		}
+  		<a id="content"></a>
+    	<div class="grid-row">
+    		<div class="column-two-thirds">
+		  		<h1 class="heading-large">@play.twirl.api.Html(Messages("activityform.title"))</h1>
+		  		@linked_applications(ActivityApplication.findLinked(activityapp), activityapp.getId())
+				@if(ctx=="confirmadd") {
+					@if(activityapp.getStatus()=="Proposed") {
+						<p>@play.twirl.api.Html(Messages("activityform.confirmadd.proposed"))</p>
+					} else {
+						<p>@play.twirl.api.Html(Messages("activityform.confirmadd.draft"))</p>
+					}
+		
+				}
+
+				<table title="Submitted values for activity application">
+					<tbody>
+						@form_displaynumber(activityapp.getId().floatValue(), "activityform.field_heading.aan","%.0f")
+						@form_displaytext(activityapp.getStatus(), "activityform.field_heading.status")
+						@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Interim Close-out" && activityapp.getStatus()!="Draft") {
+							@form_displaydate(activityapp.getDate_closed(), "activityform.field_heading.date_closed")
+		  				}
+						@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
+						@if(appUser.getUserOrgType()=="REGULATOR") {
+								@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_name(), "activityform.field_heading.noiseproducer_name")
+								@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_email(), "activityform.field_heading.noiseproducer_email")
+								@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getContact_phone(), "activityform.field_heading.noiseproducer_phone")
+						}
+						@form_displaytext(activityapp.getRegulator().getOrganisation().getOrganisation_name(), "activityform.field_heading.regulator")
+						@if(activityapp.getNon_licensable()) {
+							@form_displaytext(Messages("activityform.non_licensable.true"), "activityform.field_heading.non_licensable")
+						} else {
+							@form_displaytext(Messages("activityform.non_licensable.false"), "activityform.field_heading.non_licensable")
+						}
+						@form_displaydate(activityapp.getDate_start(), "activityform.field_heading.date_start")				
+						@form_displaydate(activityapp.getDate_end(), "activityform.field_heading.date_end")
+						@form_displaynumber(activityapp.getDuration().floatValue(), "activityform.field_heading.duration","%.0f","units.duration")
+						@form_displaytext(ActivityTypes.get(activityapp.getActivitytype_id()), "activityform.field_heading.activity_type")
+						
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Seismic_Survey.toLong()) {
+							@if(activityapp.getActivitySeismic().getSurvey_type()=="Other") {
+								@form_displaytext(activityapp.getActivitySeismic().getOther_survey_type(), "activityform.field_heading.seismic_survey_type")
+							} else {
+								@form_displaytext(activityapp.getActivitySeismic().getSurvey_type(), "activityform.field_heading.seismic_survey_type")
+							}
+							@form_displaytext(activityapp.getActivitySeismic().getData_type(), "activityform.field_heading.seismic_data_type")					
+							@form_displaynumber(activityapp.getActivitySeismic().getMax_airgun_volume().floatValue(), "activityform.field_heading.seismic_max_airgun", "%.0f", "units.max_airgun_volume")
+							@form_displaynumber(activityapp.getActivitySeismic().getSound_pressure_level().floatValue(), "activityform.field_heading.seismic_sound_pressure", "%.0f", "units.sound_pressure_level")
+							@form_displaynumber(activityapp.getActivitySeismic().getSound_exposure_level().floatValue(), "activityform.field_heading.seismic_exposure_level", "%.0f", "units.sound_exposure_level")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Geophysical_Survey.toLong()) {
+							@form_displaytext(activityapp.getActivityGeophysical().getSource(), "activityform.field_heading.geo_source")
+							@form_displaynumber(activityapp.getActivityGeophysical().getFrequency().floatValue(), "activityform.field_heading.geo_frequency","%.0f","units.frequency")
+							@form_displaynumber(activityapp.getActivityGeophysical().getSound_pressure_level().floatValue(), "activityform.field_heading.geo_sound_pressure","%.0f", "units.sound_pressure_level")
+							@form_displaynumber(activityapp.getActivityGeophysical().getSound_exposure_level().floatValue(), "activityform.field_heading.geo_exposure_level","%.0f", "units.sound_exposure_level")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Piling.toLong()) {
+							@form_displaynumber(activityapp.getActivityPiling().getMax_hammer_energy().floatValue(), "activityform.field_heading.piling_max_hammer","%.0f", "units.max_hammer_energy")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Explosives.toLong()) {
+							@form_displaynumber(activityapp.getActivityExplosives().getTnt_equivalent().floatValue(), "activityform.field_heading.explosive_tnt","%.1f","units.tnt_equivalent")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Acoustic_Deterrent_Device.toLong()) {
+							@if(activityapp.getActivityAcousticDD().getFrequency()==null){ @{l = 0} } else { @{l=activityapp.getActivityAcousticDD().getFrequency().longValue() }}
+							@form_displaynumber(l.floatValue(), "activityform.field_heading.acoustic_frequency","%.0f", "units.frequency.acousticDD")
+						
+							@if(activityapp.getActivityAcousticDD().getSound_pressure_level()==null){ @{l = 0} } else { @{l=activityapp.getActivityAcousticDD().getSound_pressure_level().longValue() }}
+							@form_displaynumber(l.floatValue(), "activityform.field_heading.acoustic_sound_pressure","%.0f", "units.sound_pressure_level")
+							
+							@if(activityapp.getActivityAcousticDD().getSound_exposure_level()==null){ @{l = 0} } else { @{l=activityapp.getActivityAcousticDD().getSound_exposure_level().longValue() }}
+							@form_displaynumber(l.floatValue(), "activityform.field_heading.acoustic_exposure_level","%.0f", "units.sound_exposure_level")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.Multibeam_Echosounders.toLong()) {
+							@if(activityapp.getActivityMultibeamES().getFrequency()==null){ @{l = 0} } else { @{l=activityapp.getActivityMultibeamES().getFrequency().longValue() }}
+				        	@form_displaynumber(l.floatValue(), "activityform.field_heading.mb_frequency","%.0f", "units.frequency")
+							@if(activityapp.getActivityMultibeamES().getSound_pressure_level()==null){ @{l = 0} } else { @{l=activityapp.getActivityMultibeamES().getSound_pressure_level().longValue() }}
+				        	@form_displaynumber(l.floatValue(), "activityform.field_heading.mb_sound_pressure","%.0f", "units.sound_pressure_level")
+							@if(activityapp.getActivityMultibeamES().getSound_exposure_level()==null){ @{l = 0} } else { @{l=activityapp.getActivityMultibeamES().getSound_exposure_level().longValue() }}
+			    	    	@form_displaynumber(l.floatValue(), "activityform.field_heading.mb_exposure_level","%.0f", "units.sound_exposure_level")
+						}
+						@if(activityapp.getActivitytype_id()==ActivityTypes.MoD.toLong()) {
+							@form_displaytext(activityapp.getActivityMoD().getSource(), "activityform.field_heading.mod_source")
+						}				
+						<tr>
+							<th colspan="2">@Messages("activityform.field_heading.activity_locations")</th>
+						</tr>
+						@if(activityapp.getPa()!=null) {
+							@for(pa <- activityapp.getPa()) {
+								@if(!(activityapp.getStatus()=="Closed" && pa.getActivitydates().isEmpty())) { 
+								<tr>
+									@if(pa.getEntered_ogb_code().length>0) {
+										<td style="vertical-align:top">@Messages("activityform.field_heading.block_code")
+											@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
+										</td>
+										<td style="vertical-align:top">@pa.getEntered_ogb_code()
+											@if(!pa.getActivitydates().isEmpty()) { 
+											 <br /> 
+												@{dts=""}
+												@{pre=""}
+												@for(dt <- pa.getActivitydates()){
+													@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
+													@{pre=", "}
+												}
+												@dts
+											}
+										</td>
+									}
+									@if(pa.getLat()!=null && pa.getLng()!=null) {
+										<td style="vertical-align:top">@Messages("activityform.field_heading.latlng")
+											@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
+										</td>
+										<td style="vertical-align:top">@pa.getLat().toString() / @pa.getLng().toString() 
+											@if(!pa.getActivitydates().isEmpty()) { 
+												<br /> 
+												@{dts=""}
+												@{pre=""}
+												@for(dt <- pa.getActivitydates()){
+													@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
+													@{pre=", "}
+												}
+												@dts
+											}
+										</td>
+									}
+								</tr>
+								}
+							}
+						}
+						@if(activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Interim Close-out") {
+							<tr>
+								<td style="font-weight:bold;">@Messages("activityform.field_heading.date_due")</td>
+								<td style="font-weight:bold;">@view_displaydate(activityapp.getDate_due())</td>
+							</tr>
+							<tr>
+								<td colspan="2"><div class="form-hint">@Messages("activityform.field_hint.date_due")</div></td>
+							</tr>
+		  				}
+				
+					</tbody>
+		 		</table>
+		 		<div style="clear:both">&nbsp;</div> 
+		 		@if(ctx=="confirmadd") {
+		 			@if(activityapp.getStatus()=="Draft") {
+		 				<a class="button" href="@routes.ActivityApplicationController.findDraft()">@play.twirl.api.Html(Messages("buttons.finished"))</a>
+		 			} else {
+						<a class="button" href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("buttons.finished"))</a>
+					}
+				}
+	 		</div>
+	 		<div class="column-third">
+	    		@noiseregistry_activityformactions(activityapp, if(appUser==null) {"NONE"} else {appUser.getUserOrgType()}, if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, ctx)
+	    	</div>		
+  		</div>
+  	</main>
+}
