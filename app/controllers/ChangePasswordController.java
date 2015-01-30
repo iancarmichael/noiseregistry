@@ -69,7 +69,7 @@ public class ChangePasswordController  extends Controller {
     		String newPwd = filledForm.get().resetPassword();
     		String email = filledForm.get().getEmail();
     		//email the new password...
-    		sendResetPasswordMail(AppUser.findByEmail("email"), email, newPwd);
+    		sendResetPasswordMail(AppUser.findByEmail(email), email, newPwd);
     		return redirect(routes.ChangePasswordController.confirmreset());
     	}
     	
@@ -80,7 +80,6 @@ public class ChangePasswordController  extends Controller {
         return ok(views.html.finished.render(AppUser.findByEmail(session("email")), "resetpassword.confirmation_title", "resetpassword.success", activeTab, routes.ApplicationController.home()));
     }
     
-    //TODO make this async - mail blocking on the main thread makes it slow
   	public static void sendResetPasswordMail(AppUser au, String email, String pwd) 
   	{
   		Html mailBody = views.html.email.passwordresetmail.render(au, pwd, request().host());

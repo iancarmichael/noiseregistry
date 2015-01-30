@@ -76,7 +76,6 @@ public class RegistrationController extends Controller {
 		}
 	}
 	
-	//TODO make this async - mail blocking on the main thread makes it slow
 	public static void sendVerificationMail(AppUser au) 
 	{
 		Html mailBody = views.html.email.verificationmail.render(au, request().host());

@@ -44,7 +44,6 @@ public class Global extends GlobalSettings {
 	/* Fix for an issue with the Hibernate Persistence Provider, as detailed here:
 	 * https://hibernate.atlassian.net/browse/HHH-9141
 	 * 
-	 * (non-Javadoc)
 	 * @see play.GlobalSettings#beforeStart(play.Application)
 	 */
 	@Override
@@ -54,7 +53,7 @@ public class Global extends GlobalSettings {
 
 	        @Override
 	        public void clearCachedProviders() {
-	            // TODO Auto-generated method stub
+	            //
 	        }
 
 	        @Override

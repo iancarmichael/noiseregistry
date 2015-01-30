@@ -327,7 +327,6 @@ public class OrganisationController extends Controller {
 			 }
 		}
 	}
-	//TODO make this async - mail blocking on the main thread makes it slow
 	public static void sendUserRemovalMail(OrgUser ou) 
 	{
 		AppUser au = ou.getAu();
