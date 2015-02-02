@@ -1,6 +1,7 @@
 # Template messages
 jncc.full_name=Joint Nature Conservation Committee
 jncc.abbrev_name=JNCC
+jncc.googleanalytics.code=UA-49672752-1
 
 application.app_name=Marine Noise Registry
 application.service_name=Marine Noise Registry Service
@@ -207,9 +208,14 @@ cookies.message=\
 	<h2 class="heading-medium">Our use of cookies</h2>\n\
 	<p>\n\
 	A session cookie is used to ensure that choices are preserved during your visit to our site<br />\n\
-	Cookie Name: JSESSIONID<br />\n\
-	Typical content: randomly generated hexadecimal number<br />\n\
+	Cookie Name: PLAY_SESSION<br />\n\
+	Typical content: randomly generated hexadecimal number and the registered email address of the user<br />\n\
 	Expires: when user exits browser<br />\n\
+	<br />\n\
+	A session cookie is used to ensure that the correct content is displayed following user login<br />\n\
+	Cookie Name: redirectTo<br />\n\
+	Typical content: url path of the content to be displayed following login<br />\n\
+	Expires: when the user exits the browser, or when the user successfully logs in to the service<br />\n\
 	<br />\n\
 	Google Analytics sets cookies to help us accurately estimate the number of visitors to the website and volumes of usage. This to ensure that the service is available when you want it and fast.<br />\n\
 	Cookie Name: _utma<br />\n\
@@ -226,8 +232,7 @@ cookies.message=\
 	<br />\n\
 	Cookie Name: _utmz<br />\n\
 	Typical content: randomly generated number + info on how the site was reached (e.g. directly or via a link, organic search or paid search)<br />\n\
-	Expires: 6 months<br />\n\
-	<br />\n\
+	Expires: 6 months\n\
 	</p>\n\
 	</section>
 	

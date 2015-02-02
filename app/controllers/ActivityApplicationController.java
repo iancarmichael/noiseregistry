@@ -476,7 +476,6 @@ public class ActivityApplicationController extends Controller {
 			
 				Session session = MailSettings.getSession();
 				String regulatorEmail = reg.getOrganisation().getContact_email();
-				String regulatorName = reg.getOrganisation().getOrganisation_name();
 						
 				String mailFrom = AppConfigSettings.getConfigString("sendMailFrom", "email.sendFrom");
 				String overrideAddress = AppConfigSettings.getConfigString("regulatorOverrideAddress", "email.regulator_override_address");

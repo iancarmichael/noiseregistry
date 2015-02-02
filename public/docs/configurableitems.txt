@@ -1,0 +1,15 @@
+There are a number of items that can be configured through text files in the system.
+
+The system will need to be redeployed after changes.
+
+Messages
+The messages files contains almost all strings output by the application.  Hence labels, field help,
+error messages etc. can all be configured by changing the text in this file.
+
+In addition, the file contains the code for Google Analytics.  The file also contains the static text for 
+the initial welcome, feedback, help, cookies, contact and terms and conditions pages.  The format of the 
+text requires multi-line entries to be terminated with a back slash (\).
+
+
+Emails
+All of the email templates are in the views.email directory.  The names of these should be self-explanatory.  

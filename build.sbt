@@ -8,9 +8,14 @@ Play2WarPlugin.play2WarSettings
 
 Play2WarKeys.servletVersion := "2.5"
 
-Play2WarKeys.filteredArtifacts ++= Seq(("javax.servlet", "servlet-api"))
-
-Play2WarKeys.filteredArtifacts ++= Seq(("javax.mail", "mail"))
+Play2WarKeys.filteredArtifacts ++= Seq(("javax.servlet", "servlet-api"), 
+										("postgresql", "postgresql"),
+										("org.postgresql", "postgresql"), 
+										("org.postgis", "postgis-jdbc"),
+										("javax.mail", "mail"),
+										("javax.el", "el-api"),
+										("org.apache.tomcat", "tomcat-servlet-api")
+										)
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 

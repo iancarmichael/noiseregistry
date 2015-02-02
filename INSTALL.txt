@@ -117,6 +117,11 @@ The Postgres JDBC driver is required by Tomcat - the driver can be downloaded fr
 Select the version with support for JDBC41. The downloaded file must then be copied to the Tomcat "lib" folder under the main
 Tomcat application folder.
 
+The PostGIS jar file used by Hibernate is also required - this can be downloaded from:
+	http://www.hibernatespatial.org/repository/org/postgis/postgis-jdbc/1.5.2/postgis-jdbc-1.5.2.jar
+
+The file should be copied to the Tomcat "lib" folder.
+
 The Java Mail libraries can be downloaded from:
 	https://java.net/projects/javamail/pages/Home
 	
