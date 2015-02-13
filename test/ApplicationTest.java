@@ -4,7 +4,6 @@ import play.test.WithBrowser;
 import play.twirl.api.Content;
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
-import models.AppUser;
 
 
 /**

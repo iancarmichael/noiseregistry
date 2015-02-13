@@ -83,4 +83,5 @@ GET     /api/v1/aas/:id						controllers.ActivityApplicationController.read(id:L
 POST	/api/v1/aas							controllers.ActivityApplicationController.save()
 GET     /api/v1/aas/closeout/:id			controllers.ActivityApplicationController.closeOut(id:Long)
 POST 	/api/v1/aas/closeout/:id			controllers.ActivityApplicationController.closeOutApplication(id:Long)
+POST	/api/v1/aas/cancel/:id					controllers.ActivityApplicationController.cancelApplicationById(id:Long)
 POST	/api/v1/login						controllers.LoginController.authenticate()

@@ -1,6 +1,6 @@
 @(appUser: AppUser, appForm: Form[ActivityApplication], title: String, id:Long)
 
-@import layouts.govuk_template
+@import layouts._
 @import scala._
 @import java.math.BigInteger;
 @import includes._
@@ -23,7 +23,7 @@
   	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
 }
 	
-@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
 	<main id="page-container" role="main">
 	@noiseregistry_phasebanner()
 	@if(appForm("status").value=="Proposed" || appForm("status").value=="Interim Close-out") {
@@ -94,6 +94,7 @@
 	    <div style="clear:both">&nbsp;</div>
 		<fieldset>
 	    <legend class="form-label-bold">@Messages("activityform.field_heading.activity_type")</legend>
+	    <div class="form-hint">@Messages("activityform.field_hint.activity_type")</div>
 	    @for(error <- appForm("activitytype_id").errors) {
 			<div class="validation-message">@Messages(error.message)</div>
 		}

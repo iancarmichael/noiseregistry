@@ -27,30 +27,30 @@ actions.actions=Actions
 actions.org_actions=Organisation Actions
 actions.admin_actions=Administration Actions
 actions.user_actions=User Actions
-actions.view_draft_applications=View draft applications
-actions.edit_draft_application=Edit draft application
-actions.create_linked_application=Create linked application
-actions.delete_draft_application=Delete draft application
-actions.view_proposed_applications=View proposed applications
-actions.view_completed_applications=View completed applications
+actions.view_draft_applications=View draft activities
+actions.edit_draft_application=Edit draft activity
+actions.create_linked_application=Create linked activity
+actions.delete_draft_application=Delete draft activity
+actions.view_proposed_applications=View proposed activities
+actions.view_completed_applications=View completed activities
 actions.create_new_application=Create new proposed activity
 actions.organisation_administration=Administer organisations
 actions.edit_user_details=Edit user details
 actions.change_password=Change password
-actions.cancel_application=Cancel application
+actions.cancel_application=Cancel activity
 actions.submit_closeout_data=Submit close-out data
 actions.edit_organisation=Edit organisation details
 actions.edit_mydetails=Edit my details
-actions.join_organisation=Join/create an organisation
+actions.join_organisation=Join/create organisation
 actions.create_organisation=Create new organisation
 
 validation.field_too_long=Field too long (maximum {0} characters)
 
 breadcrumbs.home=Home
-breadcrumbs.draft_applications=Draft applications
-breadcrumbs.proposed_applications=Proposed applications
-breadcrumbs.completed_applications=Completed applications
-breadcrumbs.application=Application
+breadcrumbs.draft_applications=Draft activities
+breadcrumbs.proposed_applications=Proposed activities
+breadcrumbs.completed_applications=Completed activities
+breadcrumbs.application=Activity
 breadcrumbs.admin_organisations=Administer organisations
 breadcrumbs.organisation_read=My organisation
 breadcrumbs.organisation_edit=Edit organisation details
@@ -93,13 +93,9 @@ welcome.message_before_button=\
 	</p>\n\
 	<p class="font-small">\n\
 	If you are a member of the Noise Registry development team or user group please follow start now:\n\
-	</p>\n\
-	<p class="font-small">\n\
-	<div class="start-container">\n\
+	</p>
 
 welcome.message_after_button=\
-	</div>\n\
-	</p>\n\
 	<section>\n\
 		<h2 class="heading-medium">Background</h2>\n\
 		<p class="font-small">\n\
@@ -175,7 +171,7 @@ helppage.message=\
 	<h1 class="heading-large">Help</h1>\n\
 	<section>\n\
 	<p class="lede">\n\
-	Help is available for the Marine Noise Registry as a downloadable <a href="/assets/help/Noise_Registry_Help.pdf">PDF file</a>.\n\
+	Help is available for the Marine Noise Registry as a downloadable <a href="/assets/help/Marine_Noise_Registry_Help.pdf">PDF file</a>.\n\
 	</p>\n\
 	<p class="font-small">\n\
 	\n\
@@ -261,7 +257,21 @@ termsandconditions.message=\
 
 ################################  HOME ITEMS ###############################################
 home.title=Welcome 
-home.intro=Please choose an action below.
+home.intro=\
+	<p class="font-small">\n\
+	Please read the ‘Requirements of the Marine Noise Registry’ (available soon) before submitting any \n\
+	activity notifications. This is accessed through the Help link at the bottom of all pages.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Please choose an action from the menu below:\n\
+	</p>
+home.intro.regulator=\
+	<p class="font-small">\n\
+	Please choose an action from the menu below.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	If you require help or guidance, select the Help link available at the bottom of all pages.\n\
+	</p>
 
 ################################  ACTIVITY ITEMS ###############################################
 
@@ -289,24 +299,24 @@ field_option.Other=Other
 field_option.2D=2D
 field_option.3D=3D
 field_option.4D=4D
-field_option.asw_sonar=ASW Sonar
-field_option.asw_sonar_check=ASW Sonar (Check)
+field_option.asw_sonar=Anti-submarine Warfare Sonar
+field_option.asw_sonar_check=Anti-submarine Warfare Sonar (Check)
 field_option.explosion=Explosion
 	        	
 #General view messages
-activities.draft_activity_applications=Draft Activity Applications
-activities.draft_activity_intro=The following list shows draft applications for organisations who have accepted you membership request.
-activities.proposed_activity_applications=Proposed Activity Applications
-activities.proposed_activity_intro=The following list shows all proposed activity applications for organisations who have accepted your membership request.
-activities.proposed_activity_intro.regulator=The following list shows all proposed activity applications where your organisation has been selected as the regulator.
-activities.completed_activity_applications=Completed Activity Applications
-activities.completed_activity_intro=The following list shows all closed and cancelled activity applications for organisations who have accepted your membership request.
-activities.completed_activity_intro.regulator=The following list shows all closed and cancelled activity applications where your organisation has been selected as the regulator.
-activities.activity_applications=Activity Applications
-activities.activity_intro=The following list shows activity applications for organisations who have accepted your membership request.
-activities.activity_intro.regulator=The following list shows activity applications where your organisation has been selected as the regulator.
+activities.draft_activity_applications=Draft Activities
+activities.draft_activity_intro=This table shows all draft activities for organisations of which you are a member.
+activities.proposed_activity_applications=Proposed Activities
+activities.proposed_activity_intro=This table shows all proposed activities for organisations of which you are a member.
+activities.proposed_activity_intro.regulator=This table shows all proposed activities where your organisation has been selected as the regulator.
+activities.completed_activity_applications=Completed Activities
+activities.completed_activity_intro=This table shows all closed and cancelled activities for organisations of which you are a member. Cancelled activities are shown without a closed date.
+activities.completed_activity_intro.regulator=This table shows all closed and cancelled activities where your organisation has been selected as the regulator. Cancelled activities will not show a closed date.
+activities.activity_applications=Activities
+activities.activity_intro=The following list shows activities for organisations who have accepted your membership request.
+activities.activity_intro.regulator=This table shows activities where your organisation has been selected as the regulator.
 activities.tableheading_aan=Activity Application Number
-activities.tableheading_parent_aa=Linked AAN
+activities.tableheading_parent_aa=Parent Activity
 activities.tableheading_status=Status
 activities.tableheading_activity_type=Activity Type
 activities.tableheading_start_date=Start Date
@@ -317,10 +327,10 @@ activities.tableheading_regulator=Regulator
 activities.tableheading_noiseproducer=Organisation
  
 # Activity form messages
-activityform.title_new=New Activity Application
-activityform.title=Activity Application
+activityform.title_new=New Activity
+activityform.title=Activity
 activityform.submit=Save and Submit
-activityform.linked_application_heading=Linked Application Details
+activityform.linked_application_heading=Linked Activity Details
 activityform.field_heading.aan=Activity Application Number
 activityform.field_heading.status=Status
 activityform.field_heading.regulator=Regulator
@@ -342,6 +352,7 @@ activityform.field_heading.date_closed=Closed Date
 activityform.field_heading.duration=Duration
 activityform.field_hint.duration=The estimated maximum number of days over the whole period that impulsive noise will occur
 activityform.field_heading.activity_type=Activity Type
+activityform.field_hint.activity_type=To enter more than one activity type, start by submitting an activity for one activity type.  You will then be given the opportunity to create linked activities for further activity types.
 activityform.field_heading.seismic_survey_type=Survey Type
 activityform.field_heading.seismic_othersurvey_type=Other Survey Type
 activityform.field_hint.seismic_othersurvey_type=Please give details
@@ -379,30 +390,34 @@ activityform.field_heading.mod_source=Source
 activityform.field_heading.activity_locations=Locations
 activityform.field_heading.locations=Locations
 activityform.field_heading.dates=Activity Dates
-activityform.add_location=Add Location
-activityform.confirmadd.proposed=Your activity application has been successfully submitted with the following values:
-activityform.confirmadd.draft=Your activity application has been successfully saved with the following values:
+activityform.add_location=Save Location
+activityform.confirmadd.proposed=Your activity has been successfully submitted with the following values:
+activityform.confirmadd.draft=Your activity has been successfully saved with the following values:
 
 activityform.field_heading.activity_location_date_entry=Locations and Dates
 activityform.field_hint.activity_location_date_entry=Add dates to entered locations by typing in the box or using the date picker. \
 	Delete dates by highlighting the text and using the delete or backspace key. \
 	The date picker restricts dates to those between the earliest start date and latest end date.
-activityformcloseout.title=Activity Application Close-Out
+activityformcloseout.title=Activity Close-Out
 activityformcloseout.interim=Submit Interim Close-out Data
-activityformcloseout.submit=Close Out Application
-activityformcloseout.cancel=Return to Application
+activityformcloseout.submit=Close Out Activity
+activityformcloseout.cancel=Return to Activity
 activityformcloseout.heading.location_entry=Additional Activity Locations
-activityformcloseout.field_hint.location_entry_type=Additional activity locations may be entered if required
+activityformcloseout.field_hint.location_entry_type=\
+	Additional activity locations may be entered here.\n\
+	If a proposed location was entered as a polygon, please add actual locations as lat/long points \
+	or Oil and Gas Blocks. See help for more guidance.	
 activityformcloseout.text.location_entry=Select the additional location entry type
 activityformcloseout.activitytorecord=Activity to be recorded
 activityformcloseout.activitytorecord.yes=Yes
 activityformcloseout.activitytorecord.no=No
 activityformcloseout.field_heading.activitydate=Dates of activity
-activityformcloseout.field_hint.activitydate=Enter dates as d/m/yyyy separated by commas
+activityformcloseout.field_hint.activitydate=Enter dates as dd/md/yyyy separated by commas
 
 ############## LOCATION TYPES ##################
 location.type.latlng=Latitude/Longitude
 location.type.ogb=Oil and Gas Block Code
+location.type.polygon=Polygon
 location.type.map=Map
 
 ############## LOCATION DATA ENTRY ##################
@@ -419,7 +434,7 @@ activityform.heading.location_entry=Location Entry
 activityform.text.location_entry=Select the entry type
 activityform.field_heading.location_entry_type=Entry Type
 activityform.field_hint.location_entry_type=To add a succession of location points, enter the first latitude/longitude or quadrant/block point. \
-	Click 'Add Location'. \
+	Click 'Save Location'. \
 	The point will appear under the heading 'Locations'.  To add a second point repeat the first steps and \
 	the second point will appear below the first.  An unlimited number of points can be added. 
 activityform.field_hint.latlng=Enter in decimal degrees, between 2-7 decimal places.  Use a negative sign if longitude is West, for example 48.442 -1.234  
@@ -430,18 +445,21 @@ activityform.field_heading.lat=Latitude
 activityform.field_hint.lat=Value between 48.00 and 64.00
 activityform.field_heading.lng=Longitude
 activityform.field_hint.lng=Value between -24.00 and 4.00
+activityform.field_heading.polygon=Polygon
+activityform.field_hint.polygon=To enter a polygon area enter a succession of latitude/longitude points, working around the shape in clockwise order.  To add more than three points click on the "Add Another Polygon Point" button. 
+activityform.add_polygon_point=Add Another Polygon Point
 
 ############## ACTIVITY FORM CANCELLATION ##################
 activityform.cancel.title=Confirm Proposed Activity Cancellation
 activityform.cancel.text=Please confirm that you wish to cancel the proposed activity
-activityformcancel.submit=Cancel Application
-activityformcancel.dontcancel=Return to Application
+activityformcancel.submit=Cancel Activity
+activityformcancel.dontcancel=Return to Activity
 
 ############## ACTIVITY FORM DELETION (FOR DRAFTS) ##################
 activityform.delete.title=Confirm Draft Activity Deletion
-activityform.delete.text=Please confirm that you wish to delete the draft activity application
-activityform.delete.submit=Delete Draft Application
-activityform.delete.dontdelete=Return to Application
+activityform.delete.text=Please confirm that you wish to delete the draft activity
+activityform.delete.submit=Delete Draft Activity
+activityform.delete.dontdelete=Return to Activity
 
 ############## UNITS ##################
 units.sound_exposure_level=dB re 1&micro;Pa2.s
@@ -479,7 +497,6 @@ units.duration=days
 
 ############## CUSTOM ERRORS #########################
 
-# error.required=This is a required value
 validation.required=Value must be entered
 validation.min=Value must be greater or equal to {0}
 validation.max=Value must be less than or equal to {0}
@@ -494,6 +511,13 @@ validation.entered_ogb_code.invalid=The entered code could not be found
 validation.appcloseout.datesrequired=The activity dates must be entered
 validation.activitybeforestart=The activity dates must be after the entered start date
 validation.activityafterend=The activity dates must be before the entered end date
+validation.activityforpolygon=Activity dates recorded against polygon entries are not supported
+validation.polygon_latlngs.parseerror=The entered latitude/longitude values could not be used to create a valid polygon
+validation.polygon_latlngs.invalid=The entered latitude/longitude values do not create a valid polygon
+validation.polygon_latlngs.bounds=The entered latitude/longitude values do not fall within the allowed range
+validation.appcloseout.noactivity=No activity has been recorded.  Please enter a location \
+	(lat/lng point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
+error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking 
 
 ############## CONSTRAINTS #################
 constraint.required=
@@ -549,7 +573,7 @@ loginform.field_heading.password=Password
 loginform.field_heading.submit=Log In
 loginform.field_hint.email=The email address that you registered with
 loginform.field_hint.password=Note: The password is case-sensitive
-loginform.error.invalid=Invalid user or password
+loginform.error.invalid=Invalid email address or password
 
 changepasswordform.title=Change Password
 changepasswordform.field_heading.current_password=Current Password
@@ -559,7 +583,7 @@ changepasswordform.field_hint.password_entry=Password needs to be at least 8 cha
 changepasswordform.field_heading.password_confirm=Confirm New Password
 changepasswordform.field_hint.password_confirm=
 changepasswordform.field_heading.submit=Change Password
-changepasswordform.error.invalid=Invalid user or password
+changepasswordform.error.invalid=Invalid email address or password
 changepasswordform.error.notloggedin=You are not currently logged in
 
 changepassword.confirmation_title=Password Change Successful
@@ -689,7 +713,7 @@ regulator.activity.proposed.mail.preamble=<p>{0} has submitted the following pro
 	Close-Out Report Due: {4}<br />\n\
 	<br />\n\
 	For more information please visit the Marine Noise Registry.</p>
-regulator.activity.proposed.mail.linktext=Proposed Activity Application
+regulator.activity.proposed.mail.linktext=Proposed Activity
 regulator.activity.proposed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 regulator.activity.cancelled.mail.subject=Marine Noise Registry - Activity Cancellation
@@ -702,7 +726,7 @@ regulator.activity.cancelled.mail.preamble=<p>{0} has cancelled the following ac
 	Close-Out Report Due: {4}<br />\n\
 	<br />\n\
 	For more information please visit the Marine Noise Registry.</p>
-regulator.activity.cancelled.mail.linktext=Cancelled Activity Application
+regulator.activity.cancelled.mail.linktext=Cancelled Activity
 regulator.activity.cancelled.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 regulator.activity.closed.mail.subject=Marine Noise Registry - Close-out Report Submission
@@ -715,7 +739,7 @@ regulator.activity.closed.mail.preamble=<p>{0} has submitted a close-out report 
 	Close-Out Report Due: {4}<br />\n\
 	<br />\n\
 	For more information please visit the Marine Noise Registry.</p>
-regulator.activity.closed.mail.linktext=Closed Activity Application
+regulator.activity.closed.mail.linktext=Closed Activity
 regulator.activity.closed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
 
 regulator.activity.interim_close-out.mail.subject=Marine Noise Registry - Interim Close-out Data Submission
@@ -728,18 +752,13 @@ regulator.activity.interim_close-out.mail.preamble=<p>{0} has submitted interim 
 	Close-Out Report Due: {4}<br />\n\
 	<br />\n\
 	For more information please visit the Marine Noise Registry.</p>
-regulator.activity.interim_close-out.mail.linktext=Activity Application
+regulator.activity.interim_close-out.mail.linktext=Activity
 regulator.activity.interim_close-out.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 regulator.activity.latecloseout.mail.subject=Marine Noise Registry - Late Activity Close-out Report
 regulator.activity.latecloseout.mail.salutation={0},
 regulator.activity.latecloseout.mail.preamble=<p>The following Activity notice(s) have not been closed and are now overdue:</p>
-regulator.activity.latecloseout.mail.linktext=Activity Application
+regulator.activity.latecloseout.mail.linktext=Activity
 regulator.activity.latecloseout.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
-################################ IC ###############################################
-############################### END IC #############################################
-
-################################  DS ###############################################
-############################### END DS ############################################
 

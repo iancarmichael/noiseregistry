@@ -31,13 +31,22 @@ public class OrganisationController extends Controller {
 	static Form<Organisation> appForm = Form.form(Organisation.class);
 	static Form<OrgUser> joinForm = Form.form(OrgUser.class);
 	
+	/**
+	 * Shows the UI allowing creation of a new organisation
+	 * @return page for new organisation
+	 */
 	public static Result add() 
 	{
 		Organisation org = new Organisation();
 		return ok(
-				organisation.render(AppUser.findByEmail(session("email")), appForm, Messages.get("userform.title_new"), org)
+				organisation.render(AppUser.findByEmail(session("email")), appForm, org)
 			  );
 	}
+	/**
+	 * Allows editing of an organisation
+	 * @param id the organisation to be edited
+	 * @return the page containing the data to be edited
+	 */
 	@Transactional(readOnly=true)
 	public static Result edit(String id) 
 	{
@@ -49,12 +58,16 @@ public class OrganisationController extends Controller {
 			}
 			Form<Organisation> f = appForm.fill(org);
 			
-			return ok(organisation.render(AppUser.findByEmail(session("email")), f , "edit", org));
+			return ok(organisation.render(AppUser.findByEmail(session("email")), f , org));
 		}
 		String activeTab="HOME";
         return status(403,index.render(AppUser.findByEmail(session("email")), activeTab));
 	}
 	
+	/**
+	 * UI showing the list of organisations to which the user is the administrator
+	 * @return page showing the organisations
+	 */
 	@Transactional(readOnly=true)
 	public static Result adminorgs()
 	{
@@ -63,6 +76,11 @@ public class OrganisationController extends Controller {
 		return ok(adminorganisations.render(AppUser.findByEmail(session("email")), Organisation.getMyAdminOrganisations(sEmail)));
 	}
 	
+	/**
+	 * Shows the UI for organisation user
+	 * @param id the organisation user id
+	 * @return page allowing the user to be edited
+	 */
 	@Transactional(readOnly=true)
 	public static Result getuser(String id) 
 	{
@@ -71,12 +89,17 @@ public class OrganisationController extends Controller {
 		if (userHasAdminAccessToOrganisation(ou.getOrg().getId()))
 		{
 			Form<OrgUser> f = Form.form(OrgUser.class).fill(ou);
-			return ok(organisationuser.render(AppUser.findByEmail(session("email")), ou , ou.getOrg().getId(), f, ""));
+			return ok(organisationuser.render(AppUser.findByEmail(session("email")), ou , ou.getOrg().getId(), f));
 		}
 		String activeTab="HOME";
         return status(403,index.render(AppUser.findByEmail(session("email")), activeTab)); 	// user must have admin rights to organisation
 	}
 	
+	/**
+	 * Checks whether the user is an administrator of an organisation
+	 * @param lid the id of the organisation
+	 * @return
+	 */
 	@Transactional(readOnly=true)
 	private static boolean userHasAdminAccessToOrganisation(long lid)
 	{
@@ -93,6 +116,11 @@ public class OrganisationController extends Controller {
 		return false;
 	}
 	
+	/**
+	 * Shows the UI for the organisation details
+	 * @param id the id of the organisation
+	 * @return page showing the organisation
+	 */
 	@Transactional(readOnly=true)
 	public static Result read(String id)
 	{
@@ -102,11 +130,15 @@ public class OrganisationController extends Controller {
 		{
 			Organisation org = JPA.em().find(Organisation.class, lid);
 		
-			return ok(organisationread.render(AppUser.findByEmail(session("email")), org , "edit"));
+			return ok(organisationread.render(AppUser.findByEmail(session("email")), org));
 		}
 		String activeTab="HOME";
         return status(403,index.render(AppUser.findByEmail(session("email")), activeTab));	// user must have admin rights to organisation
 	}
+	/**
+	 * Page showing list of noise producers
+	 * @return Page showing list of noise producers
+	 */
 	@Transactional(readOnly=true)
 	public static Result list()
 	{
@@ -119,6 +151,11 @@ public class OrganisationController extends Controller {
 		
 		return ok(organisationselect.render(au, nps));
 	}
+	/**
+	 * UI allowing the user to request join access
+	 * @param orgId The organisation which the user is attempting to join
+	 * @return page showing the request
+	 */
 	@Transactional(readOnly=true)
 	public static Result join(Long orgId) 
 	{
@@ -126,6 +163,11 @@ public class OrganisationController extends Controller {
 		Organisation org = JPA.em().find(Organisation.class, orgId);
 		return ok(organisationjoin.render(au, org));
 	}
+	/**
+	 * Request to join organisation
+	 * @param orgId the id of the organisation to add the user to
+	 * @return confirmation of the request
+	 */
 	@Transactional
 	public static Result addUser(Long orgId)
 	{
@@ -148,7 +190,10 @@ public class OrganisationController extends Controller {
 		return ok(finished.render(au, "organisation.joinrequest.title", "organisation.joinrequest.confirmmessage", activeTab, routes.RegistrationController.read()));			
 		
 	}
-	
+	/** 
+	 * Saves the organisation details
+	 * @return confirmation
+	 */
 	@Transactional
 	public static Result save() 
 	{
@@ -157,7 +202,7 @@ public class OrganisationController extends Controller {
 			Logger.error(filledForm.errors().toString());
 			Organisation org = filledForm.get();	
 			return badRequest(
-					organisation.render(AppUser.findByEmail(session("email")), filledForm, Messages.get("organisationform.title_new"),org)
+					organisation.render(AppUser.findByEmail(session("email")), filledForm, org)
 		    );
 		} else {
 			Organisation org = filledForm.get();	
@@ -170,6 +215,10 @@ public class OrganisationController extends Controller {
 	        return ok(finished.render(AppUser.findByEmail(session("email")), "organisation.confirmsave.title", "organisation.confirmsave.message", activeTab, routes.OrganisationController.adminorgs()));			
 		}
     }
+	/**
+	 * Removes a user from an organisation
+	 * @return organsiation details page
+	 */
 	@Transactional
 	public static Result deleteuser() 
 	{
@@ -186,6 +235,11 @@ public class OrganisationController extends Controller {
 		return redirect(routes.OrganisationController.read(lorgid.toString()));
 	}
 
+	/**
+	 * Saves changes to an organisation user
+	 * May send email to user
+	 * @return appropriate data
+	 */
 	@Transactional
 	public static Result saveuser() 
 	{
@@ -199,13 +253,13 @@ public class OrganisationController extends Controller {
 
 		if (map.containsKey("action") && ((String)map.get("action")).compareTo("delete")==0)
 		{
-			return ok(organisationconfirmdelete.render(AppUser.findByEmail(session("email")), ou , "edit"));				
+			return ok(organisationconfirmdelete.render(AppUser.findByEmail(session("email")), ou));				
 		}
 
 		if(filledForm.hasErrors()) {
 			Logger.error(filledForm.errors().toString());
 			if (userHasAdminAccessToOrganisation(ou.getOrg().getId()))
-				return badRequest(organisationuser.render(AppUser.findByEmail(session("email")), ou , ou.getOrg().getId(), filledForm, ""));
+				return badRequest(organisationuser.render(AppUser.findByEmail(session("email")), ou , ou.getOrg().getId(), filledForm));
 			else 
 			{
 				String activeTab="HOME";
@@ -242,6 +296,11 @@ public class OrganisationController extends Controller {
     	return redirect(routes.OrganisationController.read(lorgid.toString()));		
     }
 
+	/**
+	 * Sends rejection email to user
+	 * @param ou the organisation user
+	 * @param map additional data
+	 */
 	private static void sendRejectionToUser(OrgUser ou, Map map) {
 		AppUser au = ou.getAu();
 		
@@ -269,6 +328,11 @@ public class OrganisationController extends Controller {
 		 }
 	}
 
+	/**
+	 * Sends acceptance email to user
+	 * @param ou the organisation user
+	 * @param map additional data
+	 */
 	private static void sendAcceptToUser(OrgUser ou, Map map) {
 		AppUser au = ou.getAu();
 		
@@ -296,6 +360,11 @@ public class OrganisationController extends Controller {
 		 }
 	}
 	
+	/**
+	 * Sends the organisation administrator join confirmation
+	 * @param org the organisation
+	 * @param au the user
+	 */
 	private static void sendAdminJoinNotification(Organisation org, AppUser au) {
 		List<OrgUser> admins = org.findAdmins();
 		if (!admins.isEmpty()) {
@@ -327,6 +396,10 @@ public class OrganisationController extends Controller {
 			 }
 		}
 	}
+	/**
+	 * Sends the user a removal confirmation email
+	 * @param ou the organisation user
+	 */
 	public static void sendUserRemovalMail(OrgUser ou) 
 	{
 		AppUser au = ou.getAu();

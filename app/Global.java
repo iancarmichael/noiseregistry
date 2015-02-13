@@ -8,7 +8,6 @@ import play.Application;
 import play.GlobalSettings;
 import play.Logger;
 import play.db.jpa.JPA;
-import play.db.jpa.JPAPlugin;
 import play.i18n.Messages;
 import play.libs.Akka;
 import play.libs.Time.CronExpression;

@@ -1284,7 +1284,26 @@ ol {
 .radio-location {
   width: 15em; }
 
-#xxglobal-header, #xxglobal-header .header-wrapper {
-  background-color: #003154; }
+#global-header {
+  background-color: #ffffff; }
+
+#global-header .header-wrapper {
+  background-color: #ffffff; }
+
+#global-header-bar .header-bar {
+  background-color: #04647C; }
+
+#global-header #logo, #global-header #logo img {
+  height: 84px;
+  width: 228px; }
+
+#global-header .header-proposition #proposition-name {
+  color: #04647C; }
+
+#global-header .header-proposition #proposition-links li a {
+  color: #04647C; }
+
+#global-header .header-proposition #proposition-links li a.active {
+  color: #000000; }
 
 /*# sourceMappingURL=main-ie8.css.map */

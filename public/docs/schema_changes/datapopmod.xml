@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.2.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="ian.carmichael" id="addmodregulator">
+    	<insert tableName="organisation">
+        	<column name="contact_email" value="Tetrienne.box@jncc.gov.uk" />
+        	<column name="contact_name" value="JNCC, Tetrienne Box" />
+        	<column name="contact_phone" value="01224266571" />
+        	<column name="organisation_name" value="Ministry of Defence" />
+    	</insert>	
+    	<insert tableName="regulator">
+    	    <column name="organisation_id" valueComputed="(SELECT id from organisation where organisation_name='Ministry of Defence')"/>
+        	<column name="closeoutdays" value="56"/>
+	    </insert>    	
+	</changeSet>
+</databaseChangeLog>

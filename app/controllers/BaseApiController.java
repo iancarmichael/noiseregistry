@@ -13,10 +13,21 @@ public class BaseApiController extends Controller {
 
     protected static ObjectMapper mapper = JsonUtil.mapper();
 
+    /**
+     * Returns a Json response using the Play Framework helpers
+     * @param obj the object to be converted to Json
+     * @return Play Framework version
+     */
     public static Result JsonResponse(Object obj) {
         return JsonResponse(obj, 200);
     }
 
+    /**
+     * Returns a Json object with a status code
+     * @param obj the object to be converted to Json
+     * @param code the status code to be returned
+     * @return The Play Framework result
+     */
     public static Result JsonResponse(Object obj, int code) {
         StringWriter w = new StringWriter();
         try {

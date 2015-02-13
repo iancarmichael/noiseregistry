@@ -63,57 +63,129 @@ public class OilAndGasBlock
     @Type(type = "org.hibernate.spatial.GeometryType")
     protected Polygon geom;
         
+    /**
+     * Gets the code
+     * @return
+     */
 	public String getBlock_code() {
 		return block_code;
 	}
+	/**
+	 * Sets the code
+	 * @param block_code
+	 */
 	public void setBlock_code(String block_code) {
 		this.block_code = block_code;
 	}
+	/**
+	 * Gets the "Less than five percent"
+	 * @return
+	 */
 	public Boolean getLessthan_five() {
 		return lessthan_five;
 	}
+	/**
+	 * Sets "Less than 5%"
+	 * @param lessthan_five
+	 */
 	public void setLessthan_five(Boolean lessthan_five) {
 		this.lessthan_five = lessthan_five;
 	}
+	/**
+	 * Gets the TW code 
+	 * @return
+	 */
 	public String getTw_code() {
 		return tw_code;
 	}
+	/**
+	 * Sets the TW code
+	 * @param tw_code
+	 */
 	public void setTw_code(String tw_code) {
 		this.tw_code = tw_code;
 	}
+	/**
+	 * Gets whether this is a split block
+	 * @return
+	 */
 	public Boolean getSplit_block() {
 		return split_block;
 	}
+	/**
+	 * Sets whether this is a split block
+	 * @param split_block
+	 */
 	public void setSplit_block(Boolean split_block) {
 		this.split_block = split_block;
 	}
+	/**
+	 * Gets the quadrant 
+	 * @return
+	 */
 	public String getQuadrant() {
 		return quadrant;
 	}
+	/**
+	 * Sets the quadrant
+	 * @param quadrant
+	 */
 	public void setQuadrant(String quadrant) {
 		this.quadrant = quadrant;
 	}
+	/**
+	 * Gets the point required
+	 * @return
+	 */
 	public Boolean getPoint_req() {
 		return point_req;
 	}
+	/**
+	 * Sets the point required
+	 * @param point_req
+	 */
 	public void setPoint_req(Boolean point_req) {
 		this.point_req = point_req;
 	}
+	/**
+	 * Gets the assignment block code 
+	 * @return
+	 */
 	public String getAssignment_block_code() {
 		return assignment_block_code;
 	}
+	/**
+	 * Sets the assignment block code
+	 * @param assignment_block_code
+	 */
 	public void setAssignment_block_code(String assignment_block_code) {
 		this.assignment_block_code = assignment_block_code;
 	}
+	/**
+	 * Gets the polygon
+	 * @return
+	 */
 	public Polygon getGeom() {
 		return geom;
 	}
+	/**
+	 * Sets the polygon
+	 * @param geom
+	 */
 	public void setGeom(Polygon geom) {
 		this.geom = geom;
 	}
+	/**
+	 * Gets the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}

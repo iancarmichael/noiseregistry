@@ -11,19 +11,34 @@ public class AppUserResetPassword {
 
 	protected String email;
 	
+	/**
+	 * Gets the email address
+	 * @return
+	 */
 	public String getEmail() {
 		return email;
 	}
+	/**
+	 * Sets the email address
+	 * @param email
+	 */
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	
-	
+	/**
+	 * Gets the reset password
+	 * @return
+	 */
 	public String resetPassword() {
 		String res = AppUser.resetPassword(this.getEmail());
 		return res;
 	}
 	
+	/**
+	 * Gets a list of validation errors
+	 * @return
+	 */
 	public List<ValidationError> validate() {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
 		try

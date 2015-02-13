@@ -43,6 +43,10 @@ public class ActivityApplicationController extends Controller {
 	static Form<ActivityApplication> appForm = Form.form(ActivityApplication.class);
 	static Form<ActivityApplicationCloseOut> appcloseoutForm = Form.form(ActivityApplicationCloseOut.class);
 	
+	/**
+	 * List of applications
+	 * @return page with list of applications
+	 */
 	@Transactional(readOnly=true)
 	public static Result index()
 	{
@@ -67,6 +71,11 @@ public class ActivityApplicationController extends Controller {
 			return badRequest("Unsupported content type");
 		}
 	}
+	
+	/**
+	 * List of drafts
+	 * @return page with list of drafts
+	 */
 	@Transactional(readOnly=true)
 	public static Result findDraft()
 	{
@@ -80,7 +89,6 @@ public class ActivityApplicationController extends Controller {
 		
 		Comparator<ActivityApplication> comparator;
 		comparator = new ActivityApplication.NoiseProducerComparator();
-		//Logger.error("Found drafts: " + Integer.toString(apps.size()));
 		if (request().accepts("text/html")) {
 			return ok(activities.render(au, au.findApplicationsByStatus(status, comparator), statusVals));
 		} else if (request().accepts("application/json")) {
@@ -90,6 +98,10 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * List of completed applications
+	 * @return page with list of completed applications
+	 */
 	@Transactional(readOnly=true)
 	public static Result findCompleted()
 	{
@@ -112,6 +124,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 
+	/**
+	 * Fins all applications with the given status that are allowed to be seen by the user
+	 * @param status
+	 * @return List of applications with the given status
+	 */
 	@Transactional(readOnly=true)
 	@ApiOperation(value = "Finds Activity Applications by Status",
             notes = "Returns all Activity Applications with a Status value matching the parameter.  Multiple comma-separated status can be used.",
@@ -139,6 +156,10 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Shows the UI for entering a new application
+	 * @return Page allowing entry of new application
+	 */
 	@Transactional(readOnly=true)
 	public static Result add()
 	{
@@ -156,6 +177,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Show the UI for editing an existing application
+	 * @param id the id of the application to be edited 
+	 * @return page with the application
+	 */
 	@Transactional(readOnly=true)
 	public static Result edit(Long id)
 	{
@@ -180,6 +206,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Shows the UI for creating a linked application
+	 * @param id the id of the application to be linked to
+	 * @return the page allowing creation of the linked application
+	 */
 	@Transactional(readOnly=true)
 	public static Result createLinked(Long id)
 	{
@@ -202,6 +233,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Shows the UI asking users to confirm the deletion of the application
+	 * @param id the application about to be deleted
+	 * @return the page asking for confirmation
+	 */
 	@Transactional(readOnly=true)
 	public static Result preDelete(Long id)
 	{
@@ -218,6 +254,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Delete an application
+	 * @param id the id of the application to be deleted
+	 * @return appropriate result
+	 */
 	@Transactional
 	public static Result delete(Long id)
 	{
@@ -241,6 +282,11 @@ public class ActivityApplicationController extends Controller {
 		}
 			
 	}
+	/**
+	 * Shows the confirmation page that an application has been added
+	 * @param id the application id added
+	 * @return the page with the confirmation details
+	 */
 	@Transactional(readOnly=true)
 	public static Result confirmadd(String id)
 	{
@@ -256,6 +302,11 @@ public class ActivityApplicationController extends Controller {
 		);
 	}
 	
+	/**
+	 * Gets an activity application
+	 * @param id the id of the application to be returned
+	 * @return appropriate data
+	 */
 	@Transactional(readOnly=true)
 	@ApiOperation(value = "Get Activity Application by ID",
 	            notes = "Returns an Activity Application",
@@ -286,6 +337,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Shows the UI allowing a user to cancel an application
+	 * @param id the application to be cancelled
+	 * @return the page allowing the user to cancel
+	 */
 	@Transactional
 	public static Result cancel(String id)
 	{
@@ -298,11 +354,16 @@ public class ActivityApplicationController extends Controller {
 		return ok(activityformcancel.render(au, aa));
 	}
 	
+	/**
+	 * Gets an application to close
+	 * @param id the application to be closed
+	 * @return appropriate data
+	 */
 	@Transactional
 	@ApiOperation(value = "Get Activity Application for close out by ID",
     	notes = "Returns an Activity Application for close out",
     	nickname = "getById",
-    	response = ActivityApplication.class, httpMethod = "GET")
+    	response = ActivityApplicationCloseOut.class, httpMethod = "GET")
 	@ApiResponses(value = {@ApiResponse(code = 400, message = "Invalid ID supplied"),
     @ApiResponse(code = 404, message = "Activity Application not found")})
 	public static Result closeOut(
@@ -319,12 +380,16 @@ public class ActivityApplicationController extends Controller {
 		}
 		
 		if (aa.getStatus().equals("Proposed") || aa.getStatus().equals("Interim Close-out")) {
-			Form<ActivityApplication> filledForm = appForm.fill(aa);
+			//populate the close out partial model
+			ActivityApplicationCloseOut aaco = new ActivityApplicationCloseOut();
+			aaco.setId(aa.getId());
+			aaco.setActivitylocations(aa.getActivitylocations());
+			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.fill(aaco);
 
 			if (request().accepts("text/html")) {
 				return ok(activityformcloseout.render(au, aa, filledForm, id));
 			} else if (request().accepts("application/json")) {
-				return ok(Json.toJson(aa));
+				return ok(Json.toJson(aaco));
 			} else {
 				return badRequest("Unsupported content type");
 			}
@@ -333,11 +398,16 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Closes the application
+	 * @param id the application to be closed
+	 * @return appropriate data
+	 */
 	@Transactional
 	@ApiOperation(value="Close out Activity Application",
-	notes = "Closes out an Activity Application using the data supplied (if valid).",
+	notes = "Closes out an Activity Application using the data supplied (if valid). The parameter 'interimcloseout' must be non-null if the update is an interim close out, otherwise the ActivityApplication status will be set to closed.",
 	nickname = "closeoutAA",
-	response = ActivityApplication.class, httpMethod = "POST")
+	response = ActivityApplicationCloseOut.class, httpMethod = "POST")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "body", value = "Activity Application details", required = true, dataType="models.ActivityApplicationCloseOut", paramType = "body"),
 	})
@@ -391,6 +461,10 @@ public class ActivityApplicationController extends Controller {
 		
 	}
 	
+	/** 
+	 * UI part of the application cancellation
+	 * @return page following cancellation
+	 */
 	@Transactional
 	public static Result cancelApplication()
 	{
@@ -399,6 +473,25 @@ public class ActivityApplicationController extends Controller {
 		String sId = (String)map.get("id"); 
 		Long id = Long.parseLong(sId);
 		
+		return cancelApplicationById(id);
+	}
+		
+	/**
+	 * cancels an application (used for both UI and REST)
+	 * @param id the id of the application to cancel
+	 * @return appropriate data
+	 */
+	@Transactional
+	@ApiOperation(value = "Cancel Activity Application by ID",
+	nickname = "cancel",
+	response = ActivityApplicationCloseOut.class, httpMethod = "POST")
+	@ApiResponses(value = {@ApiResponse(code = 404, message = "Activity Application not found")})
+	public static Result cancelApplicationById(
+			@ApiParam(value = "Id value that identifies the Activity Application", 
+			required = true, 
+			allowMultiple = false) 
+	@PathParam("id") Long id) 
+	{
 		AppUser au = AppUser.getSystemUser(request().username());
 		ActivityApplication aa = ActivityApplication.findById(id);
 		if (aa==null) {
@@ -409,12 +502,22 @@ public class ActivityApplicationController extends Controller {
 		}
 		JPA.em().flush();  //make sure any persistence errors are raised before emailing
 		sendRegulatorNotification(aa, aa.getStatus().toLowerCase());
-		return redirect(routes.ActivityApplicationController.index());
+		if (request().accepts("text/html")) {
+			return redirect(routes.ActivityApplicationController.index());
+		} else if (request().accepts("application/json")) {
+    		return redirect(routes.ActivityApplicationController.read(id));
+    	} else {
+    		return badRequest("Unsupported content type");
+    	}
 	}
 	
+	/**
+	 * Saves an application
+	 * @return appropriate data
+	 */
 	@Transactional
 	@ApiOperation(value="Create Activity Application",
-	notes = "Creates a new Activity Application using the data supplied (if valid).  The following fields are read-only and should be excluded from any POST: all id values, all aa values, status, date_due, date_closed",
+	notes = "Creates a new Activity Application using the data supplied (if valid).  The following fields are read-only and should be excluded from any POST: all id values, all aa values, status, date_due, date_closed.  To create a linked application, specify the id of the parent in an additional parameter 'parent.id' (not shown in the included schema).",
 	nickname = "createAA",
 	response = ActivityApplication.class, httpMethod = "POST")
 		@ApiImplicitParams({
@@ -459,14 +562,17 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Emails the regulator
+	 * @param aa the ActivityApplication
+	 * @param statusKey status of the application
+	 */
 	public static void sendRegulatorNotification(ActivityApplication aa, String statusKey)
 	{
 		try {
-			//Regulator reg = aa.getRegulator();
 			Regulator reg = JPA.em().find(Regulator.class,  aa.getRegulator().getId());
 			NoiseProducer np = JPA.em().find(NoiseProducer.class,  aa.getNoiseproducer().getId());
 			
-			Logger.debug(reg.getAccepts_email().toString());
 			if (reg.getAccepts_email().booleanValue()) {
 				if (Messages.get("regulator.activity." + statusKey + ".mail.subject").equals("regulator.activity." + statusKey + ".mail.subject")) {
 					//no message translation - don't try to send mail out in this case...
@@ -511,7 +617,11 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
-	
+		
+	/**
+	 * Returns the activity types
+	 * @return activity types
+	 */
 	@Transactional(readOnly=true)
 	@ApiOperation(value = "Find list options for Activity Types",
 		notes = "Returns a list of Activity Type options which are valid in activity application submissions.",
@@ -530,6 +640,10 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Retrieves the list of Noise Produces of which the user is a verified member
+	 * @return List of Noise Producers
+	 */
 	@Transactional(readOnly=true)
 	@ApiOperation(value = "Find list options for Noise Producers of which User is a verified member",
 		notes = "Returns a list of Noise Producer options which are valid in activity application submissions.",
@@ -590,6 +704,10 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Returns a list of Regulator options which are valid in activity application submissions
+	 * @return List of regulators
+	 */
 	@Transactional(readOnly=true)
 	@ApiOperation(value = "Find list options for Regulators",
 		notes = "Returns a list of Regulator options which are valid in activity application submissions.",

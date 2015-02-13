@@ -19,12 +19,12 @@ var dpOptions = {
 	      			};
 	      			
 function datepicker_init() {
-	$('.pa .closeoutdate').glDatePicker(dpOptions);
+	$('.activitylocations .closeoutdate').glDatePicker(dpOptions);
 }
 
 datepicker_init();
 
-$('#addPa').on('click', function(e) {
+$('.button.addActivityLocation').on('click', function(e) {
 	if ($( "input:radio[name=entrytype]:checked" ).length>0) {
 		var entryType=$( "input:radio[name=entrytype]:checked" ).val();
 		
@@ -35,11 +35,11 @@ $('#addPa').on('click', function(e) {
 			return;
 		}
 		
-	    var template = $('.pa_template');
-	    template.before('<div class="pa">' + template.html() + '</div>');
+	    var template = $('.activitylocations_template');
+	    template.before('<div class="activitylocations">' + template.html() + '</div>');
 	    var last = renumber();
 	    populateEntry(last);
-	    $(".pa").on("click", ".BtnMinus", deleteRow);
+	    $(".activitylocations").on("click", ".BtnMinus", deleteRow);
 	    $("#nolocations").addClass("js-hidden");
 	    
 	    
@@ -52,71 +52,115 @@ $('#addPa').on('click', function(e) {
 	    }
     }
 });
+
+$('#addPolygonPoint').on('click', function(e) {
+ 	var template = $('.polygon_point_template');
+	template.before('<tr class="polygon_point">' + template.html() + '</tr>');
+	renumberPolygonPoints();
+});
     
 $('#form').submit(function() {
-    $('.pa_template').remove();
+    $('.activitylocations_template').remove();
+    $('.polygon_point_template').remove();
 });
     
 var renumber = function() {
  	var idxLast=0;
-    $('.pa').each(function(i) {
+    $('.activitylocations').each(function(i) {
         $('input', this).each(function() {
-            $(this).attr('name', $(this).attr('name').replace(/pa\[.+?\]/g, 'pa[' + i + ']'));
+            $(this).attr('name', $(this).attr('name').replace(/activitylocations\[.+?\]/g, 'activitylocations[' + i + ']'));
             if ($(this).attr('id')) {
-            	$(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            	$(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         	}
         });
         
         $('textarea', this).each(function() {
-            $(this).attr('name', $(this).attr('name').replace(/pa\[.+?\]/g, 'pa[' + i + ']'));
-            $(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            $(this).attr('name', $(this).attr('name').replace(/activitylocations\[.+?\]/g, 'activitylocations[' + i + ']'));
+            $(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         });
         $('label', this).each(function() {
-            $(this).attr('for', $(this).attr('for').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            $(this).attr('for', $(this).attr('for').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         });
         $('div', this).each(function() {
         	if ($(this).attr('id')) {
-            	$(this).attr('id', $(this).attr('id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            	$(this).attr('id', $(this).attr('id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         	}
         	if ($(this).attr('gldp-el')) {
-            	$(this).attr('gldp-el', $(this).attr('gldp-el').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            	$(this).attr('gldp-el', $(this).attr('gldp-el').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         	}
         });
         
         $('.closeoutdate', this).each(function() {
         	if ($(this).attr('gldp-id')) {
-            	$(this).attr('gldp-id', $(this).attr('gldp-id').replace(/pa_.+?_/g, 'pa_' + i + '_'));
+            	$(this).attr('gldp-id', $(this).attr('gldp-id').replace(/activitylocations_.+?_/g, 'activitylocations_' + i + '_'));
         	}
-        	$('#pa_'+i+'_activitydate').glDatePicker(dpOptions);
+        	$('#activitylocations_'+i+'_activitydate').glDatePicker(dpOptions);
         });
         idxLast = i;
     });
     
     return idxLast;
 }
+var renumberPolygonPoints = function() {
+ 	var idxLast=0;
+    $('.polygon_point').each(function(i) {
+        $('input', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/polygon_point\[.+?\]/g, 'polygon_point[' + i + ']'));
+            if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        	}
+        });
+        
+        $('textarea', this).each(function() {
+            $(this).attr('name', $(this).attr('name').replace(/polygon_point\[.+?\]/g, 'polygon_point[' + i + ']'));
+            $(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        });
+        $('label', this).each(function() {
+            $(this).attr('for', $(this).attr('for').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        });
+        $('div', this).each(function() {
+        	if ($(this).attr('id')) {
+            	$(this).attr('id', $(this).attr('id').replace(/polygon_point_.+?_/g, 'polygon_point_' + i + '_'));
+        	}
+        });
+	});
+	return idxLast;
+}
 function deleteRow() {
-    var par = $(this).closest(".pa");
+    var par = $(this).closest(".activitylocations");
     par.remove();
     renumber();
-    if ($(".pa").length == 0) {
+    if ($(".activitylocations").length == 0) {
     	$("#nolocations").removeClass("js-hidden");
     }
 };
-$(".pa").on("click", ".BtnMinus", deleteRow);
+$(".activitylocations").on("click", ".BtnMinus", deleteRow);
 
 var populateEntry= function(id) {
 	var entryType=$( "input:radio[name=entrytype]:checked" ).val();
-	$('input[name="pa[' + id + '].entrytype"]').val(entryType);
+	$('input[name="activitylocations[' + id + '].entrytype"]').val(entryType);
 	
 	if (entryType=="ogb") {
-		$('input[name="pa[' + id + '].entered_ogb_code"]').val($( "#entered_ogb_code" ).val());
+		$('input[name="activitylocations[' + id + '].entered_ogb_code"]').val($( "#entered_ogb_code" ).val());
 	}
 	if (entryType=="latlng") {
-		$('input[name="pa[' + id + '].lat"]').val($( "#lat" ).val());
-		$('input[name="pa[' + id + '].lng"]').val($( "#lng" ).val());
+		$('input[name="activitylocations[' + id + '].lat"]').val($( "#lat" ).val());
+		$('input[name="activitylocations[' + id + '].lng"]').val($( "#lng" ).val());
+	}
+	if (entryType=="polygon") {
+		//get hold of the set of lat/lng values
+		var res = "";
+		$('.polygon_point').each(function(i) {
+		
+			if (res!="") {
+				res += ", ";
+			}
+			res += $('input[name="polygon_point[' + i + '].lat"]').val() + " / " + $('input[name="polygon_point[' + i + '].lng"]').val();
+		});
+		$('input[name="activitylocations[' + id + '].polygon_latlngs"]').val(res);
 	}
 	if (entryType=="wktgeom") {
-		$('input[name="pa[' + id + '].wktgeom"]').val($( "#wktgeom" ).val());
+		$('input[name="activitylocations[' + id + '].wktgeom"]').val($( "#wktgeom" ).val());
 	}
 	
 	//Set a description also:
@@ -126,10 +170,13 @@ var populateEntry= function(id) {
 		desc += ": " + $( "#entered_ogb_code" ).val();
 	}
 	if (entryType=="latlng") {
-		desc += ": " + $( "#lat" ).val() + " / " + $( "#lng" ).val()
+		desc += ": " + $( "#lat" ).val() + " / " + $( "#lng" ).val();
 	}
-	$('input[name="pa[' + id + '].description"]').val(desc);
-	$('input[name="pa[' + id + '].description"]').closest(".pa").find(".rowdescriptor").html(desc);
+	if (entryType=="polygon") {
+		desc += ": " + $('input[name="activitylocations[' + id + '].polygon_latlngs"]').val();
+	}
+	$('input[name="activitylocations[' + id + '].description"]').val(desc);
+	$('input[name="activitylocations[' + id + '].description"]').closest(".activitylocations").find(".rowdescriptor").html(desc);
 	locationEntryReset();
 }
 var locationEntryReset = function() {
@@ -137,5 +184,13 @@ var locationEntryReset = function() {
 	$( "#lng" ).val("");
 	$( "#entered_ogb_code" ).val("");
 	$( "#wktgeom" ).val("");
+	$('.polygon_point').each(function(i) {
+		if (i>2) {
+			$(this).remove();
+		} else {
+			$('input[name="polygon_point[' + i + '].lat"]').val("");
+			$('input[name="polygon_point[' + i + '].lng"]').val("")
+		}
+	});
 }
 </script>

@@ -49,4 +49,7 @@
     <include file="changeset150120.xml" />
     <include file="changeset150122.xml" />
     <include file="changeset150126.xml" />
+    <include file="datapopmod.xml" />
+    <include file="datapopseq.xml" />
+    <include file="changeset150206.xml" />
 </databaseChangeLog>

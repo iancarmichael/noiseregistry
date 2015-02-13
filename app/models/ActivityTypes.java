@@ -14,13 +14,27 @@ public enum ActivityTypes {
 	
 	private Long value;
 	
+	/**
+	 * Constructor
+	 * @param i the value of the type
+	 */
 	private ActivityTypes(Long i)
 	{
 		this.value=i;
 	}
+	/**
+	 * Gets this type as a Long value
+	 * @return
+	 */
 	public Long toLong() {
 		return this.value;
 	}
+	/**
+	 * Gets a long version of the type as a string.  The list configured in this class
+	 * should match the list in the database 
+	 * @param l the activity type Long value
+	 * @return
+	 */
 	public static String get(Long l)
 	{
 		if (l==1L)
@@ -39,12 +53,19 @@ public enum ActivityTypes {
 			return Messages.get("activity_type.mod");
 		return Messages.get("activity_type.unknown");
 	}
+	/**
+	 * Get this activity as a string
+	 */
 	@Override
 	public String toString()
 	{
 		return ActivityTypes.get(this.value);
 	}
 	
+	/**
+	 * Get the activity types as a list for use in options
+	 * @return
+	 */
 	public static LinkedHashMap<Long, String> getOptions() {
 		LinkedHashMap<Long, String> options = new LinkedHashMap<Long, String>();
         for (int i=1; i<=7; i++) {

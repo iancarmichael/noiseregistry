@@ -10,20 +10,22 @@
    		Messages("activityform.text.location_entry")
 )
 
-<div class="manage">
-	<input class="button" type="button" id="addPa" value="@Messages("activityform.add_location")">
-</div>
-	
 <fieldset id="activitylocations">
  	<legend class="form-label-bold">@Messages("activityform.field_heading.activity_locations")</legend>
-	@helper.repeat(appForm("pa"), min=0) { pa =>
-		@location_entry_group(pa, parentId=appForm("id").value, closeOut = closeOut)
+	@helper.repeat(appForm("activitylocations"), min=0) { activitylocations =>
+		@location_entry_group(activitylocations, parentId=appForm("id").value, closeOut = closeOut, appStatus = appForm("status").value)
 	}
-   	<div id="nolocations" @if((appForm("pa").indexes.size) > 0){class="js-hidden"}>@Messages("activityform.nolocations")</div>
+   	<div id="nolocations" @if((appForm("activitylocations").indexes.size) > 0){class="js-hidden"}>@Messages("activityform.nolocations")</div>
        
 	@**
-	 * Keep an hidden block that will be used as template for Javascript copy code
+	 * Keep an hidden block that will be used as template for Javascript copy code to add locations in the list using the Add Location button
 	 **@
-	@location_entry_group(appForm("pa[x]"), className = "pa_template js-hidden", parentId=appForm("id").value, creationType = creationType, closeOut = closeOut)
+	@location_entry_group(appForm("activitylocations[x]"), 
+		className = "activitylocations_template js-hidden", 
+		parentId=appForm("id").value, 
+		creationType = creationType, 
+		closeOut = closeOut,
+		appStatus = appForm("status").value
+		)
           
 </fieldset>

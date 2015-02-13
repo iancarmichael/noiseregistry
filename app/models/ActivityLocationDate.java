@@ -21,6 +21,7 @@ import play.data.format.Formats;
 import play.data.validation.Constraints.Required;
 import play.data.validation.ValidationError;
 import play.db.jpa.JPA;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,16 +45,31 @@ public class ActivityLocationDate {
 	@Required
 	protected Date activity_date;
 	
-	
+	/**
+	 * Gets the activity location
+	 * @return
+	 */
 	public ActivityLocation getActivitylocation() {
 		return activitylocation;
 	}
+	/**
+	 * Sets the activity location
+	 * @param activitylocation
+	 */
 	public void setActivitylocation(ActivityLocation activitylocation) {
 		this.activitylocation = activitylocation;
 	}
+	/**
+	 * Gets the activity date
+	 * @return
+	 */
 	public Date getActivity_date() {
 		return activity_date;
 	}
+	/**
+	 * Sets the activity date
+	 * @param activity_date
+	 */
 	public void setActivity_date(Date activity_date) {
 		this.activity_date = activity_date;
 	}
@@ -67,8 +83,7 @@ public class ActivityLocationDate {
 	 */
 	public List<ValidationError> validate() {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
-		Logger.error("ActivityLocationDate validate method()");
-		
+		//Logger.debug("ActivityLocationDate validate method()");
 		// Work around a problem where the call to getActivityApplication on the parent location record
 		// returns an empty entity record...
 		ActivityApplication aa = this.getActivitylocation().getAa();
@@ -77,7 +92,11 @@ public class ActivityLocationDate {
 	    		aa = JPA.em().find(ActivityApplication.class, aa.getId());
 	    	}
 	    }
-	    
+	    if (this.getActivitylocation().getPolygon_latlngs()!=null 
+	    		&& !this.getActivitylocation().getPolygon_latlngs().equals("")) {
+	    	//Should never get here, but if we do, return an error.
+	    	errors.add(new ValidationError("activity_date", "validation.activityforpolygon"));
+	    }
 		if (aa.getDate_start() != null) {
 			if (this.getActivity_date().before(aa.getDate_start())) {
 				errors.add(new ValidationError("activity_date", "validation.activitybeforestart"));

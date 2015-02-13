@@ -1,6 +1,6 @@
-@(appUser: AppUser, appForm: Form[Organisation], ctx: String, org:Organisation)
+@(appUser: AppUser, appForm: Form[Organisation], org:Organisation)
 
-@import layouts.govuk_template
+@import layouts._
 @import scala._
 @import includes._
 @head={
@@ -21,7 +21,7 @@
   	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
 }
 	
-@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
 	<main id="page-container" role="main">
 		@noiseregistry_phasebanner()
   		@noiseregistry_breadcrumb("ORGEDIT")

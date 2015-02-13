@@ -41,7 +41,7 @@ public class ModelTest {
 	private static Regulator reg = null;
 	private static Organisation org = null;
 	private static ActivityType at = null;
-	private static ActivityLocation pa = null;
+	private static ActivityLocation al = null;
 	private static ActivityApplication aa = null;
 	private static OilAndGasBlock oagb = null;
 	//private static Liquibase liquibase = null;
@@ -291,12 +291,12 @@ public class ModelTest {
 			em.flush();			
 			
 			// Add some data to the table
-			pa = new ActivityLocation();
-			pa.setCreation_type("Proposed");
-			//pa.setOagb(oagb);
-			pa.setAa(aa);
+			al = new ActivityLocation();
+			al.setCreation_type("Proposed");
+			//al.setOagb(oagb);
+			al.setAa(aa);
 			
-			em.persist(pa);
+			em.persist(al);
 			em.flush();
 			
 			// check that we have one entry

@@ -32,19 +32,39 @@ public class ActivityType
     @Column(length=30)
     protected String name;
     
+    /**
+     * Gets the id
+     * @return
+     */
 	public Long getId() {
 		return id;
 	}
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
+	/**
+	 * Gets the name
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
+	/**
+	 * Sets the name
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
     
+	/**
+	 * retrieves the types from the database
+	 * @return
+	 */
 	public static Map<String,String> options() {
 		List<ActivityType> actTypes = JPA.em().createNamedQuery("ActivityType.findAll", ActivityType.class).getResultList();
         LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
@@ -54,10 +74,19 @@ public class ActivityType
         return options;
     }
 	
+	/**
+	 * Gets an activity type by id
+	 * @param id the id to be found
+	 * @return the activity type
+	 */
 	public static ActivityType findById(int id) {
 	    return JPA.em().find(ActivityType.class, id);
 	}
 	
+	/**
+	 * gets a list of all activity types
+	 * @return
+	 */
 	public static List<ActivityType> findAll() {
 		List<ActivityType> actTypes = JPA.em().createNamedQuery("ActivityType.findAll", ActivityType.class).getResultList();
         return actTypes;

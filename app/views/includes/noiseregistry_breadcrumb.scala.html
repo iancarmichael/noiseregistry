@@ -59,7 +59,7 @@
 		}
 		@if(active=="CREATEORG") {
 			<li><a href="@routes.RegistrationController.read()">@play.twirl.api.Html(Messages("breadcrumbs.user_details"))</a></li>
-			<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("breadcrumbs.user_join_org"))</li>
+			<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("breadcrumbs.user_join_org"))</a></li>
 			<li>@play.twirl.api.Html(Messages("breadcrumbs.create_organisation"))</li>
 		}
 		@if(active=="CHANGEPASSWORD") {

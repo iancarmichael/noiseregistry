@@ -15,7 +15,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.db.jpa.JPA;
@@ -31,7 +30,8 @@ public class ActivityMoD
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    @JsonBackReference("activity-activitymod")
+    //@JsonBackReference("activity-activitymod")
+    @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
@@ -50,33 +50,68 @@ public class ActivityMoD
 	public void setDummy(String dummy) {
 		this.dummy = dummy;
 	}
+	/**
+	 * Gets the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
+	/**
+	 * Gets the associated application
+	 * @return
+	 */
 	public ActivityApplication getAa() {
 		return aa;
 	}
+	/**
+	 * Sets the associated application
+	 * @param aa
+	 */
 	public void setAa(ActivityApplication aa) {
 		this.aa = aa;
 	}
+	/**
+	 * Gets the source
+	 * @return
+	 */
 	public String getSource() {
 		return source;
 	}
+	/**
+	 * Sets the source
+	 * @param source
+	 */
 	public void setSource(String source) {
 		this.source = source;
 	}
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
+	/**
+	 * Constructor
+	 */
 	public ActivityMoD() 
 	{
 		
 	}
+	/**
+	 * Alternate constructor
+	 * @param aa_p associated application 
+	 * @param map source
+	 */
 	public ActivityMoD(ActivityApplication aa_p, Map map) 
 	{
 		this.setAa(aa_p);
 		this.setSource((String)map.get("mod_source.id"));
 	}
+	/**
+	 * Saves the activity type to the database
+	 */
 	@Transactional
 	public void save()
 	{

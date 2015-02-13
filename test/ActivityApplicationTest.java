@@ -1,11 +1,19 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import models.ActivityApplication;
+import models.ActivityLocation;
 import models.ActivityPiling;
 import models.ActivityExplosives;
 import models.NoiseProducer;
@@ -33,6 +41,15 @@ import scala.Option;
  */
 public class ActivityApplicationTest {
 	
+	private static NoiseProducer np;
+	private static Regulator reg;
+	
+	private static double validLat = 49.1233;
+	private static double validLng = -1.234;
+	
+	private static double validLat2 = 50.1233;
+	private static double validLng2 = 1.234;
+	
 	@PersistenceContext
 	private static EntityManager em;
 	
@@ -44,6 +61,26 @@ public class ActivityApplicationTest {
 		em = jpaPlugin.get().em("default");
 		JPA.bindForCurrentThread(em);
 		em.getTransaction().begin();
+		
+		np = new NoiseProducer();
+		Organisation org = new Organisation();
+		org.setOrganisation_name("test org");
+		org.setContact_name("name");
+		org.setContact_phone("1234");
+		org.setContact_email("name@org.com");
+		np.setOrganisation(org);
+		np.saveNoAdmin();
+
+		reg = new Regulator();
+		Organisation orgreg = new Organisation();
+		orgreg.setOrganisation_name("test reg");
+		orgreg.setContact_name("name");
+		orgreg.setContact_phone("1234");
+		orgreg.setContact_email("name@org.com");
+		reg.setOrganisation(orgreg);
+		reg.setCloseoutdays(180);
+		reg.save();			
+		
 	}
 	
 	@AfterClass
@@ -55,16 +92,58 @@ public class ActivityApplicationTest {
 			em.close();
 	}	
 	
+	/**
+	 * create coordinates for an invalid polygon
+	 * @return String lat lng values
+	 */
+	private String getInvalidPolygon() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(Double.toString(validLat));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng));
+		sb.append(", ");
+		sb.append(Double.toString(validLat2));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng2));
+		sb.append(", ");
+		sb.append(Double.toString(validLat2));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng));
+		sb.append(", ");
+		sb.append(Double.toString(validLat));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng2));
+		
+		return sb.toString();
+	}
+	/**
+	 * create coordinates for a valid polygon
+	 * @return String lat lng values
+	 */
+	private String getValidPolygon() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(Double.toString(validLat));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng));
+		sb.append(", ");
+		sb.append(Double.toString(validLat2));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng));
+		sb.append(", ");
+		sb.append(Double.toString(validLat2));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng2));
+		sb.append(", ");
+		sb.append(Double.toString(validLat));
+		sb.append(" / ");
+		sb.append(Double.toString(validLng2));
+		
+		return sb.toString();
+	}
 	@Test
 	public void test_setProposedActivityApplicationOrganisation() {
 		try {
 			ActivityApplication aa = new ActivityApplication();
-			NoiseProducer np = new NoiseProducer();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("TestOrg");
-			org.setId(0L);
-
-			np.setOrganisation(org);
 			
 			aa.setNoiseproducer(np);
 			
@@ -78,11 +157,7 @@ public class ActivityApplicationTest {
 	public void test_setProposedActivityApplicationRegulator() {
 		try {
 			ActivityApplication aa = new ActivityApplication();
-			Regulator reg = new Regulator();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("TestReg");
-			org.setId(0L);
-			reg.setOrganisation(org);
+			
 			aa.setRegulator(reg);
 			
 			assertEquals(reg, aa.getRegulator());
@@ -91,30 +166,7 @@ public class ActivityApplicationTest {
 			fail(e.getMessage());
 		}
 	}
-	/*private NoiseProducer createNP()
-	{
-		NoiseProducer np = new NoiseProducer();
-		Organisation org = new Organisation();
-		org.setOrganisation_name("test org");
-		org.setContact_name("name");
-		org.setContact_phone("1234");
-		org.setContact_email("name@org.com");
-		np.setOrganisation(org);
-		np.save();
-		return np;
-	}*/
-	/*private Regulator createReg()
-	{
-		Regulator reg = new Regulator();
-		Organisation orgreg = new Organisation();
-		orgreg.setOrganisation_name("test reg");
-		orgreg.setContact_name("name");
-		orgreg.setContact_phone("1234");
-		orgreg.setContact_email("name@org.com");
-		reg.setOrganisation(orgreg);			
-		reg.save();
-		return reg;		
-	}*/
+	
 	/*private ActivityApplication createApplicationActivity()
 	{
 		ActivityApplication aa = new ActivityApplication();
@@ -149,25 +201,7 @@ public class ActivityApplicationTest {
 	{
 		try 
 		{
-			int iCount = 5;
-			
-			NoiseProducer np = new NoiseProducer();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("test org");
-			org.setContact_name("name");
-			org.setContact_phone("1234");
-			org.setContact_email("name@org.com");
-			np.setOrganisation(org);
-			np.saveNoAdmin();
-	
-			Regulator reg = new Regulator();
-			Organisation orgreg = new Organisation();
-			orgreg.setOrganisation_name("test reg");
-			orgreg.setContact_name("name");
-			orgreg.setContact_phone("1234");
-			orgreg.setContact_email("name@org.com");
-			reg.setOrganisation(orgreg);			
-			reg.save();			
+			int iCount = 5;	
 			
 			ActivityApplication aa;
 			for (int i = 0; i<iCount ; i++)
@@ -213,32 +247,66 @@ public class ActivityApplicationTest {
 		
 		aa.setNon_licensable(false);
 		
-		//aa.setActivity_type_id(3L);
 		aa.setDuration(2);
 		
 		return aa;
 	}
 	@Test
+	public void test_saveInvalidPolygonLocation() {
+		
+		
+		ActivityApplication aa = getAA();
+		aa.setNoiseproducer(np);			
+		aa.setRegulator(reg);	
+
+		//create a valid location entry...
+		ActivityLocation al = new ActivityLocation();
+		al.setCreation_type("Proposed");
+		al.setPolygon_latlngs(getInvalidPolygon());
+		
+		List<ActivityLocation> activitylocations = new ArrayList<ActivityLocation>();
+		activitylocations.add(al);
+		aa.setActivitylocations(activitylocations);
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+	    
+		Set<ConstraintViolation<ActivityApplication>> constraintViolations =
+			      validator.validate( aa );
+		assertTrue(constraintViolations.isEmpty());
+		
+		//Check that the custom validate method returns an error for the invalid polygon
+		assertNotNull(aa.validate());
+	}
+	@Test
+	public void test_saveValidPolygonLocation() {
+		
+		ActivityApplication aa = getAA();
+		aa.setNoiseproducer(np);			
+		aa.setRegulator(reg);	
+
+		//create a valid location entry...
+		ActivityLocation al = new ActivityLocation();
+		al.setCreation_type("Proposed");
+		al.setPolygon_latlngs(getValidPolygon());
+		
+		List<ActivityLocation> activitylocations = new ArrayList<ActivityLocation>();
+		activitylocations.add(al);
+		aa.setActivitylocations(activitylocations);
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
+	    
+		Set<ConstraintViolation<ActivityApplication>> constraintViolations =
+			      validator.validate( aa );
+		assertTrue(constraintViolations.isEmpty());
+		
+		//Check that the custom validate method returns an error for the invalid polygon
+		assertNull(aa.validate());
+	}
+	@Test
 	public void test_setCancelApplication() {
 		try {
-			NoiseProducer np = new NoiseProducer();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("test org");
-			org.setContact_name("name");
-			org.setContact_phone("1234");
-			org.setContact_email("name@org.com");
-			np.setOrganisation(org);
-			np.saveNoAdmin();
-
-			Regulator reg = new Regulator();
-			Organisation orgreg = new Organisation();
-			orgreg.setOrganisation_name("test reg");
-			orgreg.setContact_name("name");
-			orgreg.setContact_phone("1234");
-			orgreg.setContact_email("name@org.com");
-			reg.setOrganisation(orgreg);			
-			reg.save();			
-			
 			ActivityApplication aa = getAA();
 			aa.setNoiseproducer(np);			
 			aa.setRegulator(reg);	
@@ -256,25 +324,7 @@ public class ActivityApplicationTest {
 	}
 	@Test
 	public void test_saveDraftApplication() {
-		try {
-			NoiseProducer np = new NoiseProducer();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("test org");
-			org.setContact_name("name");
-			org.setContact_phone("1234");
-			org.setContact_email("name@org.com");
-			np.setOrganisation(org);
-			np.saveNoAdmin();
-
-			Regulator reg = new Regulator();
-			Organisation orgreg = new Organisation();
-			orgreg.setOrganisation_name("test reg");
-			orgreg.setContact_name("name");
-			orgreg.setContact_phone("1234");
-			orgreg.setContact_email("name@org.com");
-			reg.setOrganisation(orgreg);			
-			reg.save();			
-			
+		try {	
 			ActivityApplication aa = getAA();
 			aa.setNoiseproducer(np);			
 			aa.setRegulator(reg);	
@@ -307,28 +357,57 @@ public class ActivityApplicationTest {
 			fail(e.getMessage());
 		}
 	}
-	
+	@Test
+	public void test_deleteDraftLocation() {
+		try {	
+			ActivityApplication aa = getAA();
+			aa.setNoiseproducer(np);			
+			aa.setRegulator(reg);	
+			aa.setSaveasdraft("true");
+			
+			//create a valid location entry...
+			ActivityLocation al = new ActivityLocation();
+			al.setCreation_type("Proposed");
+			al.setLat(validLat);
+			al.setLng(validLng);
+			
+			ActivityLocation al2 = new ActivityLocation();
+			al2.setCreation_type("Proposed");
+			al2.setLat(validLat2);
+			al2.setLng(validLng2);
+			
+			List<ActivityLocation> activitylocations = new ArrayList<ActivityLocation>();
+			activitylocations.add(al);
+			activitylocations.add(al2);
+			aa.setActivitylocations(activitylocations);
+						
+			aa.save();
+			em.flush();
+			assertEquals(2, aa.getActivitylocations().size());	
+			assertEquals(aa.getStatus(), "Draft");
+			
+			//detach the object from the entity manager so that we have the same scenario
+			//as when the framework binds an object from the request
+			JPA.em().detach(aa);
+			
+			//remove the first location from the activity application
+			aa.getActivitylocations().remove(0);
+			
+			aa.setSaveasdraft("true");
+			aa.update(aa.getId());
+			em.flush();
+			
+			assertEquals(aa.getStatus(), "Draft");
+			assertEquals(1, aa.getActivitylocations().size());	
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail(e.getMessage());
+		}
+	}
 	@Test
 	public void test_linkedApplications() {
 		try {
-			NoiseProducer np = new NoiseProducer();
-			Organisation org = new Organisation();
-			org.setOrganisation_name("test org");
-			org.setContact_name("name");
-			org.setContact_phone("1234");
-			org.setContact_email("name@org.com");
-			np.setOrganisation(org);
-			np.saveNoAdmin();
-
-			Regulator reg = new Regulator();
-			Organisation orgreg = new Organisation();
-			orgreg.setOrganisation_name("test reg");
-			orgreg.setContact_name("name");
-			orgreg.setContact_phone("1234");
-			orgreg.setContact_email("name@org.com");
-			reg.setOrganisation(orgreg);			
-			reg.save();			
-			
 			ActivityApplication aa = getAA();
 			aa.setNoiseproducer(np);			
 			aa.setRegulator(reg);	

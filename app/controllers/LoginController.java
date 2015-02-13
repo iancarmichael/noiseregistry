@@ -27,6 +27,10 @@ public class LoginController extends Controller {
     
 	static Form<AppUserLogin> loginForm = Form.form(AppUserLogin.class);
 
+	/**
+	 * Index page for login
+	 * @return The login page
+	 */
     public static Result index() {
     	AppUserLogin aul = new AppUserLogin();
     	//Pickup the redirectto value from the cookie, and discard the cookie - the redirectto value is
@@ -42,6 +46,10 @@ public class LoginController extends Controller {
         return ok(views.html.login.render(filledForm, Messages.get("loginform.title")));
     }
 
+    /**
+     * Authenticates a user from the POSTed email address and password
+     * @return appropriate data
+     */
     @ApiOperation(value = "Authenticate user by email address and password",
             notes = "Returns auth token to JSON clients.  For use in the Swagger UI, the returned auth_token value should be copied into the api_key field to provide authentication.",
             nickname = "authenticate",
@@ -96,6 +104,10 @@ public class LoginController extends Controller {
         }
     }
     
+    /**
+     * Allows the user to logout
+     * @return confirmation that the user has logged out
+     */
     @Security.Authenticated(SecuredController.class)
     @Transactional
     @ApiOperation(value = "Log out the current user",

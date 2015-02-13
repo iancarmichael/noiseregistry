@@ -104,10 +104,10 @@ public class ProposedActivityTest {
 	@Test 
 	public void test_ValidLatLng() {
 		//fail("Todo");
-		ActivityLocation pa = new ActivityLocation();
-		pa.setLat(51.520707);
-		pa.setLng(-0.153809);
-		pa.setAa(aa);
+		ActivityLocation al = new ActivityLocation();
+		al.setLat(51.520707);
+		al.setLng(-0.153809);
+		al.setAa(aa);
 		
 	}
 	

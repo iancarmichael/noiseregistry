@@ -7,9 +7,17 @@ import models.*;
 
 public class SecuredController extends Security.Authenticator {
 
-    @Override
+	/**
+	 * Gets the email address for the current user
+	 * @param ctx the context for the request
+	 * @return the email address
+	 */
+	@Override
     public String getUsername(Context ctx) {
-    	//Simple case - user has a logged in http session 
+		// Uncomment the two lines to test as a particular user
+    	//ctx.session().clear();
+    	//ctx.session().put("email","janey.cringean@tronsystems.co.uk");		
+    	//Simple case - user has a logged in http session
     	if (ctx.session().containsKey("email")) {
     		//Logger.error("Session based user access found: " + ctx.session().get("email"));
     		return ctx.session().get("email");
@@ -31,6 +39,11 @@ public class SecuredController extends Security.Authenticator {
         
     }
 
+	/**
+	 * Action for unauthorized requests
+	 * @param ctx the request context
+	 * @return The redirected page
+	 */
     @Override
     public Result onUnauthorized(Context ctx) {
     	if (ctx.request().accepts("text/html")) {

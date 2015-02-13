@@ -102,6 +102,11 @@ public class AppUser {
 	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[A-Z])(.)*)";
 	private static final int AUTH_TOKEN_EXPIRY_MINS = 30;
 
+	/**
+	 * Gets a user from the email address
+	 * @param email address to search for
+	 * @return The user matching the email address
+	 */
 	@Transactional (readOnly=true)
 	public static AppUser findByEmail(String email) {
 
@@ -116,102 +121,202 @@ public class AppUser {
 
 	}
 
+	/**
+	 * Get the list of organisation user entries for this user (allows the user to be 
+	 * associated with organisations)
+	 * @return
+	 */
 	public List<OrgUser> getOu() {
 		return ou;
 	}
 
+	/**
+	 * Set the organisation users for this user
+	 * @param ou
+	 */
 	public void setOu(List<OrgUser> ou) {
 		this.ou = ou;
 	}
 
+	/**
+	 * Get the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Get the full name
+	 * @return
+	 */
 	public String getFullname() {
 		return fullname;
 	}
 
+	/**
+	 * Sets the full name
+	 * @param fullname
+	 */
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
 
+	/**
+	 * Gets the email address
+	 * @return
+	 */
 	public String getEmail_address() {
 		return email_address;
 	}
 
+	/**
+	 * Sets the email address
+	 * @param email_address
+	 */
 	public void setEmail_address(String email_address) {
 		this.email_address = email_address;
 	}
 
+	/** 
+	 * Gets the phone number
+	 * @return
+	 */
 	public String getPhone() {
 		return phone;
 	}
 
+	/**
+	 * Sets the phone number
+	 * @param phone
+	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
+	/**
+	 * Gets the date registered
+	 * @return
+	 */
 	public Timestamp getDate_registered() {
 		return date_registered;
 	}
 
+	/**
+	 * Sets the date registered
+	 * @param date_registered
+	 */
 	public void setDate_registered(Timestamp date_registered) {
 		this.date_registered = date_registered;
 	}
 
+	/**
+	 * Gets the date last logged in
+	 * @return
+	 */
 	public Timestamp getDate_last_login() {
 		return date_last_login;
 	}
 
+	/**
+	 * Sets the date last logged in
+	 * @param date_last_login
+	 */
 	public void setDate_last_login(Timestamp date_last_login) {
 		this.date_last_login = date_last_login;
 	}
 
+	/**
+	 * Gets the password
+	 * @return
+	 */
 	public String getPassword() {
 		return password;
 	}
 
+	/**
+	 * Sets the password
+	 * @param password
+	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	/**
+	 * Gets the password entry
+	 * @return
+	 */
 	public String getPassword_entry() {
 		return password_entry;
 	}
 
+	/**
+	 * Sets the password entry
+	 * @param password_entry
+	 */
 	public void setPassword_entry(String password_entry) {
 		this.password_entry = password_entry;
 	}
 
+	/**
+	 * Gets the password confirmation
+	 * @return
+	 */
 	public String getPassword_confirm() {
 		return password_confirm;
 	}
 
+	/**
+	 * Sets the password confirmation
+	 * @param password_confirm
+	 */
 	public void setPassword_confirm(String password_confirm) {
 		this.password_confirm = password_confirm;
 	}
 
+	/**
+	 * Gets the verification token
+	 * @return
+	 */
 	public String getVerification_token() {
 		return verification_token;
 	}
 
+	/**
+	 * Sets the verification token
+	 * @param verification_token
+	 */
 	public void setVerification_token(String verification_token) {
 		this.verification_token = verification_token;
 	}
 
+	/**
+	 * Gets the verification status
+	 * @return
+	 */
 	public String getVerification_status() {
 		return verification_status;
 	}
 
+	/**
+	 * Sets the verification status
+	 * @param verification_status
+	 */
 	public void setVerification_status(String verification_status) {
 		this.verification_status = verification_status;
 	}
 
+	/**
+	 * Setting items prior to save
+	 */
 	@PrePersist
 	public void preSave() {
 		date_registered = new Timestamp(new java.util.Date().getTime());
@@ -219,6 +324,11 @@ public class AppUser {
 		verification_token = generateToken();
 	}
 
+	/**
+	 * Gets a verified user by email
+	 * @param email email address to find
+	 * @return the user
+	 */
 	public static AppUser findVerifiedByEmail(String email) {
 
 		TypedQuery<AppUser> query = JPA.em().createNamedQuery(
@@ -231,6 +341,11 @@ public class AppUser {
 		return (results.get(0));
 	}
 
+	/**
+	 * Gets an unverified user by email 
+	 * @param email email address to find
+	 * @return the user
+	 */
 	private static AppUser findUnverifiedByEmail(String email) {
 		TypedQuery<AppUser> query = JPA.em().createNamedQuery(
 				"AppUser.findUnverifiedByEmail", AppUser.class);
@@ -279,10 +394,16 @@ public class AppUser {
 		return null;
 	}
 
+	/**
+	 * Saves the user to the database
+	 */
 	public void save() {
 		JPA.em().persist(this);
 	}
 
+	/**
+	 * Updates the user record in the database
+	 */
 	public void update() {
 		if (this.getId() == null) {
 			if (this.getEmail_address() != null) {
@@ -292,6 +413,11 @@ public class AppUser {
 		JPA.em().merge(this);
 	}
 	
+	/**
+	 * Sets the verification token
+	 * @param ver_token token to associate with the user
+	 * @return true if successful
+	 */
 	public static boolean verify(String ver_token) {
 		// first try and find the user record by the supplied token...
 		TypedQuery<AppUser> query = JPA.em().createNamedQuery(
@@ -313,10 +439,17 @@ public class AppUser {
 		return false;
 	}
 
+	/**
+	 * Constructor
+	 */
 	public AppUser() {
 		super();
 	}
 	
+	/**
+	 * Determines whether the user is an administrator, member or nothing in an organsiation
+	 * @return
+	 */
 	public String getOrgRole() {
 		/* Does user have admin access to any organisation */
 
@@ -334,6 +467,10 @@ public class AppUser {
 		return "NONE";
 	}
 		
+	/**
+	 * Determines whether the organisation type is a noise producer or regulator
+	 * @return
+	 */
 	public String getUserOrgType() {
 		/* Users can belong to multiple orgs but only one org type - noise producer or regulator */
 
@@ -344,6 +481,11 @@ public class AppUser {
 		return "NONE";
 	}
 
+	/**
+	 * Gets the organisation administators
+	 * @param ou an organisation user
+	 * @return List of administrators for the same organisation
+	 */
 	public List<OrgUser> getOrgAdmins(OrgUser ou) {
 		TypedQuery<OrgUser> query = JPA.em().createNamedQuery(
 				"AppUser.findOrgAdmins", OrgUser.class);
@@ -354,6 +496,10 @@ public class AppUser {
 		return results;
 	}
 
+	/**
+	 * Determines whether the user is a member of a noise producer
+	 * @return
+	 */
 	public boolean isNoiseProducerMember() {
 		boolean res = false;
 		
@@ -371,6 +517,10 @@ public class AppUser {
 		return res;
 	}
 	
+	/**
+	 * Determines whether the user is a member of a regulator
+	 * @return
+	 */
 	public boolean isRegulatorMember() {
 		boolean res = false;
 		
@@ -401,6 +551,9 @@ public class AppUser {
 		return res;
 	}
 
+	/**
+	 * Encrypts the password
+	 */
 	public void encryptPassword() {
 		try {
 			this.setPassword(PasswordHash.createHash(this.getPassword_entry()));
@@ -411,6 +564,11 @@ public class AppUser {
 		}	
 	}
 
+	/**
+	 * Resets the password
+	 * @param email email of the user to reset the password of
+	 * @return the new password
+	 */
 	public static String resetPassword(String email) {
 
 		AppUser au = AppUser.findByEmail(email);
@@ -434,6 +592,10 @@ public class AppUser {
 		}
 	}
 
+	/**
+	 * Generate a new password
+	 * @return The new password
+	 */
 	static String generateValidPassword() {
 		String res = getRandomString(8);
 		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(PASSWORD_PATTERN);
@@ -445,6 +607,11 @@ public class AppUser {
 		return res;
 	}
 
+	/**
+	 * Gets a pseudo random string
+	 * @param length length of string to return
+	 * @return the string
+	 */
 	private static String getRandomString(int length) {
 		final String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJLMNOPQRSTUVWXYZ1234567890!";
 		StringBuilder result = new StringBuilder();
@@ -456,6 +623,10 @@ public class AppUser {
 		return result.toString();
 	}
 
+	/**
+	 * Saves the registration details to the database
+	 * @param appUserRegistration details to save
+	 */
 	public static void saveRegistration(AppUserRegistration appUserRegistration) {
 		// Update any non-verified account, or create a new one
 		boolean bNew = false;
@@ -479,6 +650,10 @@ public class AppUser {
 		}
 	}
 
+	/**
+	 * Updates the user password
+	 * @param appUserChangePassword model containing the password change data 
+	 */
 	public static void updatePassword(
 			AppUserChangePassword appUserChangePassword) {
 		// Get the authenticated user, then update the password
@@ -573,6 +748,12 @@ public class AppUser {
 		return regs;
 	}
 	
+	/**
+	 * Get activity Applications for this user by the status of them
+	 * @param status the status of the activity application to look for
+	 * @param comparator the sort order
+	 * @return List of ActivityApplications
+	 */
 	public List<ActivityApplication> findApplicationsByStatus(String status, Comparator<ActivityApplication> comparator)
 	{
 		List<ActivityApplication> laa = new ArrayList<ActivityApplication>();
@@ -600,6 +781,11 @@ public class AppUser {
 		return laa;
 	}
 
+	/**
+	 * Gets a user by the token
+	 * @param token the token to look for
+	 * @return the user
+	 */
 	public static AppUser findByAuthToken(String token) {
 		// Lookup user by the auth token, checking expiry...
 		TypedQuery<AppUser> query = JPA.em().createNamedQuery(
@@ -622,6 +808,10 @@ public class AppUser {
 		
 	}
 
+	/**
+	 * Generates a token that expires after 60 minutes 
+	 * @return
+	 */
 	public String createAuthToken() {
 		// Generate a token and expiry, update the user record and return the token.
 		this.auth_token = generateToken();

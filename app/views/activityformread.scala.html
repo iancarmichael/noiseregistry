@@ -1,5 +1,5 @@
 @(appUser: AppUser, activityapp: ActivityApplication, ctx: String)
-@import layouts.govuk_template
+@import layouts._
 @import scala._
 @import java.math.BigInteger; var l:Long=0; var pre=""; var dts=""
 @import includes._
@@ -21,7 +21,7 @@
   	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
 }
 
-@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
 	<main id="page-container" role="main">
 		@noiseregistry_phasebanner()
 		@if(activityapp.getStatus()=="Proposed" || activityapp.getStatus()=="Interim Close-out") {
@@ -118,20 +118,20 @@
 						<tr>
 							<th colspan="2">@Messages("activityform.field_heading.activity_locations")</th>
 						</tr>
-						@if(activityapp.getPa()!=null) {
-							@for(pa <- activityapp.getPa()) {
-								@if(!(activityapp.getStatus()=="Closed" && pa.getActivitydates().isEmpty())) { 
+						@if(activityapp.getActivitylocations()!=null) {
+							@for(activitylocation <- activityapp.getActivitylocations()) {
+								@if(!(activityapp.getStatus()=="Closed" && activitylocation.getActivitydates().isEmpty())) { 
 								<tr>
-									@if(pa.getEntered_ogb_code().length>0) {
+									@if(activitylocation.getEntered_ogb_code()!=null && activitylocation.getEntered_ogb_code().length>0) {
 										<td style="vertical-align:top">@Messages("activityform.field_heading.block_code")
 											@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
 										</td>
-										<td style="vertical-align:top">@pa.getEntered_ogb_code()
-											@if(!pa.getActivitydates().isEmpty()) { 
+										<td style="vertical-align:top">@activitylocation.getEntered_ogb_code()
+											@if(!activitylocation.getActivitydates().isEmpty()) { 
 											 <br /> 
 												@{dts=""}
 												@{pre=""}
-												@for(dt <- pa.getActivitydates()){
+												@for(dt <- activitylocation.getActivitydates()){
 													@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
 													@{pre=", "}
 												}
@@ -139,21 +139,27 @@
 											}
 										</td>
 									}
-									@if(pa.getLat()!=null && pa.getLng()!=null) {
+									@if(activitylocation.getLat()!=null && activitylocation.getLng()!=null) {
 										<td style="vertical-align:top">@Messages("activityform.field_heading.latlng")
 											@if(activityapp.getStatus()!="Proposed" && activityapp.getStatus()!="Draft" && activityapp.getStatus()!="Cancelled"){<br />@Messages("activityform.field_heading.dates")}
 										</td>
-										<td style="vertical-align:top">@pa.getLat().toString() / @pa.getLng().toString() 
-											@if(!pa.getActivitydates().isEmpty()) { 
+										<td style="vertical-align:top">@activitylocation.getLat().toString() / @activitylocation.getLng().toString() 
+											@if(!activitylocation.getActivitydates().isEmpty()) { 
 												<br /> 
 												@{dts=""}
 												@{pre=""}
-												@for(dt <- pa.getActivitydates()){
+												@for(dt <- activitylocation.getActivitydates()){
 													@{dts=dts+pre+dt.getActivity_date.format("dd-MM-yyyy")}
 													@{pre=", "}
 												}
 												@dts
 											}
+										</td>
+									}
+									@if(activitylocation.getPolygon_latlngs()!=null && activitylocation.getPolygon_latlngs().length>0) {
+										<td style="vertical-align:top">@Messages("activityform.field_heading.polygon")
+										</td>
+										<td style="vertical-align:top">@activitylocation.polyToString() 
 										</td>
 									}
 								</tr>

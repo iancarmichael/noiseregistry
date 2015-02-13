@@ -64,65 +64,125 @@ public class OrgUser
 	@Transient
 	protected String reject_reason;
 	
+	/**
+	 * Gets the status
+	 * @return
+	 */
 	public String getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the status
+	 * @param status
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
+	/**
+	 * Gets whether the user is an administrator for this organisation
+	 * @return
+	 */
 	public boolean isAdministrator() {
 		return administrator;
 	}
-
+	/**
+	 * Sets whether this user is an administrator for this organisation
+	 * @param administrator
+	 */
 	public void setAdministrator(boolean administrator) {
 		this.administrator = administrator;
 	}
 
+	/**
+	 * Gets the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the organisation
+	 * @return
+	 */
 	public Organisation getOrg() {
 		return org;
 	}
 
+	/**
+	 * Sets the organisation
+	 * @param org
+	 */
 	public void setOrg(Organisation org) {
 		this.org = org;
 	}
 
+	/**
+	 * Gets the associated AppUser
+	 * @return
+	 */
 	public AppUser getAu() {
 		return au;
 	}
 
+	/**
+	 * Sets the associated AppUser
+	 * @param au
+	 */
 	public void setAu(AppUser au) {
 		this.au = au;
 	}
 	
+	/**
+	 * Gets the rejection reason
+	 * @return
+	 */
 	public String getReject_reason() {
 		return reject_reason;
 	}
 
+	/**
+	 * Sets the rejection reason
+	 * @param reject_reason
+	 */
 	public void setReject_reason(String reject_reason) {
 		this.reject_reason = reject_reason;
 	}
 
+	/**
+	 * Saves the OrgUser to the database
+	 */
 	@Transactional
     public void save() 
 	{
 		JPA.em().merge(this);
 	}
+	/**
+	 * Deletes the orguser from the database
+	 */
 	@Transactional
     public void delete() 
 	{
 		JPA.em().remove(this);
 		// we're not deleting the attached users as this was deemed unwanted 
 	}
+	/**
+	 * Given the id of a user and organisation returns the orguser if there is a match 
+	 * and null otherwise
+	 * @param appuser_id id of the user
+	 * @param org_id id of the organisation
+	 * @return The OrgUser or null
+	 */
 	public static OrgUser findOU(Long appuser_id, Long org_id)
 	{
 		List<OrgUser> results = new ArrayList<OrgUser>();
@@ -143,6 +203,11 @@ public class OrgUser
 		}
 		return null;
 	}
+	/**
+	 * Gets the OrgUser records for a user
+	 * @param appuser_id user id
+	 * @return List of OrgUser records
+	 */
 	public static List<OrgUser> findOrgs(Long appuser_id)
 	{
 		List<OrgUser> results = new ArrayList<OrgUser>();
@@ -164,6 +229,10 @@ public class OrgUser
 		return null;
 	}
 	
+	/**
+	 * Gets a list of validation errors
+	 * @return
+	 */
 	public List<ValidationError> validate() {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
 		try

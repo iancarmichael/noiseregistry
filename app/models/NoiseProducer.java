@@ -39,22 +39,41 @@ public class NoiseProducer {
     @Valid
 	protected Organisation organisation;
 
+	/**
+	 * Gets the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
-
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the organisation 
+	 * @return
+	 */
 	public Organisation getOrganisation() {
 		return organisation;
 	}
 
+	/**
+	 * Sets the organisation
+	 * @param organisation
+	 */
 	public void setOrganisation(Organisation organisation) {
 		this.organisation = organisation;
 	}
 
+	/**
+	 * Gets all of the NoiseProducers
+	 * @return
+	 */
 	public static List<NoiseProducer> findAll() {
 		TypedQuery<NoiseProducer> query = JPA.em().createNamedQuery("NoiseProducer.findAll", NoiseProducer.class);
 		
@@ -62,6 +81,11 @@ public class NoiseProducer {
 		return results;
 	}
 	
+	/**
+	 * Get the Noise Producers for use in options lists
+	 * @param au the context of the user
+	 * @return
+	 */
 	public static LinkedHashMap<String, String> getOptions(AppUser au) {
 		
 		List<NoiseProducer> nps = au.findNoiseProducers();
@@ -74,6 +98,10 @@ public class NoiseProducer {
 		return options;
 	}
 	
+	/**
+	 * Set a user to be an organisation administrator
+	 * @param au
+	 */
 	private void setOrgAdmin(AppUser au) {
 		//having saved the new organisation, set the current user to be the first admin user...
 		OrgUser orguser = new OrgUser();
@@ -84,6 +112,10 @@ public class NoiseProducer {
 		JPA.em().persist(orguser);
 	}
 	
+	/**
+	 * Save the user to the database
+	 * @param au
+	 */
 	public void save(AppUser au) {
 		JPA.em().persist(this);
 		JPA.em().persist(this.getOrganisation());
@@ -100,6 +132,10 @@ public class NoiseProducer {
 		JPA.em().persist(this.getOrganisation());
 	}
 	
+	/**
+	 * Update the user in the database
+	 * @param id
+	 */
     public void update(Long id) {
         this.id = id;
         JPA.em().merge(this);

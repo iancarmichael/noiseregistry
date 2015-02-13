@@ -87,54 +87,105 @@ public class Organisation
     @Length(max=20, message="validation.field_too_long")
     protected String contact_phone;
     
+    /**
+     * Gets the id
+     * @return
+     */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * Sets the id
+	 * @param id
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
+	/**
+	 * Gets the name of the organisation
+	 * @return
+	 */
 	public String getOrganisation_name() {
 		return organisation_name;
 	}
 
+	/**
+	 * Sets the name of the organisation
+	 * @param organisation_name
+	 */
 	public void setOrganisation_name(String organisation_name) {
 		this.organisation_name = organisation_name;
 	}
-
+	/**
+	 * Gets the contact name
+	 * @return
+	 */
 	public String getContact_name() {
 		return contact_name;
 	}
 
+	/**
+	 * Sets the contact name
+	 * @param contact_name
+	 */
 	public void setContact_name(String contact_name) {
 		this.contact_name = contact_name;
 	}
 
+	/**
+	 * Gets the contact email
+	 * @return
+	 */
 	public String getContact_email() {
 		return contact_email;
 	}
 
+	/**
+	 * Sets the contact email
+	 * @param contact_email
+	 */
 	public void setContact_email(String contact_email) {
 		this.contact_email = contact_email;
 	}
 
+	/**
+	 * Gets the contact phone number
+	 * @return
+	 */
 	public String getContact_phone() {
 		return contact_phone;
 	}
 
+	/**
+	 * Sets the contact phone number
+	 * @param contact_phone
+	 */
 	public void setContact_phone(String contact_phone) {
 		this.contact_phone = contact_phone;
 	}
 
+	/**
+	 * Gets whether the organisation accepts email notifications
+	 * @return
+	 */
 	public Boolean getAccepts_email() {
 		return accepts_email;
 	}
 
+	/**
+	 * Sets whether the organisation accepts email notifications
+	 * @param accepts_email
+	 */
 	public void setAccepts_email(Boolean accepts_email) {
 		this.accepts_email = accepts_email;
 	}
 
+	/**
+	 * Gets a list of regulators
+	 * @return
+	 */
 	public static List<Organisation> findRegulators() {
 		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findRegulators", Organisation.class);
 		
@@ -142,6 +193,11 @@ public class Organisation
 		return results;
 	}
 	
+	/**
+	 * Gets an organisation user given its id 
+	 * @param id id of the organisation user
+	 * @return The OrgUser
+	 */
 	public static OrgUser findUser(Long id) 
 	{
 		TypedQuery<OrgUser> query = JPA.em().createNamedQuery("Organisation.findUser", OrgUser.class).setParameter("id",id);
@@ -155,13 +211,21 @@ public class Organisation
 		return ou;
 	}
     
+	/**
+	 * Gets those organisations that aren't listed as regulators
+	 * @return
+	 */
 	public static List<Organisation> findNonRegulators() {
 		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findNonRegulators", Organisation.class);
 		
 		List<Organisation> results = query.getResultList();
 		return results;
 	}
-	
+
+	/**
+	 * Gets the list of administrators for this organisation 
+	 * @return
+	 */
 	public List<OrgUser> findAdmins() {
 		TypedQuery<OrgUser> query = JPA.em().createNamedQuery("Organisation.findAdmins", OrgUser.class);
 		query.setParameter("org", this);
@@ -169,6 +233,10 @@ public class Organisation
 		return results;
 	}
 	
+	/**
+	 * Gets the list of users for this organisation 
+	 * @return
+	 */
 	public List<OrgUser> findUsers() {
 		List<OrgUser> results = new ArrayList<OrgUser>();
 				
@@ -183,6 +251,9 @@ public class Organisation
 		return results;
 	}
 
+	/**
+	 * Saves the organisation to the database
+	 */
 	@Transactional
     public void save() 
 	{
@@ -198,6 +269,12 @@ public class Organisation
 		}
 	}
 	
+	/**
+	 * Gets a List of users (0 or 1) that are administrators of the organisation with the given email 
+	 * address  
+	 * @param email the email address
+	 * @return
+	 */
 	public static List<Organisation> getMyAdminOrganisations(String email)
 	{
 		List<Organisation> results = new ArrayList<Organisation>();
@@ -216,6 +293,11 @@ public class Organisation
 		
 		return results;
 	}
+	/**
+	 * Gets the list of organisations to which the user with the email address belongs 
+	 * @param email email address of user
+	 * @return 
+	 */
 	public static List<Organisation> getMyOrganisations(String email)
 	{
 		List<Organisation> results = new ArrayList<Organisation>();
@@ -235,6 +317,10 @@ public class Organisation
 		return results;
 	}
 
+	/**
+	 * Gets all organisations
+	 * @return
+	 */
 	public static List<Organisation> findAll() {
 		TypedQuery<Organisation> query = JPA.em().createNamedQuery("Organisation.findAll", Organisation.class);
 		
@@ -252,6 +338,10 @@ public class Organisation
 			return true;
 		}
 	}
+	/**
+	 * Try and get the regulator associated with this organisation (null if there isn't one)
+	 * @return
+	 */
 	@JsonIgnore
 	public Regulator getRegulator() {
 		TypedQuery<Regulator> query = JPA.em().createNamedQuery("Organisation.findRegulator", Regulator.class);
@@ -263,6 +353,10 @@ public class Organisation
 			return results.get(0);
 		}
 	}
+	/**
+	 * Gets whether this organisation is a NoiseProducer
+	 * @return
+	 */
 	@JsonIgnore
 	public boolean isNoiseProducer() {
 		TypedQuery<NoiseProducer> query = JPA.em().createNamedQuery("Organisation.findNoiseProducer", NoiseProducer.class);
@@ -274,6 +368,10 @@ public class Organisation
 			return true;
 		}
 	}
+	/**
+	 * Try to get the NoiseProducer associated with this organisation
+	 * @return
+	 */
 	@JsonIgnore
 	public NoiseProducer getNoiseProducer() {
 		TypedQuery<NoiseProducer> query = JPA.em().createNamedQuery("Organisation.findNoiseProducer", NoiseProducer.class);
@@ -285,11 +383,20 @@ public class Organisation
 			return results.get(0);
 		}
 	}
+	/**
+	 * Gets a list of activityapplications by the given status
+	 * @param status
+	 * @return
+	 */
 	public List<ActivityApplication> findApplicationsByStatus(String status) {
 		List<ActivityApplication> results = ActivityApplication.findByStatus(status, this);
 		
 		return results;
 	}
+	/**
+	 * Adds a new user to the organisation
+	 * @param au the new user
+	 */
 	public void addUser(AppUser au)
 	{
 		OrgUser newOrgUser = new OrgUser();

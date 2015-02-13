@@ -26,7 +26,7 @@ Before running ensure that you know the following:
 6) What is the database user's password?
 7) What is the schema name? 
  
-The command should be run on one line (not on separate lines as displayed below).
+The command should be run on one line (not on separate lines as displayed below) from the ..\public\docs\scahema_changes directory 
 
 /path/to/liquibase.bat --driver=org.postgresql.Driver --classpath=/path/to/postgresql-9.3-1102.jdbc3.jar 
 --changeLogFile=/path/to/schema_changes/changelog.xml --url="jdbc:postgresql://server:5432/database" 

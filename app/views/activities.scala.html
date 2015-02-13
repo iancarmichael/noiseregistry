@@ -1,6 +1,6 @@
 @(appUser: AppUser, activityapps: List[ActivityApplication], status: List[String])
 
-@import layouts.govuk_template
+@import layouts._
 @import includes._
 @head={
 	@noiseregistry_head()
@@ -20,7 +20,7 @@
   	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, "HOME")	
 }
 	
-@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
 	<main id="page-container" role="main">
 		@noiseregistry_phasebanner()
 		@if(status.contains("Proposed") && !status.contains("Closed") && !status.contains("Cancelled")) {
@@ -110,7 +110,9 @@
 					@for(activityapp <- activityapps){
 						<tr>
 							<td><a href="@routes.ActivityApplicationController.read(activityapp.getId())">@activityapp.getId()</a></td>
-							<td>@if(activityapp.getParent()!=null){@activityapp.getParent().getId()}</td>	
+							<td>@if(activityapp.getParent()!=null){	
+								<a href="@routes.ActivityApplicationController.read(activityapp.getParent().getId())">@activityapp.getParent().getId()</a></td>
+							}
 							<td>@view_displaydate(activityapp.getDate_start())</td>
 							<td>@view_displaydate(activityapp.getDate_end())</td>
 							<td>@ActivityTypes.get(activityapp.getActivitytype_id())</td>

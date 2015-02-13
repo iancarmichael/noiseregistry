@@ -1,6 +1,6 @@
 @(appUser: AppUser, message: String, activeTab: String)
 
-@import layouts.govuk_template
+@import layouts._
 @import includes._
 @head={
 	@noiseregistry_head()
@@ -20,7 +20,7 @@
   	@noiseregistry_navigation(if(appUser==null) {"NONE"} else {appUser.getOrgRole()}, activeTab)	
 }
 	
-@govuk_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
+@jncc_template(Option("Marine Noise Registry"),None)(Option(head), Option(bodyEnd), Option(insideHeader), Option(afterHeader), Option(footerTop), Option(footerLinks), Option(headerClass), Option(propositionHeader)) {
 	<main id="page-container" role="main">
 		@noiseregistry_phasebanner()
 		<a id="content"></a>

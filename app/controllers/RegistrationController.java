@@ -22,6 +22,10 @@ public class RegistrationController extends Controller {
 	static Form<AppUserRegistration> userForm = Form.form(AppUserRegistration.class);
 	static Form<AppUserDetails> detailsForm = Form.form(AppUserDetails.class);
 	
+	/**
+	 * Shows the UI for adding a user
+	 * @return the form
+	 */
 	@Transactional
 	public static Result add()
 	{
@@ -31,6 +35,10 @@ public class RegistrationController extends Controller {
 			  );
 	}
 	
+	/**
+	 * Saves the user
+	 * @return confirmation page
+	 */
 	@Transactional
 	public static Result save()
 	{
@@ -76,6 +84,10 @@ public class RegistrationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Send a verification email
+	 * @param au the user
+	 */
 	public static void sendVerificationMail(AppUser au) 
 	{
 		Html mailBody = views.html.email.verificationmail.render(au, request().host());
@@ -98,6 +110,11 @@ public class RegistrationController extends Controller {
 		 }
 	}
 	
+	/**
+	 * Checks the verification token
+	 * @param ver_token
+	 * @return confirmation
+	 */
 	@Transactional
 	public static Result verify(String ver_token)
 	{
@@ -113,6 +130,11 @@ public class RegistrationController extends Controller {
 		}
 	}
 	
+	/**
+	 * Shows the UI to confirm the addition of a user
+	 * @param id not used 
+	 * @return confirmation page
+	 */
 	@Transactional(readOnly=true)
 	public static Result confirmadd(String id)
 	{
@@ -121,6 +143,10 @@ public class RegistrationController extends Controller {
         
 	}
 	
+	/**
+	 * Shows the UI allowing a user to be edited
+	 * @return page ready for editing
+	 */
 	@Transactional
 	@Security.Authenticated(SecuredController.class)
 	public static Result edit()
@@ -132,6 +158,10 @@ public class RegistrationController extends Controller {
 	        );
 	}
 	
+	/**
+	 * Shows a static version of the user details
+	 * @return user detail page
+	 */
 	@Transactional(readOnly=true)
 	@Security.Authenticated(SecuredController.class)
 	public static Result read()
@@ -140,6 +170,11 @@ public class RegistrationController extends Controller {
 		return ok(userread.render(au));
 	}
 	
+	/**
+	 * Updates the user with the submitted details
+	 * @param id the user id 
+	 * @return confirmation page
+	 */
 	@Transactional
 	public static Result update(Long id)
 	{
