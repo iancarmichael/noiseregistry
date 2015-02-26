@@ -39,7 +39,7 @@
     	<class>models.ActivityAcousticDD</class>
     	<class>models.ActivityApplication</class>
     	<class>models.ActivityExplosives</class>
-    	<class>models.ActivityGeophysical</class>
+    	<class>models.ActivitySubBottomProfilers</class>
     	<class>models.ActivityMultibeamES</class>
     	<class>models.ActivityPiling</class>
     	<class>models.ActivitySeismic</class>

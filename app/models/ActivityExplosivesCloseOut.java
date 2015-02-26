@@ -15,13 +15,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import play.db.jpa.JPA;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="activityexplosives")
-public class ActivityExplosives extends DefaultableActivity
+public class ActivityExplosivesCloseOut extends DefaultableActivity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "activityexplosives_seq_gen")
@@ -38,26 +36,16 @@ public class ActivityExplosives extends DefaultableActivity
     @Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
     @NotNull(message="validation.required")
-	protected Double tnt_equivalent;
-    
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-	protected Integer sound_pressure_level;
-    
-	@Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-	protected Integer sound_exposure_level;
-	
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
 	protected Double tnt_equivalent_actual;
 	
     @Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
+    @NotNull(message="validation.required")
 	protected Integer sound_pressure_level_actual;
     
 	@Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
+	@NotNull(message="validation.required")
 	protected Integer sound_exposure_level_actual;
 
     /**
@@ -92,54 +80,6 @@ public class ActivityExplosives extends DefaultableActivity
 		this.aa = aa;
 	}
 
-	/**
-	 * Gets the TNT equivalent
-	 * @return
-	 */
-	public Double getTnt_equivalent() {
-		return tnt_equivalent;
-	}
-
-	/**
-	 * Sets the TNT equivalent
-	 * @param tnt_equivalent
-	 */
-	public void setTnt_equivalent(Double tnt_equivalent) {
-		this.tnt_equivalent = tnt_equivalent;
-	}
-
-	/**
-	 * Gets the sound pressure level
-	 * @return
-	 */
-	public Integer getSound_pressure_level() {
-		return sound_pressure_level;
-	}
-
-	/**
-	 * Sets the sound pressure level
-	 * @param sound pressure level
-	 */
-	public void setSound_pressure_level(Integer sound_pressure_level) {
-		this.sound_pressure_level = sound_pressure_level;
-	}
-
-	/**
-	 * Gets the sound exposure level
-	 * @return
-	 */
-	public Integer getSound_exposure_level() {
-		return sound_exposure_level;
-	}
-
-	/**
-	 * Sets the sound exposure level
-	 * @param sound exposure level
-	 */
-	public void setSound_exposure_level(Integer sound_exposure_level) {
-		this.sound_exposure_level = sound_exposure_level;
-	}
-	
 	/**
 	 * Gets the actual TNT equivalent
 	 * @return
@@ -191,18 +131,18 @@ public class ActivityExplosives extends DefaultableActivity
 	/**
 	 * Constructor
 	 */
-	public ActivityExplosives() {
+	public ActivityExplosivesCloseOut() {
 		super();
 	}
 
 	@Override
 	public void populateDefaults() {
 		if (getTnt_equivalent_actual()==null)
-			setTnt_equivalent_actual(getTnt_equivalent());
+			setTnt_equivalent_actual(getAa().getActivityExplosives().getTnt_equivalent());
 		if (getSound_pressure_level_actual()==null)
-			setSound_pressure_level_actual(getSound_pressure_level());
+			setSound_pressure_level_actual(getAa().getActivityExplosives().getSound_pressure_level());
 		if (getSound_exposure_level_actual()==null)
-			setSound_exposure_level_actual(getSound_exposure_level());		
+			setSound_exposure_level_actual(getAa().getActivityExplosives().getSound_exposure_level());		
 	}
 
 	@Override
@@ -210,7 +150,6 @@ public class ActivityExplosives extends DefaultableActivity
 		setSound_exposure_level_actual(getSafeInt(m,"activityExplosives.sound_exposure_level_actual"));
 		setSound_pressure_level_actual(getSafeInt(m,"activityExplosives.sound_pressure_level_actual"));
 		setTnt_equivalent_actual(getSafeDouble(m,"activityExplosives.tnt_equivalent_actual"));
-		JPA.em().merge(this);	
 	}
 	
 }

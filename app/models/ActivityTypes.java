@@ -5,7 +5,7 @@ import play.i18n.Messages;
 
 public enum ActivityTypes {
 	Seismic_Survey(1L),
-	Geophysical_Survey(2L),
+	Sub_Bottom_Profilers(2L),
 	Piling(3L),
 	Explosives(4L),
 	Acoustic_Deterrent_Device(5L),
@@ -40,7 +40,7 @@ public enum ActivityTypes {
 		if (l==1L)
 			return Messages.get("activity_type.seismic");
 		if (l==2L)
-			return Messages.get("activity_type.geophysical");
+			return Messages.get("activity_type.subbottomprofilers");
 		if (l==3L)
 			return Messages.get("activity_type.piling");
 		if (l==4L)

@@ -1,4 +1,4 @@
-@(appUser: AppUser, appForm: Form[ActivityApplication], title: String, id:Long)
+@(appUser: AppUser, appForm: Form[ActivityApplication], title: String, id:Long, aaPar: ActivityApplication)
 
 @import layouts._
 @import scala._
@@ -29,10 +29,10 @@
 	@if(appForm("status").value=="Proposed" || appForm("status").value=="Interim Close-out") {
 			@noiseregistry_breadcrumb("PROPOSEDAPPL")
   	} else {
-		@if(appForm("status").valueOr("Draft")=="Draft") {
-			@noiseregistry_breadcrumb("DRAFTAPPL")
+		@if(appForm("status").value=="Closed" || appForm("status").value=="Cancelled") {
+			@noiseregistry_breadcrumb("COMPLETEDAPPL")
 		} else {
-  			@noiseregistry_breadcrumb("COMPLETEDAPPL")
+  			@noiseregistry_breadcrumb("DRAFTAPPL")
   		}
   	}
   	<a id="content"></a>
@@ -42,24 +42,26 @@
 
 
 		@if(appForm.hasGlobalErrors) {
-		    <p class="validation-message">
-		        @appForm.globalError.message
-		    </p>
+			@for(error <- appForm.globalErrors) {
+             	<p class="validation-message">
+               		@error.message
+             	</p>
+             }
 		}
-		@if(appForm("parent.id").valueOr("")!="") {
+		@if(aaPar!=null) {
 			<h2 class="heading-medium">@Messages("activityform.linked_application_heading")</h2>
 			<table title="Submitted values from linked activity application">
 				<tbody>
-					@form_displaytext(appForm.get().getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
-					@form_displaytext(appForm.get().getRegulator().getOrganisation().getOrganisation_name(), "activityform.field_heading.regulator")
-					@if(appForm.get().getNon_licensable()) {
+					@form_displaytext(aaPar.getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
+					@form_displaytext(aaPar.getRegulator().getOrganisation().getOrganisation_name(), "activityform.field_heading.regulator")
+					@if(aaPar.getNon_licensable()) {
 						@form_displaytext(Messages("activityform.non_licensable.true"), "activityform.field_heading.non_licensable")
 					} else {
 						@form_displaytext(Messages("activityform.non_licensable.false"), "activityform.field_heading.non_licensable")
 					}
-					@form_displaydate(appForm.get().getDate_start(), "activityform.field_heading.date_start")				
-					@form_displaydate(appForm.get().getDate_end(), "activityform.field_heading.date_end")
-					@form_displaynumber(appForm.get().getDuration().floatValue(), "activityform.field_heading.duration","%.0f","units.duration")
+					@form_displaydate(aaPar.getDate_start(), "activityform.field_heading.date_start")				
+					@form_displaydate(aaPar.getDate_end(), "activityform.field_heading.date_end")
+					@form_displayinteger(aaPar.getDuration(), "activityform.field_heading.duration", "units.duration")
 				</tbody>
 			</table>	
 	    	<input type="hidden" name="@appForm("parent.id").name" id="@appForm("parent.id").id" value="@appForm("parent.id").value">
@@ -116,44 +118,48 @@
 		    	)),
 	        	form_inputnumber(appForm, "activitySeismic.max_airgun_volume", "activityform.field_heading.seismic_max_airgun", "activityform.field_hint.seismic_max_airgun", "units.max_airgun_volume"),		
 	        	form_inputnumber(appForm, "activitySeismic.sound_pressure_level", "activityform.field_heading.seismic_sound_pressure", "activityform.field_hint.seismic_sound_pressure", "units.sound_pressure_level"),
-	        	form_inputnumber(appForm, "activitySeismic.sound_exposure_level", "activityform.field_heading.seismic_exposure_level", "activityform.field_hint.seismic_exposure_level", "units.sound_exposure_level")
+	        	form_inputnumber(appForm, "activitySeismic.sound_exposure_level", "activityform.field_heading.seismic_sound_exposure", "activityform.field_hint.seismic_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    )
-	    @form_section_openclose("geophysical","activity_type.geophysical","activitytype_id", "2",
+	    @form_section_openclose("subbottomprofilers","activity_type.subbottomprofilers","activitytype_id", "2",
 	    	List(
-	    		form_inputradio(appForm, "activityGeophysical.source", "activityform.field_heading.geo_source", "", 
+	    		form_inputradio(appForm, "activitySubBottomProfilers.source", "activityform.field_heading.sbp_source", "", 
 		    	Seq("Pinger"->Messages("field_option.pinger"),
 		    		"Boomer"->Messages("field_option.boomer"),
 		    		"Sparker"->Messages("field_option.sparker"),
 		    		"Chirp"->Messages("field_option.chirp")		    		
 		    	)),
-	        	form_inputnumber(appForm, "activityGeophysical.frequency", "activityform.field_heading.geo_frequency", "activityform.field_hint.geo_frequency", "units.frequency"),
-	        	form_inputnumber(appForm, "activityGeophysical.sound_pressure_level", "activityform.field_heading.geo_sound_pressure", "activityform.field_hint.geo_sound_pressure", "units.sound_pressure_level"),
-	        	form_inputnumber(appForm, "activityGeophysical.sound_exposure_level", "activityform.field_heading.geo_exposure_level", "activityform.field_hint.geo_exposure_level", "units.sound_exposure_level")
+	        	form_inputnumber(appForm, "activitySubBottomProfilers.frequency", "activityform.field_heading.sbp_frequency", "activityform.field_hint.sbp_frequency", "units.frequency"),
+	        	form_inputnumber(appForm, "activitySubBottomProfilers.sound_pressure_level", "activityform.field_heading.sbp_sound_pressure", "activityform.field_hint.sbp_sound_pressure", "units.sound_pressure_level"),
+	        	form_inputnumber(appForm, "activitySubBottomProfilers.sound_exposure_level", "activityform.field_heading.sbp_sound_exposure", "activityform.field_hint.sbp_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    )	   
 	    @form_section_openclose("piling","activity_type.piling","activitytype_id", "3", 
 	    	List(
-	    		form_inputnumber(appForm, "activityPiling.max_hammer_energy", "activityform.field_heading.piling_max_hammer", "activityform.field_hint.piling_max_hammer", "units.max_hammer_energy")
+	    		form_inputnumber(appForm, "activityPiling.max_hammer_energy", "activityform.field_heading.piling_max_hammer", "activityform.field_hint.piling_max_hammer", "units.max_hammer_energy"),
+	        	form_inputnumber(appForm, "activityPiling.sound_pressure_level", "activityform.field_heading.piling_sound_pressure", "activityform.field_hint.piling_sound_pressure", "units.sound_pressure_level"),
+	        	form_inputnumber(appForm, "activityPiling.sound_exposure_level", "activityform.field_heading.piling_sound_exposure", "activityform.field_hint.piling_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    ) 
 	    @form_section_openclose("explosives","activity_type.explosives","activitytype_id", "4",
 	    	List(
-	    		form_inputnumber(appForm, "activityExplosives.tnt_equivalent", "activityform.field_heading.explosive_tnt", "activityform.field_hint.explosive_tnt", "units.tnt_equivalent")
+	    		form_inputnumber(appForm, "activityExplosives.tnt_equivalent", "activityform.field_heading.explosive_tnt", "activityform.field_hint.explosive_tnt", "units.tnt_equivalent"),
+	        	form_inputnumber(appForm, "activityExplosives.sound_pressure_level", "activityform.field_heading.explosive_sound_pressure", "activityform.field_hint.explosive_sound_pressure", "units.sound_pressure_level"),
+	        	form_inputnumber(appForm, "activityExplosives.sound_exposure_level", "activityform.field_heading.explosive_sound_exposure", "activityform.field_hint.explosive_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    )	   	    	    
 	    @form_section_openclose("acoustic","activity_type.add","activitytype_id", "5", 
 	    	List(
 	        	form_inputnumber(appForm, "activityAcousticDD.frequency", "activityform.field_heading.acoustic_frequency", "activityform.field_hint.acoustic_frequency", "units.frequency.acousticDD"),
 	        	form_inputnumber(appForm, "activityAcousticDD.sound_pressure_level", "activityform.field_heading.acoustic_sound_pressure", "activityform.field_hint.acoustic_sound_pressure", "units.sound_pressure_level"),
-	        	form_inputnumber(appForm, "activityAcousticDD.sound_exposure_level", "activityform.field_heading.acoustic_exposure_level", "activityform.field_hint.acoustic_exposure_level", "units.sound_exposure_level")
+	        	form_inputnumber(appForm, "activityAcousticDD.sound_exposure_level", "activityform.field_heading.acoustic_sound_exposure", "activityform.field_hint.acoustic_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    )	   	  
 	    @form_section_openclose("multibeam","activity_type.mbes","activitytype_id", "6",
 	    	List(
 	        	form_inputnumber(appForm, "activityMultibeamES.frequency", "activityform.field_heading.mb_frequency", "activityform.field_hint.mb_frequency", "units.frequency"),
 	        	form_inputnumber(appForm, "activityMultibeamES.sound_pressure_level", "activityform.field_heading.mb_sound_pressure", "activityform.field_hint.mb_sound_pressure", "units.sound_pressure_level"),
-	        	form_inputnumber(appForm, "activityMultibeamES.sound_exposure_level", "activityform.field_heading.mb_exposure_level", "activityform.field_hint.mb_exposure_level", "units.sound_exposure_level")
+	        	form_inputnumber(appForm, "activityMultibeamES.sound_exposure_level", "activityform.field_heading.mb_sound_exposure", "activityform.field_hint.mb_sound_exposure", "units.sound_exposure_level")
 	        ), appForm
 	    )
 	    @form_section_openclose("mod","activity_type.mod","activitytype_id", "7",
@@ -172,8 +178,8 @@
 	    <!-- Hidden fields required for full population when editing -->
 	    <input type="hidden" name="@appForm("status").name" id="@appForm("status").id" value="@appForm("status").value">
 	        	    	   	    
-	    <div style="clear:both">&nbsp;</div> 
-			
+	    <div style="clear:both">&nbsp;</div>
+		
 		@location_create(appForm, creationType="Proposed")
 		
 		<br />
@@ -181,8 +187,9 @@
 			<input name="saveasdraft" class="button" type="submit" value="@Messages("form.savedraft")">
 		} 		
 		<input name="submititem" class="button" type="submit" value="@Messages("activityform.submit")">
-		
 		<a onclick="return confirm('@Messages("form.abort")')" href="@if(appForm("status").value == null || appForm("status").value=="Draft"){@routes.ActivityApplicationController.findDraft()}else{@routes.ActivityApplicationController.index()}">@play.twirl.api.Html(Messages("form.cancel"))</a>
+		<div style="clear:both">&nbsp;</div>
+		@Messages("activityform.submithelp")
 	}
 	</main>
 }

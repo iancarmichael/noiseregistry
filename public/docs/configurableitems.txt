@@ -16,7 +16,9 @@ must be terminated with a back slash (\).
 
 Emails
 All of the Scala templates for emails are in the \app\views.email directory.  The names of these should be self-explanatory.  
-All emails use messages in the messages file, so almost all changes can be made there without touching the templates.   
+All emails use messages in the messages file, so almost all changes can be made there without touching the templates.
+
+The weekly notifications are scheduled using a "CRON" syntax in the application.conf file (key = email.weekly.cron).    
 
 PDF Help
 The PDF help file is at \public\help\Noise_Registry_Help.pdf.  

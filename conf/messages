@@ -236,10 +236,16 @@ contact.message=\
 	<h1 class="heading-large">Contact</h1>\n\
 	<section>\n\
 	<p class="lede">\n\
-	Contacts for the Marine Noise Registry are below.\n\
+	Contact us with any questions/queries regarding the Marine Noise Registry.\n\
 	</p>\n\
 	<p class="font-small">\n\
-	Contact information will appear here.\n\
+	Email/write to the addresses below:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Email: <a href="mailto:mnr@jncc.gov.uk">mnr@jncc.gov.uk</a>\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Address: Underwater Noise Advisor, JNCC, Inverdee House, Baxter Street, Aberdeen, AB11 9QA\n\
 	</p>\n\
 	</section>
 
@@ -260,7 +266,7 @@ home.title=Welcome
 home.intro=\
 	<p class="font-small">\n\
 	Please read the ‘Requirements of the Marine Noise Registry’ (available soon) before submitting any \n\
-	activity notifications. This is accessed through the Help link at the bottom of all pages.\n\
+	activity notifications. This is accessed through the <a href="/help">Help</a> link at the bottom of all pages.\n\
 	</p>\n\
 	<p class="font-small">\n\
 	Please choose an action from the menu below:\n\
@@ -270,19 +276,19 @@ home.intro.regulator=\
 	Please choose an action from the menu below.\n\
 	</p>\n\
 	<p class="font-small">\n\
-	If you require help or guidance, select the Help link available at the bottom of all pages.\n\
+	If you require help or guidance, select the <a href="/help">Help</a> link available at the bottom of all pages.\n\
 	</p>
 
 ################################  ACTIVITY ITEMS ###############################################
 
 #Activity Types
 activity_type.seismic=Seismic Survey
-activity_type.geophysical=Geophysical Survey
+activity_type.subbottomprofilers=Sub-Bottom Profilers
 activity_type.piling=Piling
 activity_type.explosives=Explosives
 activity_type.add=Acoustic Deterrent Device
 activity_type.mbes=Multibeam Echosounders
-activity_type.mod=Ministry of Defence
+activity_type.mod=Ministry of Defence Activity
 activity_type.unknown=Unknown
 
 #Field Options
@@ -310,8 +316,8 @@ activities.proposed_activity_applications=Proposed Activities
 activities.proposed_activity_intro=This table shows all proposed activities for organisations of which you are a member.
 activities.proposed_activity_intro.regulator=This table shows all proposed activities where your organisation has been selected as the regulator.
 activities.completed_activity_applications=Completed Activities
-activities.completed_activity_intro=This table shows all closed and cancelled activities for organisations of which you are a member. Cancelled activities are shown without a closed date.
-activities.completed_activity_intro.regulator=This table shows all closed and cancelled activities where your organisation has been selected as the regulator. Cancelled activities will not show a closed date.
+activities.completed_activity_intro=This table shows all closed and cancelled activities for organisations of which you are a member.
+activities.completed_activity_intro.regulator=This table shows all closed and cancelled activities where your organisation has been selected as the regulator.
 activities.activity_applications=Activities
 activities.activity_intro=The following list shows activities for organisations who have accepted your membership request.
 activities.activity_intro.regulator=This table shows activities where your organisation has been selected as the regulator.
@@ -319,6 +325,7 @@ activities.tableheading_aan=Activity Application Number
 activities.tableheading_parent_aa=Parent Activity
 activities.tableheading_status=Status
 activities.tableheading_activity_type=Activity Type
+activities.tableheading_status=Status
 activities.tableheading_start_date=Start Date
 activities.tableheading_end_date=End Date
 activities.tableheading_closed_date=Closed Date
@@ -351,68 +358,131 @@ activityform.field_hint.date_due=Close-out Report Due Date is dependent on the r
 activityform.field_heading.date_closed=Closed Date
 activityform.field_heading.duration=Duration
 activityform.field_hint.duration=The estimated maximum number of days over the whole period that impulsive noise will occur
+
 activityform.field_heading.activity_type=Activity Type
 activityform.field_hint.activity_type=To enter more than one activity type, start by submitting an activity for one activity type.  You will then be given the opportunity to create linked activities for further activity types.
+
+activityform.field_heading.actual_data=Actual Activity Data
+activityform.field_hint.actual_data=Enter the actual values for the activity
+
 activityform.field_heading.seismic_survey_type=Survey Type
 activityform.field_heading.seismic_othersurvey_type=Other Survey Type
 activityform.field_hint.seismic_othersurvey_type=Please give details
 activityform.field_heading.seismic_data_type=Data Type
-activityform.field_heading.seismic_max_airgun=Max Airgun Volume
+activityform.field_heading.seismic_max_airgun=Maximum Airgun Volume
 activityform.field_hint.seismic_max_airgun=An integer value
 activityform.field_heading.seismic_sound_pressure=Sound Pressure Level
 activityform.field_hint.seismic_sound_pressure=An integer value
-activityform.field_heading.seismic_exposure_level=Exposure Level
-activityform.field_hint.seismic_exposure_level=An integer value
-activityform.field_heading.geo_source=Source
-activityform.field_heading.geo_frequency=Frequency
-activityform.field_hint.geo_frequency=An integer value
-activityform.field_heading.geo_sound_pressure=Sound Pressure Level
-activityform.field_hint.geo_sound_pressure=An integer value
-activityform.field_heading.geo_exposure_level=Exposure Level
-activityform.field_hint.geo_exposure_level=An integer value
-activityform.field_heading.piling_max_hammer=Max Hammer Energy
+activityform.field_heading.seismic_sound_exposure=Sound Exposure Level
+activityform.field_hint.seismic_sound_exposure=An integer value
+activityform.field_heading.seismic_max_airgun_actual=Actual Maximum Airgun Volume
+activityform.field_hint.seismic_max_airgun_actual=An integer value
+activityform.field_heading.seismic_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.seismic_sound_pressure_actual=An integer value
+activityform.field_heading.seismic_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.seismic_sound_exposure_actual=An integer value
+
+activityform.field_heading.sbp_source=Source
+activityform.field_heading.sbp_frequency=Frequency
+activityform.field_hint.sbp_frequency=An integer value
+activityform.field_heading.sbp_sound_pressure=Sound Pressure Level
+activityform.field_hint.sbp_sound_pressure=An integer value
+activityform.field_heading.sbp_sound_exposure=Sound Exposure Level
+activityform.field_hint.sbp_sound_exposure=An integer value
+activityform.field_heading.sbp_frequency_actual=Actual Frequency
+activityform.field_hint.sbp_frequency_actual=An integer value
+activityform.field_heading.sbp_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.sbp_sound_pressure_actual=An integer value
+activityform.field_heading.sbp_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.sbp_sound_exposure_actual=An integer value
+
+activityform.field_heading.piling_max_hammer=Maximum Hammer Energy
 activityform.field_hint.piling_max_hammer=An integer value
+activityform.field_heading.piling_sound_pressure=Sound Pressure Level
+activityform.field_hint.piling_sound_pressure=An integer value
+activityform.field_heading.piling_sound_exposure=Sound Exposure Level
+activityform.field_hint.piling_sound_exposure=An integer value
+activityform.field_heading.piling_max_hammer_actual=Actual Maximum Hammer Energy
+activityform.field_hint.piling_max_hammer_actual=An integer value
+activityform.field_heading.piling_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.piling_sound_pressure_actual=An integer value
+activityform.field_heading.piling_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.piling_sound_exposure_actual=An integer value
+
 activityform.field_heading.explosive_tnt=TNT Equivalent
-activityform.field_hint.explosive_tnt=An integer value
+activityform.field_hint.explosive_tnt=To one decimal place
+activityform.field_heading.explosive_sound_pressure=Sound Pressure Level
+activityform.field_hint.explosive_sound_pressure=An integer value
+activityform.field_heading.explosive_sound_exposure=Sound Exposure Level
+activityform.field_hint.explosive_sound_exposure=An integer value
+activityform.field_heading.explosive_tnt_actual=Actual TNT Equivalent
+activityform.field_hint.explosive_tnt_actual=To one decimal place
+activityform.field_heading.explosive_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.explosive_sound_pressure_actual=An integer value
+activityform.field_heading.explosive_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.explosive_sound_exposure_actual=An integer value
+
 activityform.field_heading.acoustic_frequency=Frequency
 activityform.field_hint.acoustic_frequency=An integer value
 activityform.field_heading.acoustic_sound_pressure=Sound Pressure Level
 activityform.field_hint.acoustic_sound_pressure=An integer value
-activityform.field_heading.acoustic_exposure_level=Exposure Level
-activityform.field_hint.acoustic_exposure_level=An integer value
+activityform.field_heading.acoustic_sound_exposure=Sound Exposure Level
+activityform.field_hint.acoustic_sound_exposure=An integer value
+activityform.field_heading.acoustic_frequency_actual=Actual Frequency
+activityform.field_hint.acoustic_frequency_actual=An integer value
+activityform.field_heading.acoustic_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.acoustic_sound_pressure_actual=An integer value
+activityform.field_heading.acoustic_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.acoustic_sound_exposure_actual=An integer value
+
 activityform.field_heading.mb_frequency=Frequency
 activityform.field_hint.mb_frequency=An integer value
 activityform.field_heading.mb_sound_pressure=Sound Pressure Level
 activityform.field_hint.mb_sound_pressure=An integer value
-activityform.field_heading.mb_exposure_level=Exposure Level
-activityform.field_hint.mb_exposure_level=An integer value
+activityform.field_heading.mb_sound_exposure=Sound Exposure Level
+activityform.field_hint.mb_sound_exposure=An integer value
+activityform.field_heading.mb_frequency_actual=Actual Frequency
+activityform.field_hint.mb_frequency_actual=An integer value
+activityform.field_heading.mb_sound_pressure_actual=Actual Sound Pressure Level
+activityform.field_hint.mb_sound_pressure_actual=An integer value
+activityform.field_heading.mb_sound_exposure_actual=Actual Sound Exposure Level
+activityform.field_hint.mb_sound_exposure_actual=An integer value
+
 activityform.field_heading.mod_source=Source
+
 activityform.field_heading.activity_locations=Locations
 activityform.field_heading.locations=Locations
 activityform.field_heading.dates=Activity Dates
+activityform.field_heading.actual_data=Actual Values
+activityform.field_hint.actual_data=The actual values that occurred during the activity
 activityform.add_location=Save Location
+
 activityform.confirmadd.proposed=Your activity has been successfully submitted with the following values:
 activityform.confirmadd.draft=Your activity has been successfully saved with the following values:
 
 activityform.field_heading.activity_location_date_entry=Locations and Dates
 activityform.field_hint.activity_location_date_entry=Add dates to entered locations by typing in the box or using the date picker. \
 	Delete dates by highlighting the text and using the delete or backspace key. \
-	The date picker restricts dates to those between the earliest start date and latest end date.
+	The date picker restricts dates to those between the earliest start date and latest end date. \
+	If a proposed location was entered as a polygon, please add actual locations as lat/long points \
+	or Oil and Gas Blocks. See help for more guidance.
 activityformcloseout.title=Activity Close-Out
 activityformcloseout.interim=Submit Interim Close-out Data
 activityformcloseout.submit=Close Out Activity
 activityformcloseout.cancel=Return to Activity
 activityformcloseout.heading.location_entry=Additional Activity Locations
 activityformcloseout.field_hint.location_entry_type=\
-	Additional activity locations may be entered here.\n\
-	If a proposed location was entered as a polygon, please add actual locations as lat/long points \
-	or Oil and Gas Blocks. See help for more guidance.	
+	Additional activity locations may be entered here.	
 activityformcloseout.text.location_entry=Select the additional location entry type
-activityformcloseout.activitytorecord=Activity to be recorded
+activityformcloseout.activitytorecord=Did the activity occur in this location?
 activityformcloseout.activitytorecord.yes=Yes
 activityformcloseout.activitytorecord.no=No
 activityformcloseout.field_heading.activitydate=Dates of activity
 activityformcloseout.field_hint.activitydate=Enter dates as dd/md/yyyy separated by commas
+
+activityform.submithelp=Saving as draft will enable further editing.  Saving and submitting will \
+	finalise the proposed activity, a close out report due date will be created and the activity will \
+	be visible to the regulator. It will no longer be editable however related activities can now be linked.
 
 ############## LOCATION TYPES ##################
 location.type.latlng=Latitude/Longitude
@@ -471,32 +541,7 @@ units.max_hammer_energy=kilojoules
 units.tnt_equivalent=kilograms
 units.duration=days
 
-##############             DOCUMENTED STANDARD PLAY ERRORS           ##################
-############## UNCOMMENT IF OVERWRITING - BUT DON'T WORK AS EXPECTED ##################
-
-# validation.email=
-# validation.equals=
-# validation.future=
-# validation.isTrue=
-# validation.match=
-# validation.max=
-# validation.maxSize=
-# validation.min=
-# validation.minSize=
-# validation.past=
-# validation.range=
-# validation.required=
-# validation.url=
-# validation.phone=
-# validation.ipv4=
-# validation.ipv6=
-# error.invalid.<objectName>.<fieldName>=
-# error.invalid.<fieldName>=
-# error.invalid.<type>=
-# error.invalid=
-
 ############## CUSTOM ERRORS #########################
-
 validation.required=Value must be entered
 validation.min=Value must be greater or equal to {0}
 validation.max=Value must be less than or equal to {0}
@@ -517,7 +562,10 @@ validation.polygon_latlngs.invalid=The entered latitude/longitude values do not 
 validation.polygon_latlngs.bounds=The entered latitude/longitude values do not fall within the allowed range
 validation.appcloseout.noactivity=No activity has been recorded.  Please enter a location \
 	(lat/lng point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
-error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking 
+validation.noiseproducer.invalid=Invalid organisation
+validation.regulator.invalid=Invalid regulator
+error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking
+ 
 
 ############## CONSTRAINTS #################
 constraint.required=
@@ -761,4 +809,9 @@ regulator.activity.latecloseout.mail.preamble=<p>The following Activity notice(s
 regulator.activity.latecloseout.mail.linktext=Activity
 regulator.activity.latecloseout.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
+noiseproducer.activity.latecloseout.mail.subject=Marine Noise Registry - Late Activity Close-out Report
+noiseproducer.activity.latecloseout.mail.salutation={0},
+noiseproducer.activity.latecloseout.mail.preamble=<p>The following Activity notice(s) have not been closed and are now overdue:</p>
+noiseproducer.activity.latecloseout.mail.linktext=Activity
+noiseproducer.activity.latecloseout.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 

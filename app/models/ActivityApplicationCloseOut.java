@@ -3,8 +3,28 @@ package models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.TypedQuery;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
 import play.data.validation.ValidationError;
 import play.db.jpa.JPA;
@@ -20,14 +40,35 @@ import play.i18n.Messages;
  * @author david.simpson
  *
  */
+@Entity
+@Table(name="activityapplication")
 public class ActivityApplicationCloseOut {
 
-	protected Long id;
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "activityapplication_seq_gen")
+    @SequenceGenerator(name = "activityapplication_seq_gen", sequenceName = "activityapplication_id_seq")
+    @Column(columnDefinition = "serial")
+	@ApiModelProperty(position=0)
+    protected Long id;
 	
-	@Valid
-	protected List<ActivityLocation> activitylocations;
+    //@NotNull(message="validation.required")
+    @JsonIgnore
+    protected Long activitytype_id;
 
+	@Transient
+	@ApiModelProperty(position=1)
 	protected String interimcloseout;
+
+	@JsonManagedReference("activity-activitylocation")
+	@OneToMany(mappedBy="aa",
+				targetEntity=ActivityLocation.class,
+				fetch=FetchType.EAGER,
+				cascade = {CascadeType.ALL})
+	@OrderBy
+	@Valid
+	@ApiModelProperty(position=18)
+	@Transient
+    protected List<ActivityLocation> activitylocations; 
 	
 	/**
 	 * Gets the id
@@ -44,7 +85,145 @@ public class ActivityApplicationCloseOut {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@JsonManagedReference("activity-activityacousticdd")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivityAcousticDDCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=11)
+    protected ActivityAcousticDDCloseOut activityAcousticDD;
+	
+	@JsonManagedReference("activity-activityexplosives")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivityExplosivesCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=12)
+    protected ActivityExplosivesCloseOut activityExplosives;
+	
+	@JsonManagedReference("activity-activitymod")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivityMoDCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=14)
+    protected ActivityMoDCloseOut activityMoD; 	
+	
+	@JsonManagedReference("activity-activitymultibeames")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivityMultibeamESCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=15)
+    protected ActivityMultibeamESCloseOut activityMultibeamES;
+	
+	@JsonManagedReference("activity-activitypiling")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivityPilingCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=16)
+    protected ActivityPilingCloseOut activityPiling;
+    
+	@JsonManagedReference("activity-activityseismic")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivitySeismicCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+		    	cascade = {CascadeType.ALL})
+    @Valid
+    @ApiModelProperty(position=17)
+    protected ActivitySeismicCloseOut activitySeismic;
+	
+	@JsonManagedReference("activity-activitysubbottomprofilers")
+    @OneToOne(mappedBy="aa",
+    			targetEntity=ActivitySubBottomProfilersCloseOut.class,
+    			fetch=FetchType.LAZY,
+    			optional=true,
+    			orphanRemoval=true,
+    			cascade = {CascadeType.ALL})
+	@Valid
+	@ApiModelProperty(position=13)
+    protected ActivitySubBottomProfilersCloseOut activitySubBottomProfilers;
+	
+	public ActivityExplosivesCloseOut getActivityExplosives() {
+		return activityExplosives;
+	}
 
+	public void setActivityExplosives(ActivityExplosivesCloseOut activityExplosives) {
+		this.activityExplosives = activityExplosives;
+	}
+
+	public ActivityAcousticDDCloseOut getActivityAcousticDD() {
+		return activityAcousticDD;
+	}
+
+	public void setActivityAcousticDD(ActivityAcousticDDCloseOut activityAcousticDD) {
+		this.activityAcousticDD = activityAcousticDD;
+	}
+
+	public ActivityMoDCloseOut getActivityMoD() {
+		return activityMoD;
+	}
+
+	public void setActivityMoD(ActivityMoDCloseOut activityMoD) {
+		this.activityMoD = activityMoD;
+	}
+
+	public ActivityMultibeamESCloseOut getActivityMultibeamES() {
+		return activityMultibeamES;
+	}
+
+	public void setActivityMultibeamES(ActivityMultibeamESCloseOut activityMultibeamES) {
+		this.activityMultibeamES = activityMultibeamES;
+	}
+
+	public ActivityPilingCloseOut getActivityPiling() {
+		return activityPiling;
+	}
+
+	public void setActivityPiling(ActivityPilingCloseOut activityPiling) {
+		this.activityPiling = activityPiling;
+	}
+
+	public ActivitySeismicCloseOut getActivitySeismic() {
+		return activitySeismic;
+	}
+
+	public void setActivitySeismic(ActivitySeismicCloseOut activitySeismic) {
+		this.activitySeismic = activitySeismic;
+	}
+
+	public ActivitySubBottomProfilersCloseOut getActivitySubBottomProfilers() {
+		return activitySubBottomProfilers;
+	}
+
+	public void setActivitySubBottomProfilers(
+			ActivitySubBottomProfilersCloseOut activitySubBottomProfilers) {
+		this.activitySubBottomProfilers = activitySubBottomProfilers;
+	}
+
+	/*public ActivityApplication getAa() {
+		ActivityApplication aa = ActivityApplication.findById(id);
+		return aa;
+	}*/
+	
 	/**
 	 * Gets the interim closeout status
 	 * @return
@@ -78,16 +257,63 @@ public class ActivityApplicationCloseOut {
 	}
 	
 	/**
+	 * Gets the activity type as a number
+	 * @return
+	 */
+	public Long getActivitytype_id() {
+		return activitytype_id;
+	}
+	/**
+	 * Sets the activity type
+	 * @param activitytype_id
+	 */
+	public void setActivitytype_id(Long activitytype_id) {
+		this.activitytype_id = activitytype_id;
+	}
+	
+	public void populateActivityDefaults()
+	{
+		if (getActivitytype_id()==ActivityTypes.Seismic_Survey.toLong())
+        {       	
+        	this.getActivitySeismic().populateDefaults();        
+        }
+        else if (getActivitytype_id()==ActivityTypes.Sub_Bottom_Profilers.toLong())
+        {
+        	this.getActivitySubBottomProfilers().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Piling.toLong()) 
+        {
+        	this.getActivityPiling().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Explosives.toLong())
+        {
+        	this.getActivityExplosives().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Acoustic_Deterrent_Device.toLong()) 
+        {
+        	this.getActivityAcousticDD().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Multibeam_Echosounders.toLong()) 
+        {
+        	this.getActivityMultibeamES().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.MoD.toLong()) 
+        {
+        	this.getActivityMoD().populateDefaults();
+        }
+	}
+	
+	/**
 	 * Close out the application
 	 * @param id the id of the application
 	 * @throws Exception
 	 */
-	public void closeOut(Long id) throws Exception {
+	public void closeOut(Long id, Map<String, String> m) throws Exception {
 		//Perform the close out operation
 		if (this.getInterimcloseout()!=null) {
-			ActivityApplication.closeOut(this, id, true);
+			ActivityApplication.closeOut(this, id, true, m);
 		} else {
-			ActivityApplication.closeOut(this, id, false);
+			ActivityApplication.closeOut(this, id, false, m);
 		}
 	}
 
@@ -157,5 +383,16 @@ public class ActivityApplicationCloseOut {
 		return errors.isEmpty() ? null : errors;
 		
     }
-	
+    public static ActivityApplicationCloseOut findById(Long id) {
+    	TypedQuery<ActivityApplicationCloseOut> query = JPA.em().createQuery("from ActivityApplicationCloseOut aa where aa.id = :id", ActivityApplicationCloseOut.class);
+  	  	//return query.getResultList();    	TypedQuery<ActivityApplicationCloseOut> query = JPA.em().createNamedQuery("ActivityApplicationCloseOut.findById", ActivityApplicationCloseOut.class);
+		
+    	query.setParameter("id", id);
+    	List<ActivityApplicationCloseOut> results = query.getResultList();
+    	if (!results.isEmpty()) {
+    		return results.get(0);
+    	}
+    	return null;
+    }	
+
 }

@@ -16,9 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import play.Logger;
 import play.data.format.Formats;
-import play.data.validation.Constraints.Required;
 import play.data.validation.ValidationError;
 import play.db.jpa.JPA;
 
@@ -35,6 +33,13 @@ public class ActivityLocationDate {
     @Column(columnDefinition = "serial")
     protected Long id;   
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@JsonIgnore
 	@ManyToOne(optional=false)
     @JoinColumn(name="activitylocation_id", referencedColumnName="id")
@@ -42,7 +47,7 @@ public class ActivityLocationDate {
 	
 	@Formats.DateTime(pattern="yyyy-MM-dd")
     @Temporal (TemporalType.DATE)
-	@Required
+	//@Required
 	protected Date activity_date;
 	
 	/**
@@ -81,7 +86,8 @@ public class ActivityLocationDate {
 	 * 
 	 * @return List of validation failures or null (for success)
 	 */
-	public List<ValidationError> validate() {
+	public List<ValidationError> validate() 
+	{
 		List<ValidationError> errors = new ArrayList<ValidationError>();
 		//Logger.debug("ActivityLocationDate validate method()");
 		// Work around a problem where the call to getActivityApplication on the parent location record
@@ -97,12 +103,14 @@ public class ActivityLocationDate {
 	    	//Should never get here, but if we do, return an error.
 	    	errors.add(new ValidationError("activity_date", "validation.activityforpolygon"));
 	    }
-		if (aa.getDate_start() != null) {
+		if (aa.getDate_start() != null && this.getActivity_date()!=null) 
+		{
 			if (this.getActivity_date().before(aa.getDate_start())) {
 				errors.add(new ValidationError("activity_date", "validation.activitybeforestart"));
 			}
 		}
-		if (aa.getDate_end() != null) {
+		if (aa.getDate_end() != null && this.getActivity_date()!=null) 
+		{
 			if (this.getActivity_date().after(aa.getDate_end())) {
 				errors.add(new ValidationError("activity_date", "validation.activityafterend"));
 			}

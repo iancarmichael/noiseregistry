@@ -92,15 +92,19 @@
 			<table title="Activity applications for your organisations">
 			    <thead>
       				<tr>
-        				<th scope="col" style="width:5em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
-        				<th scope="col" style="width:5em">@play.twirl.api.Html(Messages("activities.tableheading_parent_aa"))</th>
-        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_start_date"))</th>
-        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_end_date"))</th>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_aan"))</th>
+        				<th scope="col" style="width:3em">@play.twirl.api.Html(Messages("activities.tableheading_parent_aa"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_start_date"))</th>
+        				<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_end_date"))</th>
         				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_activity_type"))</th>
-        				@if(!status.contains("Proposed") && status.contains("Closed") && status.contains("Cancelled")) {
-        					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_closed_date"))</th>
+        				@if((status.contains("Draft")) && (status.length==1)){        					
         				} else {
-        					<th scope="col" style="width:5em">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+	        				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_status"))</th>
+    	    				@if(!status.contains("Proposed") && status.contains("Closed") && status.contains("Cancelled")) {
+        						<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_closed_date"))</th>
+        					} else {
+        						<th scope="col" style="width:6em">@play.twirl.api.Html(Messages("activities.tableheading_report_due_date"))</th>
+        					}
         				}
         				<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_noiseproducer"))</th>
       					<th scope="col">@play.twirl.api.Html(Messages("activities.tableheading_regulator"))</th>
@@ -116,10 +120,14 @@
 							<td>@view_displaydate(activityapp.getDate_start())</td>
 							<td>@view_displaydate(activityapp.getDate_end())</td>
 							<td>@ActivityTypes.get(activityapp.getActivitytype_id())</td>
-							@if(!status.contains("Proposed") && status.contains("Closed") && status.contains("Cancelled")) {
-								<td>@view_displaydate(activityapp.getDate_closed())</td>
-							} else {
-								<td style="@{if(activityapp.getDate_closed()==null && (activityapp.getDate_due() == null || activityapp.getDate_due().before(new java.util.Date()))) { "font-weight:bold; color:red;" }}">@view_displaydate(activityapp.getDate_due())</td>
+							@if((status.contains("Draft")) && (status.length==1)){		
+        					} else {
+								<td>@activityapp.getStatus()</td>
+								@if(!status.contains("Proposed") && status.contains("Closed") && status.contains("Cancelled")) {
+									<td>@view_displaydate(activityapp.getDate_closed())</td>
+								} else {
+									<td style="@{if(activityapp.getDate_closed()==null && (activityapp.getDate_due() == null || activityapp.getDate_due().before(new java.util.Date()))) { "font-weight:bold; color:red;" }}">@view_displaydate(activityapp.getDate_due())</td>
+								}
 							}
 							<td>@activityapp.getNoiseproducer().getOrganisation().getOrganisation_name()</td>
 							<td>@activityapp.getRegulator().getOrganisation().getOrganisation_name()</td>

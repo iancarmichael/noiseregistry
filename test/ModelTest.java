@@ -16,7 +16,7 @@ import play.db.jpa.JPAPlugin;
 import models.ActivityAcousticDD;
 import models.ActivityApplication;
 import models.ActivityExplosives;
-import models.ActivityGeophysical;
+import models.ActivitySubBottomProfilers;
 import models.ActivityMultibeamES;
 import models.ActivityPiling;
 import models.ActivitySeismic;
@@ -335,14 +335,14 @@ public class ModelTest {
 	}
 	
 	@Test
-	public void test05_Geophysical()
+	public void test05_SubBottomProfilers()
 	{
 		// start with nothing in the table
-		Query q = em.createQuery("Select count(id) from ActivityGeophysical");
+		Query q = em.createQuery("Select count(id) from ActivitySubBottomProfilers");
 		long count = (long)q.getSingleResult();
 		assertThat(count==0);
 
-		ActivityGeophysical ag = new ActivityGeophysical();
+		ActivitySubBottomProfilers ag = new ActivitySubBottomProfilers();
 		ag.setAa(aa);
 		ag.setFrequency(20);
 		ag.setSound_exposure_level(25);
@@ -351,7 +351,7 @@ public class ModelTest {
 		em.persist(ag);
 		em.flush();
 
-		q = em.createQuery("Select count(id) from ActivityGeophysical");
+		q = em.createQuery("Select count(id) from ActivitySubBottomProfilers");
 		count = (long)q.getSingleResult();
 		assertThat(count==1);
 	}

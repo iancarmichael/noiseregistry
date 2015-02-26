@@ -34,7 +34,7 @@
   		
   		<table title="Submitted values for activity application">
 			<tbody>
-				@form_displaynumber(activityapp.getId().floatValue(), "activityform.field_heading.aan","%.0f")
+				@form_displaylong(activityapp.getId(), "activityform.field_heading.aan")
 				@form_displaytext(activityapp.getNoiseproducer().getOrganisation().getOrganisation_name(), "activityform.field_heading.noiseproducer")
 				@form_displaytext(activityapp.getRegulator().getOrganisation().getOrganisation_name(), "activityform.field_heading.regulator")
 				@if(activityapp.getNon_licensable()) {
@@ -44,7 +44,7 @@
 				}
 				@form_displaydate(activityapp.getDate_start(), "activityform.field_heading.date_start")				
 				@form_displaydate(activityapp.getDate_end(), "activityform.field_heading.date_end")
-				@form_displaynumber(activityapp.getDuration().floatValue(), "activityform.field_heading.duration","%.0f","units.duration")
+				@form_displayinteger(activityapp.getDuration(), "activityform.field_heading.duration", "units.duration")
 				@form_displaytext(ActivityTypes.get(activityapp.getActivitytype_id()), "activityform.field_heading.activity_type")
 			</tbody>
  		</table>

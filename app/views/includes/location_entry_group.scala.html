@@ -52,7 +52,9 @@
 								@if(field("creation_type").value.getOrElse("Additional") == "Proposed") {
 									<fieldset class="inline">
 						      			<legend class="form-label">@Messages("activityformcloseout.activitytorecord")</legend>
-										
+						            	@for(error <- field("no_activity").errors) {
+								    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
+										}											
 										@govuk.govukRadioGroup(
 							            	field("no_activity"),
 							            	options = Seq(
@@ -60,16 +62,13 @@
 							            			"true"->Seq("label"->Messages("activityformcloseout.activitytorecord.no"))),
 							            	'_label -> ""
 							            	)(govuk.govukGroupFieldConstructor)
-						            	@for(error <- field("no_activity").errors) {
-								    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
-										}	
 							            <div class="panel-indent js-hidden" id="@field("date-entry").id">
 							            	<label class="form-label" for="@field("activitydate").id">@Messages("activityformcloseout.field_heading.activitydate")</label>
-							            	<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
-						            	 	<textarea class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
 						            	 	@for(error <- field("activitydate").errors) {
 									    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
 											}
+							            	<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
+						            	 	<textarea class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
 										</div>
 										<div gldp-el="@field("activitydate").id" style="width:400px; height:300px; position:absolute; top:70px; left:100px;"></div>
 										
@@ -78,11 +77,11 @@
 									<div id="@field("date-entry").id">
 										<input type="hidden" name="@field("no_activity").name" id="@field("no_activity").id" value="false" />
 										<label class="form-label" for="@field("activitydate").id">@Messages("activityformcloseout.field_heading.activitydate")</label>
-										<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
-										<textarea class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
 										@for(error <- field("activitydate").errors) {
 								    		<div class="validation-message">@Messages(error.message, error.args: _*)</div>
 										}
+										<div class="form-hint">@Messages("activityformcloseout.field_hint.activitydate")</div>
+										<textarea class="closeoutdate" style="width:400px;" gldp-id="@field("activitydate").id" id="@field("activitydate").id" name="@field("activitydate").name">@field("activitydate").value</textarea>
 									</div>
 									<div gldp-el="@field("activitydate").id" style="width:400px; height:300px; position:absolute; top:70px; left:100px;"></div>			
 								}

@@ -28,5 +28,8 @@ Initial configuration of the PostgreSQL database used with this application.
 5) war.txt
 Creation and deployment of a .war file for use on Tomcat.
 
+6) configurableitems.txt
+How to change the text of the static pages.
+
 Other than the initial database creation all schema changes are contained in the schema_changes
 folder.

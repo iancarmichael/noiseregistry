@@ -22,7 +22,7 @@ import play.db.jpa.Transactional;
 
 @Entity
 @Table(name="activitymod")
-public class ActivityMoD extends DefaultableActivity
+public class ActivityMoDCloseOut extends DefaultableActivity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "activitymod_seq_gen")
@@ -95,7 +95,7 @@ public class ActivityMoD extends DefaultableActivity
 	/**
 	 * Constructor
 	 */
-	public ActivityMoD() 
+	public ActivityMoDCloseOut() 
 	{
 		
 	}
@@ -104,7 +104,7 @@ public class ActivityMoD extends DefaultableActivity
 	 * @param aa_p associated application 
 	 * @param map source
 	 */
-	public ActivityMoD(ActivityApplication aa_p, Map<String, String> map) 
+	public ActivityMoDCloseOut(ActivityApplication aa_p, Map<String, String> map) 
 	{
 		this.setAa(aa_p);
 		this.setSource((String)map.get("mod_source.id"));

@@ -13,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import play.db.jpa.JPA;
 
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="activitymultibeames")
-public class ActivityMultibeamES extends DefaultableActivity
+public class ActivityMultibeamESCloseOut extends DefaultableActivity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "activitymultibeames_seq_gen")
@@ -34,26 +35,18 @@ public class ActivityMultibeamES extends DefaultableActivity
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
     
-    @Min(value=1, message="validation.min")
-	protected Integer frequency;
-    
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-	protected Integer sound_pressure_level;
-    
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-	protected Integer sound_exposure_level;
-
 	@Min(value=1, message="validation.min")
+	@NotNull(message="validation.required")
 	protected Integer frequency_actual;
 	
 	@Min(value=1, message="validation.min")
 	@Max(value=500, message="validation.max")
+	@NotNull(message="validation.required")
 	protected Integer sound_pressure_level_actual;
 	
 	@Min(value=1, message="validation.min")
 	@Max(value=500, message="validation.max")
+	@NotNull(message="validation.required")
 	protected Integer sound_exposure_level_actual;
 	
 	/**
@@ -83,47 +76,6 @@ public class ActivityMultibeamES extends DefaultableActivity
 	 */
 	public void setAa(ActivityApplication aa) {
 		this.aa = aa;
-	}
-	/**
-	 * Gets the frequency
-	 * @return
-	 */
-	public Integer getFrequency() {
-		return frequency;
-	}
-	/**
-	 * Sets the frequency
-	 * @param frequency
-	 */
-	public void setFrequency(Integer frequency) {
-		this.frequency = frequency;
-	}
-	/*
-	 * Gets the sound pressure level
-	 */
-	public Integer getSound_pressure_level() {
-		return sound_pressure_level;
-	}
-	/**
-	 * Sets the sound pressure level
-	 * @param sound_pressure_level
-	 */
-	public void setSound_pressure_level(Integer sound_pressure_level) {
-		this.sound_pressure_level = sound_pressure_level;
-	}
-	/**
-	 * Gets the sound exposure level
-	 * @return
-	 */
-	public Integer getSound_exposure_level() {
-		return sound_exposure_level;
-	}
-	/**
-	 * Sets the sound exposure level
-	 * @param sound_exposure_level
-	 */
-	public void setSound_exposure_level(Integer sound_exposure_level) {
-		this.sound_exposure_level = sound_exposure_level;
 	}
 	/**
 	 * Gets the actual frequency
@@ -170,17 +122,17 @@ public class ActivityMultibeamES extends DefaultableActivity
 	/**
 	 * Constructor
 	 */
-	public ActivityMultibeamES() {
+	public ActivityMultibeamESCloseOut() {
 		super();
 	}
 	@Override
 	public void populateDefaults() {
 		if (getFrequency_actual()==null)
-			setFrequency_actual(getFrequency());
+			setFrequency_actual(getAa().getActivityMultibeamES().getFrequency());
 		if (getSound_pressure_level_actual()==null)
-			setSound_pressure_level_actual(getSound_pressure_level());
+			setSound_pressure_level_actual(getAa().getActivityMultibeamES().getSound_pressure_level());
 		if (getSound_exposure_level_actual()==null)
-			setSound_exposure_level_actual(getSound_exposure_level());		
+			setSound_exposure_level_actual(getAa().getActivityMultibeamES().getSound_exposure_level());		
 	}
 
 	@Override

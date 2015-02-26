@@ -8,46 +8,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
 
 import play.db.jpa.JPA;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wordnik.swagger.annotations.ApiModelProperty;
 
 @Entity
-@Table(name="activityacousticdd")
-public class ActivityAcousticDD extends DefaultableActivity
+@Table(name="activitysubbottomprofilers")
+public class ActivitySubBottomProfilers extends DefaultableActivity
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "activityacousticdd_seq_gen")
-    @SequenceGenerator(name = "activityacousticdd_seq_gen", sequenceName = "activityacousticdd_id_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "activitysubbottomprofilers_seq_gen")
+    @SequenceGenerator(name = "activitysubbottomprofilers_seq_gen", sequenceName = "activitysubbottomprofilers_id_seq")
     @Column(columnDefinition = "serial")
-    @ApiModelProperty(position=0)
     protected Long id;   
     
-    //@JsonBackReference("activity-activityacousticdd")
+    //@JsonBackReference("activity-activitysubbottomprofilers")
     @JsonIgnore
-	@ManyToOne(optional=true)
+    @OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
     
-    @Min(value=1, message="validation.min")
-    @ApiModelProperty(position=1)
+	@Column(length=10)
+	@NotBlank(message="validation.required")
+	protected String source;
+	
+	@Min(value=1, message="validation.min")
+	@NotNull(message="validation.required")
 	protected Integer frequency;
-    
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-    @ApiModelProperty(position=2)
+	
+	@Min(value=1, message="validation.min")
+	@Max(value=500, message="validation.max")
 	protected Integer sound_pressure_level;
-    
-    @Min(value=1, message="validation.min")
-    @Max(value=500, message="validation.max")
-    @ApiModelProperty(position=3)
+	
+	@Min(value=1, message="validation.min")
+	@Max(value=500, message="validation.max")
 	protected Integer sound_exposure_level;
 
 	@Min(value=1, message="validation.min")
@@ -60,72 +63,87 @@ public class ActivityAcousticDD extends DefaultableActivity
 	@Min(value=1, message="validation.min")
 	@Max(value=500, message="validation.max")
 	protected Integer sound_exposure_level_actual;
-    /**
-     * Get the id of the activity type
-     * @return the id
-     */
+	
+	/**
+	 * Gets the id
+	 * @return
+	 */
 	public Long getId() {
 		return id;
 	}
 	/**
-	 * Sets the id of the activity type
-	 * @param id the new id
+	 * Sets the id
+	 * @param id
 	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 	/**
-	 * Gets the associated activityapplication
-	 * @return the activity application
+	 * Gets the associated application
+	 * @return
 	 */
 	public ActivityApplication getAa() {
 		return aa;
 	}
 	/**
-	 * Sets an associated activity application
-	 * @param aa the ActivityApplication 
+	 * Sets the associated application
+	 * @param aa
 	 */
 	public void setAa(ActivityApplication aa) {
 		this.aa = aa;
 	}
 	/**
+	 * Gets the source
+	 * @return
+	 */
+	public String getSource() {
+		return source;
+	}
+	/**
+	 * Sets the source
+	 * @param source
+	 */
+	public void setSource(String source) {
+		this.source = source;
+	}
+	/**
 	 * Gets the frequency
-	 * @return the frequency
+	 * @return
 	 */
 	public Integer getFrequency() {
 		return frequency;
 	}
 	/**
 	 * Sets the frequency
-	 * @param frequency the new frequency
+	 * @param frequency
 	 */
 	public void setFrequency(Integer frequency) {
 		this.frequency = frequency;
 	}
 	/**
 	 * Gets the sound pressure level
-	 * @return the sound pressure level
+	 * @return
 	 */
 	public Integer getSound_pressure_level() {
 		return sound_pressure_level;
 	}
 	/**
 	 * Sets the sound pressure level
-	 * @param sound_pressure_level the new pressure level
+	 * @param sound_pressure_level
 	 */
 	public void setSound_pressure_level(Integer sound_pressure_level) {
 		this.sound_pressure_level = sound_pressure_level;
 	}
 	/**
 	 * Gets the sound exposure level
-	 * @return the sound exposure level
+	 * @return
 	 */
 	public Integer getSound_exposure_level() {
 		return sound_exposure_level;
 	}
 	/**
 	 * Sets the sound exposure level
-	 * @param sound_exposure_level the new exposure level
+	 * @param sound_exposure_level
 	 */
 	public void setSound_exposure_level(Integer sound_exposure_level) {
 		this.sound_exposure_level = sound_exposure_level;
@@ -175,7 +193,7 @@ public class ActivityAcousticDD extends DefaultableActivity
 	/**
 	 * Constructor
 	 */
-	public ActivityAcousticDD() {
+	public ActivitySubBottomProfilers() {
 		super();
 	}
 	@Override
@@ -190,10 +208,9 @@ public class ActivityAcousticDD extends DefaultableActivity
 
 	@Override
 	public void mergeActuals(Map<String, String> m) {
-		setSound_exposure_level_actual(getSafeInt(m,"activityAcousticDD.sound_exposure_level_actual"));
-		setSound_pressure_level_actual(getSafeInt(m,"activityAcousticDD.sound_pressure_level_actual"));
-		setFrequency_actual(getSafeInt(m,"activityAcousticDD.frequency_actual"));
+		setSound_exposure_level_actual(getSafeInt(m,"activitySubBottomProfilers.sound_exposure_level_actual"));
+		setSound_pressure_level_actual(getSafeInt(m,"activitySubBottomProfilers.sound_pressure_level_actual"));
+		setFrequency_actual(getSafeInt(m,"activitySubBottomProfilers.frequency_actual"));
 		JPA.em().merge(this);	
-	}	
-	
+	}
 }

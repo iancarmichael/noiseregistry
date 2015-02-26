@@ -10,7 +10,9 @@ import static play.test.Helpers.contentAsString;
 import static play.test.Helpers.contentType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -195,9 +197,14 @@ public class RegulatorTest {
     	id = createDraftAA(reg);
     	assertNull(ActivityApplication.findById(id));
     	
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("max_hammer_energy_actual", "7");
+		m.put("sound_pressure_level_actual","8");
+		m.put("sound_exposure_level_actual","9");
+		
     	//ensure that the user can see closed applications...
     	try {
-    		ActivityApplication.closeOut(new ActivityApplicationCloseOut(), idProp, false);
+    		ActivityApplication.closeOut(new ActivityApplicationCloseOut(), idProp, false, m);
     	} catch (Exception e) {
     		fail(e.getMessage());	
     	}

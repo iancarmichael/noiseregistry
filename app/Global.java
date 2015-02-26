@@ -1,4 +1,5 @@
 import models.ActivityApplication;
+import models.NoiseProducer;
 import models.Regulator;
 
 import com.typesafe.config.ConfigFactory;
@@ -80,25 +81,31 @@ public class Global extends GlobalSettings {
 
 	private void schedule() {
 	    try {
+	    	FiniteDuration d;
+	    	Date nextValidTimeAfter = new Date();
 	    	String cronExpr = ConfigFactory.load().getString("email.weekly.cron");
 	    	if (!cronExpr.equals("")) {
-		        CronExpression e = new CronExpression(cronExpr);
-		        Date nextValidTimeAfter = e.getNextValidTimeAfter(new Date());
-		        FiniteDuration d = Duration.create(
-		            nextValidTimeAfter.getTime() - System.currentTimeMillis(), 
-		            TimeUnit.MILLISECONDS);
+		    	String sDebugCron = ConfigFactory.load().getString("email.weekly.crondebug");
+			    if (sDebugCron.compareTo("")!=0)
+			    {
+			    	Logger.debug("Debug schedule!!!");
+			    	Date now = new Date();
+			    	nextValidTimeAfter.setTime(now.getTime() + 2 * 60 * 1000); 
+			    }
+			    else
+			    {
+			    	CronExpression e = new CronExpression(cronExpr);
+			    	nextValidTimeAfter = e.getNextValidTimeAfter(new Date());
+			    }
+		    	d = Duration.create(
+		    			nextValidTimeAfter.getTime() - System.currentTimeMillis(), 
+		    			TimeUnit.MILLISECONDS);
 		        
 		        Logger.debug("Scheduling to run at "+nextValidTimeAfter);
 		        Logger.debug("Application hostname for external links: " + AppConfigSettings.getConfigString("externalHostname", "application.hostname"));
 			    Logger.debug("Email override for regulator emails: " + AppConfigSettings.getConfigString("regulatorOverrideAddress", "email.regulator_override_address"));
+			    Logger.debug("Email override for noiseproducer emails: " + AppConfigSettings.getConfigString("regulatorOverrideAddress", "email.noiseproducer_override_address"));
 			    
-		        //For testing, the duration below will cause the scheduler to run every minute!
-		        /*FiniteDuration d = Duration.create(
-				        1, 
-				        TimeUnit.MINUTES);
-				
-		        Logger.debug("Scheduled to run every minute!"); */
-	
 		        scheduler = Akka.system().scheduler().scheduleOnce(d, new Runnable() {
 	
 			        @Override
@@ -106,6 +113,7 @@ public class Global extends GlobalSettings {
 			            Logger.debug("Runing scheduler");
 			            //Do your tasks here
 			            notifyLateToRegulatorsWrapper();
+			            notifyLateToNoiseProducersWrapper();
 			            
 			            schedule(); //Schedule for next time
 		
@@ -128,7 +136,6 @@ public class Global extends GlobalSettings {
 			 }
 		});
 	}
-	
 	/**
 	 * Notification handler.  This must be called with a JPA transaction wrapper.
 	 */
@@ -137,7 +144,7 @@ public class Global extends GlobalSettings {
 		String statusKey = "latecloseout";
 		if (Messages.get("regulator.activity." + statusKey + ".mail.subject").equals("regulator.activity." + statusKey + ".mail.subject")) {
 			//no message translation - don't try to send mail out in this case...
-			Logger.error("No late close out mail configuration settings found.  No notifications will be sent to regulators.");
+			Logger.error("No regulator late close out mail configuration settings found.  No notifications will be sent to regulators.");
 			return;
 		}
 		List<Regulator> regs = Regulator.findAll();
@@ -188,5 +195,72 @@ public class Global extends GlobalSettings {
 			}
 		}
 	}
-	
+	/**
+	 * Simple transaction wrapper around the notification routine.
+	 */
+	private void notifyLateToNoiseProducersWrapper() {
+		JPA.withTransaction(new play.libs.F.Callback0() {
+			 @Override
+	         public void invoke() throws Throwable {
+				 notifyLateToNoiseProducers();
+			 }
+		});
+	}	
+	/**
+	 * Notification handler.  This must be called with a JPA transaction wrapper.
+	 */
+	private void notifyLateToNoiseProducers() {
+		
+		String statusKey = "latecloseout";
+		if (Messages.get("noiseproducer.activity." + statusKey + ".mail.subject").equals("noiseproducer.activity." + statusKey + ".mail.subject")) {
+			//no message translation - don't try to send mail out in this case...
+			Logger.error("No noise producer late close out mail configuration settings found.  No notifications will be sent to noise producers.");
+			return;
+		}
+		List<NoiseProducer> nps = NoiseProducer.findAll();
+		Iterator<NoiseProducer> it = nps.iterator();
+		while (it.hasNext()) {
+			NoiseProducer np = it.next();
+			List<ActivityApplication> apps = ActivityApplication.findLateByNoiseProducer(np);
+			if (!apps.isEmpty()) 
+			{
+				try 
+				{
+					Session session = MailSettings.getSession();
+					String noiseproducerEmail = np.getOrganisation().getContact_email();
+					String noiseproducerContactname = np.getOrganisation().getContact_name();
+						
+					String mailFrom = AppConfigSettings.getConfigString("sendMailFrom", "email.sendFrom");
+					String overrideAddress = AppConfigSettings.getConfigString("noiseProducerOverrideAddress", "email.noiseproducer_override_address");
+						
+					String hostname = AppConfigSettings.getConfigString("externalHostname", "application.hostname");
+						
+					InternetAddress[] addresses = new InternetAddress[1];
+						
+					if (overrideAddress.equals("")) {
+						addresses[0] = new InternetAddress(noiseproducerEmail);
+					} else {
+						Logger.error("Noise producer email override is in effect - email will not be sent to the noise producer address");
+						addresses[0] = new InternetAddress(overrideAddress);
+					}
+					Html mailBody = views.html.email.noiseproducerlatecloseout.render(apps, hostname, statusKey, noiseproducerContactname, noiseproducerEmail, overrideAddress);
+					
+				    MimeMessage message = new MimeMessage(session);
+				    message.setSubject(Messages.get("noiseproducer.activity." + statusKey + ".mail.subject"));
+				    message.setContent(mailBody.body(), "text/html");
+				    message.setRecipients(Message.RecipientType.TO, addresses);
+				    message.setFrom(new InternetAddress(mailFrom));
+				    // set the message content here
+				    Transport t = session.getTransport("smtp");
+				    t.connect();
+				    t.sendMessage(message, message.getAllRecipients());
+				    t.close();
+				} catch (MessagingException me) {
+					me.printStackTrace();
+				}	
+			} else {
+				Logger.error("No late applications found for noise producer: " + np.getOrganisation().getOrganisation_name());
+			}
+		}
+	}
 }

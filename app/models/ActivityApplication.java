@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.CascadeType;
@@ -66,7 +67,8 @@ import play.i18n.Messages;
 	@NamedQuery(name = "ActivityApplication.findById", query = "from ActivityApplication where id=:id)"),
 	@NamedQuery(name = "ActivityApplication.findLateByRegulator", query = "from ActivityApplication where regulator=:reg and status!='Closed' and date_due < now()"),
 	@NamedQuery(name = "ActivityApplication.findLinkedByParent", query = "from ActivityApplication where parent=:parent order by id"),
-	@NamedQuery(name = "ActivityApplication.findApplicationsByStatus", query = "from ActivityApplication where status in (:status) and (noiseproducer.organisation.id = :orgid or regulator.organisation.id = :orgid) order by date_start desc")
+	@NamedQuery(name = "ActivityApplication.findApplicationsByStatus", query = "from ActivityApplication where status in (:status) and (noiseproducer.organisation.id = :orgid or regulator.organisation.id = :orgid) order by date_start desc"),
+	@NamedQuery(name = "ActivityApplication.findLateByNoiseProducer", query = "from ActivityApplication where noiseproducer=:np and status in ('Proposed','Interim Close-out') and date_due < now()")
 })
 
 /**
@@ -92,7 +94,7 @@ import play.i18n.Messages;
 @JsonPropertyOrder({"id", "status", "noiseproducer", "regulator", "non_licensable", 
 					"date_start", "date_end",  "date_due", "date_closed", 
 					"duration", "activitytype_id", 
-					"activityAcousticDD", "activityExplosives", "activityGeophysical", "activityMoD",
+					"activityAcousticDD", "activityExplosives", "activitySubBottomProfilers", "activityMoD",
 					"activityMultibeamES", "activityPiling", "activitySeismic", "activitylocations"})
 public class ActivityApplication
 {
@@ -110,7 +112,7 @@ public class ActivityApplication
 		
     @ManyToOne(optional=false)
     @JoinColumn(name="noiseproducer_id")
-    @Valid
+    @Valid 
     @NotNull(message="validation.required")
     @ApiModelProperty(position=2, required=true)
     protected NoiseProducer noiseproducer;
@@ -273,31 +275,31 @@ public class ActivityApplication
 		this.activitySeismic = activitySeismic;
 	}
 
-	@JsonManagedReference("activity-activitygeophysical")
+	@JsonManagedReference("activity-activitysubbottomprofilers")
     @OneToOne(mappedBy="aa",
-    			targetEntity=ActivityGeophysical.class,
+    			targetEntity=ActivitySubBottomProfilers.class,
     			fetch=FetchType.LAZY,
     			optional=true,
     			orphanRemoval=true,
     			cascade = {CascadeType.ALL})
 	@Valid
 	@ApiModelProperty(position=13)
-    protected ActivityGeophysical activityGeophysical;
+    protected ActivitySubBottomProfilers activitySubBottomProfilers;
     
 
 	/**
 	 * If there is an activity type then it returns it
-	 * @return the ActivityGeophysical
+	 * @return the ActivitySubBottomProfilers
 	 */
-	public ActivityGeophysical getActivityGeophysical() {
-		return activityGeophysical;
+	public ActivitySubBottomProfilers getActivitySubBottomProfilers() {
+		return activitySubBottomProfilers;
 	}
 	/**
-	 * Sets an associated ActivityGeophysical
-	 * @param activityGeophysical the activity type to relate
+	 * Sets an associated ActivitySubBottomProfilers
+	 * @param activitySubBottomProfilers the activity type to relate
 	 */
-	public void setActivityGeophysical(ActivityGeophysical activityGeophysical) {
-		this.activityGeophysical = activityGeophysical;
+	public void setActivitySubBottomProfilers(ActivitySubBottomProfilers activitySubBottomProfilers) {
+		this.activitySubBottomProfilers = activitySubBottomProfilers;
 	}
 
 	@JsonManagedReference("activity-activityacousticdd")
@@ -933,12 +935,12 @@ public class ActivityApplication
 			}
 			//Ensure that the NoiseProducer and Regulator values exist in the database... 
 			if (JPA.em().find(NoiseProducer.class, this.getNoiseproducer().getId())==null) {
-				errors.add(new ValidationError("noiseproducer",  Messages.get("error.noiseproducer.invalid")));
+				errors.add(new ValidationError("noiseproducer",  Messages.get("validation.noiseproducer.invalid")));
 			}
 			
 			if (JPA.em().find(Regulator.class, this.getRegulator().getId())==null) 
 			{
-				errors.add(new ValidationError("regulator",  Messages.get("error.regulator.invalid")));
+				errors.add(new ValidationError("regulator",  Messages.get("validation.regulator.invalid")));
 			}
 			
 			
@@ -957,6 +959,14 @@ public class ActivityApplication
 					}
 				}
 			}
+			
+			if (activitytype_id==ActivityTypes.Seismic_Survey.toLong()) {
+				if (getActivitySeismic().survey_type.compareToIgnoreCase("other")==0 && getActivitySeismic().other_survey_type.trim().compareTo("")==0)
+				{
+					errors.add(new ValidationError("activitySeismic.other_survey_type",  Messages.get("validation.required")));
+				}
+			}	
+			
 		}
 		catch (Exception e)
 		{
@@ -993,6 +1003,37 @@ public class ActivityApplication
 			Logger.error("Application Due Date calculation: " + e.getMessage());
 		}
 	}
+	public void addActuals(Map<String,String> m)
+	{
+		if (getActivitytype_id()==ActivityTypes.Seismic_Survey.toLong())
+        {       	
+        	this.getActivitySeismic().mergeActuals(m);        
+        }
+        else if (getActivitytype_id()==ActivityTypes.Sub_Bottom_Profilers.toLong())
+        {
+        	this.getActivitySubBottomProfilers().mergeActuals(m);
+        }
+        else if (getActivitytype_id()==ActivityTypes.Piling.toLong()) 
+        {
+        	this.getActivityPiling().mergeActuals(m);
+        }
+        else if (getActivitytype_id()==ActivityTypes.Explosives.toLong())
+        {
+        	this.getActivityExplosives().mergeActuals(m);
+        }
+        else if (getActivitytype_id()==ActivityTypes.Acoustic_Deterrent_Device.toLong()) 
+        {
+        	this.getActivityAcousticDD().mergeActuals(m);
+        }
+        else if (getActivitytype_id()==ActivityTypes.Multibeam_Echosounders.toLong()) 
+        {
+        	this.getActivityMultibeamES().mergeActuals(m);
+        }
+        else if (getActivitytype_id()==ActivityTypes.MoD.toLong()) 
+        {
+        	this.getActivityMoD().mergeActuals(m);
+        }		
+	}
 	
 	/**
 	 * Closes out the application
@@ -1001,7 +1042,7 @@ public class ActivityApplication
 	 * @param interim flag to idicate whether this is an interim close out
 	 * @throws Exception
 	 */
-	public static void closeOut(ActivityApplicationCloseOut aaco, Long id, boolean interim) throws Exception {
+	public static void closeOut(ActivityApplicationCloseOut aaco, Long id, boolean interim, Map<String, String> m) throws Exception {
 		//Set status to proposed for new items
 		//Logger.error("Closing the activity application!");
 		ActivityApplication aa = ActivityApplication.findById(id);
@@ -1017,9 +1058,11 @@ public class ActivityApplication
 			aa.setStatus("Closed");
 			aa.setDate_closed(new Date());
 		}
+
+		aa.addActuals(m);
 		
         JPA.em().merge(aa);
-		
+
         //Logger.error("Processing location entries...");
 		//Persist any proposed activity location details
         if (aaco.getActivitylocations() != null) {
@@ -1063,9 +1106,9 @@ public class ActivityApplication
         {       	
         	this.getActivitySeismic().setAa(this);        
         }
-        else if (getActivitytype_id()==ActivityTypes.Geophysical_Survey.toLong())
+        else if (getActivitytype_id()==ActivityTypes.Sub_Bottom_Profilers.toLong())
         {
-        	this.getActivityGeophysical().setAa(this);
+        	this.getActivitySubBottomProfilers().setAa(this);
         }
         else if (getActivitytype_id()==ActivityTypes.Piling.toLong()) 
         {
@@ -1107,8 +1150,8 @@ public class ActivityApplication
 			this.setActivitySeismic(null);
 		}
 		
-		if (getActivitytype_id()!=ActivityTypes.Geophysical_Survey.toLong()) {
-			this.setActivityGeophysical(null);
+		if (getActivitytype_id()!=ActivityTypes.Sub_Bottom_Profilers.toLong()) {
+			this.setActivitySubBottomProfilers(null);
 		}
 		
 		if (getActivitytype_id()!=ActivityTypes.Piling.toLong()) {
@@ -1253,6 +1296,19 @@ public class ActivityApplication
 	}
 	
 	/**
+	 * Gets applications for the given noiseproducer that are late
+	 * @param reg the noiseproducer
+	 * @return
+	 */
+	public static List<ActivityApplication> findLateByNoiseProducer(NoiseProducer np) {
+		TypedQuery<ActivityApplication> query = JPA.em().createNamedQuery("ActivityApplication.findLateByNoiseProducer", ActivityApplication.class);
+		query.setParameter("np", np);
+		List<ActivityApplication> results = query.getResultList();
+		
+		return results;
+	}	
+	
+	/**
 	 * Gets any linked applications
 	 * @param source the application from which they may be linked
 	 * @return
@@ -1374,5 +1430,35 @@ public class ActivityApplication
 		}
 		
 	}
-
+	public void populateActivityDefaults()
+	{
+		if (getActivitytype_id()==ActivityTypes.Seismic_Survey.toLong())
+        {       	
+        	this.getActivitySeismic().populateDefaults();        
+        }
+        else if (getActivitytype_id()==ActivityTypes.Sub_Bottom_Profilers.toLong())
+        {
+        	this.getActivitySubBottomProfilers().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Piling.toLong()) 
+        {
+        	this.getActivityPiling().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Explosives.toLong())
+        {
+        	this.getActivityExplosives().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Acoustic_Deterrent_Device.toLong()) 
+        {
+        	this.getActivityAcousticDD().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.Multibeam_Echosounders.toLong()) 
+        {
+        	this.getActivityMultibeamES().populateDefaults();
+        }
+        else if (getActivitytype_id()==ActivityTypes.MoD.toLong()) 
+        {
+        	this.getActivityMoD().populateDefaults();
+        }
+	}
 }

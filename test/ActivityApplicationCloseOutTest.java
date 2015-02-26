@@ -2,7 +2,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -11,7 +13,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 
 import models.ActivityApplication;
 import models.ActivityApplicationCloseOut;
@@ -163,7 +164,12 @@ public class ActivityApplicationCloseOutTest {
 			
 			ActivityApplicationCloseOut aaco = new ActivityApplicationCloseOut();
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
 			
 			assertTrue(aa.getStatus().equals("Closed"));
 			assertNotNull(aa.getDate_closed());
@@ -256,7 +262,13 @@ public class ActivityApplicationCloseOutTest {
 			//Add the locations to the list
 			aaco.getActivitylocations().add(al2);
 			aaco.getActivitylocations().add(al3);
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), false,m);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -326,7 +338,12 @@ public class ActivityApplicationCloseOutTest {
 			aaco.getActivitylocations().add(al2);
 			aaco.getActivitylocations().get(0).setNo_activity(true);
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -398,7 +415,12 @@ public class ActivityApplicationCloseOutTest {
 			
 			aaco.getActivitylocations().add(al2);
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), false,m);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -474,7 +496,12 @@ public class ActivityApplicationCloseOutTest {
 			
 			aaco.getActivitylocations().add(al2);
 			
-			ActivityApplication.closeOut(aaco, aa.getId(), true);
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), true, m);
 			
 			//Check that the constraint violations are all ok
 			constraintViolations =
@@ -493,7 +520,7 @@ public class ActivityApplicationCloseOutTest {
 			assertEquals(2, aa.getActivitylocations().size());
 			
 			//Save again as closed this time...
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
 			
 			assertNull(aa.validate());
 			
@@ -504,7 +531,7 @@ public class ActivityApplicationCloseOutTest {
 			
 			try {
 				//Try to save again as closed...
-				ActivityApplication.closeOut(aaco, aa.getId(), false);
+				ActivityApplication.closeOut(aaco, aa.getId(), false, m);
 				fail("Close of an already closed application - this should not be allowed");
 			} catch (Exception e) {
 				//
@@ -544,7 +571,12 @@ public class ActivityApplicationCloseOutTest {
 			assertFalse(constraintViolations.isEmpty());
 			//If the location entry is not valid, it should not be persisted, so the 
 			//end result should be a closed activity application with an null list of locations
-			ActivityApplication.closeOut(aaco, aa.getId(), false);
+			Map<String, String> m = new HashMap<String, String>();
+			m.put("max_hammer_energy_actual", "7");
+			m.put("sound_pressure_level_actual","8");
+			m.put("sound_exposure_level_actual","9");
+			
+			ActivityApplication.closeOut(aaco, aa.getId(), false, m);
 			assertTrue(aa.getStatus().equals("Closed"));
 			assertNotNull(aa.getDate_closed());
 			assertNull(aa.getActivitylocations());

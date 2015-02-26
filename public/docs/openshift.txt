@@ -43,8 +43,8 @@ rhc port-forward -a jncc (in GitShell)
 
 The admin user may need access: 
 GRANT ALL ON ALL TABLES IN SCHEMA jncc TO adminhmjmrkx
-In pql.exe use show search_path; to check it is jncc,public
-Use set search_path to jncc,public; to set it is =f necessary (though this has now been done)
+In pgAdmin.exe use show search_path; to check it is jncc,public
+Use set search_path to jncc,public; to set it if necessary (though this has now been done)
 
 
 

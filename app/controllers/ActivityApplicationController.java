@@ -2,9 +2,11 @@ package controllers;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -35,6 +37,7 @@ import utils.AppConfigSettings;
 import utils.MailSettings;
 import views.html.*;
 import models.*;
+import play.data.validation.*;
 
 @Security.Authenticated(SecuredController.class)
 @Api(value = "/aas", description = "Operations on Activity Applications (aas)")
@@ -171,7 +174,7 @@ public class ActivityApplicationController extends Controller {
 			response().setHeader(PRAGMA, "no-cache, no-store");
 			response().setHeader(EXPIRES, "0");
 			
-			return ok(activityform.render(au, appForm, Messages.get("activityform.title_new"), null));
+			return ok(activityform.render(au, appForm, Messages.get("activityform.title_new"), null, null));
 		} else {
 			return badRequest("Unsupported content type");
 		}
@@ -200,7 +203,7 @@ public class ActivityApplicationController extends Controller {
 			response().setHeader(PRAGMA, "no-cache, no-store");
 			response().setHeader(EXPIRES, "0");
 			
-			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), id));
+			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), id, null));
 		} else {
 			return badRequest("Unsupported content type");
 		}
@@ -227,7 +230,7 @@ public class ActivityApplicationController extends Controller {
 		Form<ActivityApplication> filledForm = appForm.fill(linked);
 		
 		if (request().accepts("text/html")) {
-			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), null));
+			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), null, null));
 		} else {
 			return badRequest("Unsupported content type");
 		}
@@ -359,7 +362,7 @@ public class ActivityApplicationController extends Controller {
 	 * @param id the application to be closed
 	 * @return appropriate data
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	@ApiOperation(value = "Get Activity Application for close out by ID",
     	notes = "Returns an Activity Application for close out",
     	nickname = "getById",
@@ -381,11 +384,14 @@ public class ActivityApplicationController extends Controller {
 		
 		if (aa.getStatus().equals("Proposed") || aa.getStatus().equals("Interim Close-out")) {
 			//populate the close out partial model
-			ActivityApplicationCloseOut aaco = new ActivityApplicationCloseOut();
-			aaco.setId(aa.getId());
+			//ActivityApplicationCloseOut aaco = new ActivityApplicationCloseOut();
+			//aaco.setId(aa.getId());
+			ActivityApplicationCloseOut aaco = ActivityApplicationCloseOut.findById(aa.getId());
 			aaco.setActivitylocations(aa.getActivitylocations());
-			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.fill(aaco);
+			aaco.populateActivityDefaults();
 
+			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.fill(aaco);
+			
 			if (request().accepts("text/html")) {
 				return ok(activityformcloseout.render(au, aa, filledForm, id));
 			} else if (request().accepts("application/json")) {
@@ -398,6 +404,29 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	protected static void actualsValidate(Form<ActivityApplicationCloseOut> filledForm, Form<ActivityApplication> frm)
+	{
+		Map<String, List<ValidationError>> mve = frm.errors();
+		for (Entry<String, List<ValidationError>> entry : mve.entrySet()) 
+		{
+			Logger.error(entry.getKey());
+			if (entry.getKey().contains("_actual"))
+			{
+				List<ValidationError> lve = entry.getValue();
+				Iterator<ValidationError> it = lve.iterator();
+				while (it.hasNext())
+				{
+					ValidationError ve = it.next();
+					filledForm.reject(ve);
+				}
+			}
+		}
+//		Map<String, String> m = filledForm.data();
+//		for (Entry<String, String> entry : m.entrySet()) {
+//		    if (entry.getKey().contains("_actual") && entry.getValue().trim().compareTo("")==0) 
+//				filledForm.reject(new ValidationError(entry.getKey(), Messages.get("validation.required"), null));
+//		}
+	}
 	/**
 	 * Closes the application
 	 * @param id the application to be closed
@@ -428,8 +457,13 @@ public class ActivityApplicationController extends Controller {
 			//set the closing indicator to allow validation checks based on status during the bindFromRequest call...
 			aa.setClosing(true);
 			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.bindFromRequest();
+			//Logger.error(filledForm.toString());
 			
-			if (filledForm.hasErrors()) {
+			//Form<ActivityApplication> frm = appForm.bindFromRequest();
+			//actualsValidate(filledForm,frm);
+			
+			if (filledForm.hasErrors()) 
+			{
 				if (request().accepts("text/html")) {
 					return badRequest(activityformcloseout.render(au, aa, filledForm, id));
 				} else if (request().accepts("application/json")) {
@@ -439,9 +473,11 @@ public class ActivityApplicationController extends Controller {
 	        	}
 			} else {
 				try {
-					filledForm.get().closeOut(id);
+					//aa.addActuals(filledForm.data());
+					filledForm.get().closeOut(id, filledForm.data());
+
 					JPA.em().flush();  //make sure any persistence errors are raised before emailing
-					
+
 					sendRegulatorNotification(aa, aa.getStatus().toLowerCase().replace(' ', '_'));
 					if (request().accepts("text/html")) {
 						return redirect(routes.ActivityApplicationController.confirmadd(Long.toString(id)));
@@ -451,7 +487,9 @@ public class ActivityApplicationController extends Controller {
 		        		return badRequest("Unsupported content type");
 		        	}
 				} catch (Exception e) {
-					return badRequest(e.getMessage());
+					//e.printStackTrace();
+					return badRequest(activityformcloseout.render(au, aa, filledForm, id));
+					//return badRequest(e.getMessage());
 				}
 			}
 		} else {
@@ -530,9 +568,17 @@ public class ActivityApplicationController extends Controller {
 		Form<ActivityApplication> filledForm = appForm.bindFromRequest();
 
 		if(filledForm.hasErrors()) {
-			if (request().accepts("text/html")) {
+			if (request().accepts("text/html")) 
+			{
+				ActivityApplication aaParent = null;
+				if (filledForm.data().get("parent.id")!=null)
+				{
+					Long lPar = Long.parseLong((String)filledForm.data().get("parent.id"));
+					aaParent = ActivityApplication.findById(lPar);
+				}
+
 				return badRequest(
-						activityform.render(au, filledForm, Messages.get("activityform.title_new"), null)
+						activityform.render(au, filledForm, Messages.get("activityform.title_new"), null, aaParent)
 			    );
 			} else if (request().accepts("application/json")) {
         		return badRequest(filledForm.errorsAsJson());
@@ -673,7 +719,7 @@ public class ActivityApplicationController extends Controller {
 		
 		if(filledForm.hasErrors()) {
 			if (request().accepts("text/html")) {
-				return badRequest(activityform.render(au, filledForm, Messages.get("activityform.title"), id));
+				return badRequest(activityform.render(au, filledForm, Messages.get("activityform.title"), id, null));
 			} else if (request().accepts("application/json")) {
         		return badRequest(filledForm.errorsAsJson());
         	} else {
@@ -692,7 +738,7 @@ public class ActivityApplicationController extends Controller {
 				}
 			} catch (Exception e) {
 				filledForm.reject(e.getMessage());
-				return badRequest(activityform.render(au, filledForm, Messages.get("activityform.title"), id));
+				return badRequest(activityform.render(au, filledForm, Messages.get("activityform.title"), id, null));
 			}
 			if (request().accepts("text/html")) {
 				return redirect(routes.ActivityApplicationController.confirmadd(Long.toString(aa.getId())));
@@ -725,5 +771,5 @@ public class ActivityApplicationController extends Controller {
 			return badRequest("Unsupported content type");
 		}
 	}
-
+	
 }

@@ -224,7 +224,7 @@ public class OrganisationController extends Controller {
 	{
 		Form<OrgUser> filledForm = Form.form(OrgUser.class).bindFromRequest();
 		
-		Map map = filledForm.data();
+		Map<String, String> map = filledForm.data();
 		OrgUser ou = JPA.em().find(OrgUser.class, Long.parseLong((String)map.get("id")));
 		
 		Long lorgid = ou.getOrg().getId();
@@ -247,7 +247,7 @@ public class OrganisationController extends Controller {
 
 		OrgUser ou=null;
 		
-		Map map = filledForm.data();
+		Map<String, String> map = filledForm.data();
 
 		ou = JPA.em().find(OrgUser.class, Long.parseLong((String)map.get("id")));
 
@@ -301,7 +301,7 @@ public class OrganisationController extends Controller {
 	 * @param ou the organisation user
 	 * @param map additional data
 	 */
-	private static void sendRejectionToUser(OrgUser ou, Map map) {
+	private static void sendRejectionToUser(OrgUser ou, Map<String, String> map) {
 		AppUser au = ou.getAu();
 		
 		Logger.error(map.toString());
@@ -333,7 +333,7 @@ public class OrganisationController extends Controller {
 	 * @param ou the organisation user
 	 * @param map additional data
 	 */
-	private static void sendAcceptToUser(OrgUser ou, Map map) {
+	private static void sendAcceptToUser(OrgUser ou, Map<String, String> map) {
 		AppUser au = ou.getAu();
 		
 		Logger.error(map.toString());

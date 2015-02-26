@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -24,7 +26,6 @@ import javax.persistence.TypedQuery;
 import javax.validation.Valid;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -147,12 +148,32 @@ public class ActivityLocation
 		}
 		return activitydate;
 	}
+
+	@Transient
+	String[] formatStrings = {"d/M/y", "yyyy-MM-dd"};
+	protected Date tryParse(String dateString)
+	{
+	    for (String formatString : formatStrings)
+	    {
+	        try
+	        {
+	            return new SimpleDateFormat(formatString).parse(dateString);
+	        }
+	        catch (Exception e) {
+	        	//if the date is not valid flag it as an error?
+	        	//Logger.error("Unparseable date: "+dateString);
+	        }
+	    }
+
+	    return null;
+	}
 	/**
 	 * Setting the activity date field also populates the list of activitydates for this item... 
 	 * @param activitydate
 	 */
 	public void setActivitydate(String activitydate) {
 		try {
+			HashMap<String,Integer> hm = new HashMap<String,Integer>(); 
 			this.activitydate = activitydate;
 			if (!activitydate.equals("")) {
 				
@@ -165,15 +186,20 @@ public class ActivityLocation
 					SimpleDateFormat sdf = new SimpleDateFormat("d/M/y");
 					
 					Date dt = null;
-					try {
-						dt = sdf.parse(dates[i].trim());
-						ald.setActivity_date(dt);
-						ald.setActivitylocation(this);
-						dateList.add(ald);
-					} catch (java.text.ParseException e) {
+					//try {
+						//dt = sdf.parse(dates[i].trim());
+						dt = tryParse(dates[i].trim());
+						if (dt!=null && !hm.containsKey(dt.toString()))
+						{
+							hm.put(dt.toString(), 1);
+							ald.setActivity_date(dt);
+							ald.setActivitylocation(this);
+							dateList.add(ald);
+						}
+					//} catch (java.text.ParseException e) {
 						//if the date is not valid flag it as an error?
 						
-					}
+					//}
 				}
 				this.setActivitydates(dateList);
 			}
@@ -567,6 +593,14 @@ public class ActivityLocation
 			}
 		}
 	}
+	@PrePersist
+	void preInsert() 
+	{
+		if (this.creation_type==null || this.creation_type.compareTo("")==0)
+		{
+			this.setCreation_type("Proposed");  // set default value for creation_type when created
+		}
+	}
 	/**
      * Update this activity location and related activity date records.
      */
@@ -574,7 +608,8 @@ public class ActivityLocation
     	//this.saveTheDates();
     	this.checkAgainstAreas();
     	
-    	if (this.getId()==null) {
+    	if (this.getId()==null) 
+    	{
     		JPA.em().persist(this);
     	} else {
     		//When we're updating, we need to remove any existing date info from the
@@ -586,23 +621,28 @@ public class ActivityLocation
 	    		if (al.getActivitydates()!=null) {
 	    			Iterator<ActivityLocationDate> it = al.getActivitydates().iterator();
 	    			while (it.hasNext()) {
-	    				JPA.em().remove(it.next());
+	    				ActivityLocationDate ald = it.next();
+	    				JPA.em().remove(ald);
 	    			}
 	    		}
     		}
     		JPA.em().merge(this);
     	}
     	//Add the date values created from the form.
-    	if (this.getActivitydates() != null && (this.getNo_activity()==null || !this.getNo_activity())) {
+    	if (this.getActivitydates() != null && (this.getNo_activity()==null || !this.getNo_activity())) 
+    	{
+    		HashMap<String, Integer> hm = new HashMap<String, Integer>();
         	Iterator<ActivityLocationDate> it = this.getActivitydates().iterator();
 	        while(it.hasNext()) {
 	        	ActivityLocationDate ad = it.next();
-	        	if (ad.getActivity_date()!=null) {
+	        	if (ad.getActivity_date()!=null && !hm.containsKey(ad.getActivity_date().toString())) 
+	        	{
+	        		hm.put(ad.getActivity_date().toString(), 1);
 	        		ad.setActivitylocation(this);
 	        		JPA.em().merge(ad);
 	        	}
 	        }
-        }
+    	}
     }
     
 	/**
@@ -660,8 +700,10 @@ public class ActivityLocation
 	 * Custom validation for the ActivityLocation entity.
 	 * @return list of validation errors
 	 */
-	public List<ValidationError> validate() {
+	public List<ValidationError> validate() 
+	{
 		List<ValidationError> errors = new ArrayList<ValidationError>();
+		
 		try
 		{
 			ActivityApplication aa = this.getAa();
@@ -701,10 +743,11 @@ public class ActivityLocation
 				}
 			}
 			
-			if (aa!=null && aa.isSavingAsClosed()) {
+			if (aa!=null && aa.isSavingAsClosed()) 
+			{
 				//for closing, there must be dates or this item must be marked as no activity...
 				if (this.getCreation_type().equals("Proposed") && (this.getNo_activity() == null)) {
-					errors.add(new ValidationError("no_activity",  Messages.get("error.required")));
+					errors.add(new ValidationError("no_activity",  Messages.get("validation.required")));
 				}
 				if (this.getNo_activity() == null || !this.getNo_activity()) {
 					if (this.getActivitydates() == null || this.getActivitydates().isEmpty()) {
@@ -726,7 +769,6 @@ public class ActivityLocation
 						}
 					}
 				}
-				
 			}			
 		}
 		catch (Exception e)
@@ -734,7 +776,6 @@ public class ActivityLocation
 			e.printStackTrace();
 			errors.add(new ValidationError("",  Messages.get("error.something.went.wrong")));
 		}
-		
 		return errors.isEmpty() ? null : errors;
 	}
 }
