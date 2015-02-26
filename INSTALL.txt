@@ -37,6 +37,9 @@ The modified script can then be run from a psql command prompt on the server or 
 The PostGIS extension must be enabled for the database.
 Details steps for installation and enabling PostGIS can be found at:
 	http://postgis.net/install/
+	
+Once PostGIS is installed the extension needs to be enabled for the database:
+CREATE EXTENSION postgis;
 
 Oil and gas block spatial fields use the WGS coordinate system and are of type GEOMETRY (polygon,4326). 
 	
