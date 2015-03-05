@@ -54,7 +54,6 @@ import play.i18n.Messages;
 @Table(name="activitylocation")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
-//@CheckActivityLocation 			//custom class validator (stack overflow exception problems?)
 public class ActivityLocation
 {
 	
@@ -181,25 +180,16 @@ public class ActivityLocation
 				List<ActivityLocationDate> dateList = new ArrayList<ActivityLocationDate>();
 				for (int i=0; i<dates.length; i++) {
 					ActivityLocationDate ald = new ActivityLocationDate();
-					//convert the string to date
-					//@Note this is the same format as the date-picker uses.
-					SimpleDateFormat sdf = new SimpleDateFormat("d/M/y");
 					
 					Date dt = null;
-					//try {
-						//dt = sdf.parse(dates[i].trim());
-						dt = tryParse(dates[i].trim());
-						if (dt!=null && !hm.containsKey(dt.toString()))
-						{
-							hm.put(dt.toString(), 1);
-							ald.setActivity_date(dt);
-							ald.setActivitylocation(this);
-							dateList.add(ald);
-						}
-					//} catch (java.text.ParseException e) {
-						//if the date is not valid flag it as an error?
-						
-					//}
+					dt = tryParse(dates[i].trim());
+					if (dt!=null && !hm.containsKey(dt.toString()))
+					{
+						hm.put(dt.toString(), 1);
+						ald.setActivity_date(dt);
+						ald.setActivitylocation(this);
+						dateList.add(ald);
+					}
 				}
 				this.setActivitydates(dateList);
 			}
@@ -660,7 +650,6 @@ public class ActivityLocation
 		ActivityLocation alCheck = this;
 		//check if the current item has already been saved..
 		if (this.getId()!=null) {
-	    	//Logger.debug("ActivityLocation already stored");
 	    	alCheck = JPA.em().find(ActivityLocation.class, this.getId());
 		}
 		
@@ -673,7 +662,6 @@ public class ActivityLocation
 				query.setParameter("aa_id", alCheck.getAa().getId());
 				List<ActivityLocation> results = query.getResultList();
 				if (!results.isEmpty()) {
-					//Logger.debug("Found matching polygon entry");
 					this.setCreation_type("Proposed");
 					this.setDecomposed(true);
 				}
@@ -687,7 +675,6 @@ public class ActivityLocation
 			query.setParameter("aa_id", alCheck.getAa().getId());
 			List<ActivityLocation> results = query.getResultList();
 			if (!results.isEmpty()) {
-				//Logger.debug("Found matching polygon entry");
 				this.setCreation_type("Proposed");
 				this.setDecomposed(true);
 			}

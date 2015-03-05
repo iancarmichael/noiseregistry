@@ -42,7 +42,8 @@ Scala provides editors that "understand" the content for application routes, sca
 After eclipse restarts, you should find that the routes file in conf has a custom editor, as do the *.scala.html template files in the app\views folder.
 
 Optional:
-For running automated tests inside eclipse, modify the Run Configuration for each of the test files as follows:
+For running automated tests inside eclipse, after running 'activator clean' you must run 'activator test'.  
+Then modify the Run Configuration for each of the test files as follows:
 - Right click on the test file (e.g., ApplicationTest.java) below the test folder
 - Select Properties, Run/Debug Settings
 - Create or edit a launch configuration

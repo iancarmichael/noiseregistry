@@ -30,7 +30,6 @@ public class ActivityAcousticDD extends DefaultableActivity
     @ApiModelProperty(position=0)
     protected Long id;   
     
-    //@JsonBackReference("activity-activityacousticdd")
     @JsonIgnore
 	@ManyToOne(optional=true)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")

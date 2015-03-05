@@ -47,7 +47,6 @@ public class ActivityLocationDate {
 	
 	@Formats.DateTime(pattern="yyyy-MM-dd")
     @Temporal (TemporalType.DATE)
-	//@Required
 	protected Date activity_date;
 	
 	/**
@@ -89,7 +88,6 @@ public class ActivityLocationDate {
 	public List<ValidationError> validate() 
 	{
 		List<ValidationError> errors = new ArrayList<ValidationError>();
-		//Logger.debug("ActivityLocationDate validate method()");
 		// Work around a problem where the call to getActivityApplication on the parent location record
 		// returns an empty entity record...
 		ActivityApplication aa = this.getActivitylocation().getAa();

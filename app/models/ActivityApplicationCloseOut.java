@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -51,7 +51,6 @@ public class ActivityApplicationCloseOut {
 	@ApiModelProperty(position=0)
     protected Long id;
 	
-    //@NotNull(message="validation.required")
     @JsonIgnore
     protected Long activitytype_id;
 

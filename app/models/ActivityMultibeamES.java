@@ -28,7 +28,6 @@ public class ActivityMultibeamES extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitymultibeames")
     @JsonIgnore
     @OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")

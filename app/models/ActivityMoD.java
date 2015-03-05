@@ -1,5 +1,6 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 
 @Entity
 @Table(name="activitymod")
@@ -30,7 +32,6 @@ public class ActivityMoD extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitymod")
     @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
@@ -100,15 +101,35 @@ public class ActivityMoD extends DefaultableActivity
 		
 	}
 	/**
-	 * Alternate constructor
-	 * @param aa_p associated application 
-	 * @param map source
+	 * Get the source types as a list for use in options
+	 * @return
 	 */
-	public ActivityMoD(ActivityApplication aa_p, Map<String, String> map) 
-	{
-		this.setAa(aa_p);
-		this.setSource((String)map.get("mod_source.id"));
+	public static LinkedHashMap<String, String> sourceOptions() {
+		LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+
+		options.put("ASW Sonar", sourceValue("ASW Sonar"));
+        options.put("ASW Sonar (Check)", sourceValue("ASW Sonar (Check)"));
+        options.put("Explosion", sourceValue("Explosion"));
+        
+    	return options;
 	}
+	/**
+	 * Gets a message translated version as a string.  The list configured in this class
+	 * should match the values in the database 
+	 * @param s the source value as stored in the database
+	 * @return
+	 */
+	public static String sourceValue(String s)
+	{
+		if (s.compareTo("ASW Sonar")==0)
+			return Messages.get("field_option.asw_sonar");
+		if (s.compareTo("ASW Sonar (Check)")==0)
+			return Messages.get("field_option.asw_sonar_check");
+		if (s.compareTo("Explosion")==0)
+			return Messages.get("field_option.explosion");
+		return Messages.get("field_option.unknown");
+	}
+	
 	/**
 	 * Saves the activity type to the database
 	 */

@@ -864,7 +864,6 @@ public class AppUser {
 				ids.add(it.next().getId());
 			}
 			session.enableFilter("myNoiseProducers").setParameterList("np_id", ids);
-			//Logger.error("Set NoiseProducer filter value!");
 		} else {
 			//Not a noise producer, could be a regulator...
 			List<Regulator> myRegs = this.findRegulators();
@@ -875,7 +874,6 @@ public class AppUser {
 					ids.add(it.next().getId());
 				}
 				session.enableFilter("myRegulators").setParameterList("reg_id", ids);
-				//Logger.error("Set Regulator filter value!");
 			}
 		}
 	    //if the user is neither regulator nor noise producer, set a filter to match nothing

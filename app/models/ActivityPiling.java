@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import play.db.jpa.JPA;
 
@@ -29,14 +29,12 @@ public class ActivityPiling extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitypiling")
     @JsonIgnore
     @OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
     
     @Min(value=1, message="validation.min")
-    @NotNull(message="validation.required")
 	protected Integer max_hammer_energy;
     
     @Min(value=1, message="validation.min")

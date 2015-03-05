@@ -308,6 +308,7 @@ field_option.4D=4D
 field_option.asw_sonar=Anti-submarine Warfare Sonar
 field_option.asw_sonar_check=Anti-submarine Warfare Sonar (Check)
 field_option.explosion=Explosion
+field_option.unknown=Unknown
 	        	
 #General view messages
 activities.draft_activity_applications=Draft Activities

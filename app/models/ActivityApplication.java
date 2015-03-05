@@ -909,7 +909,6 @@ public class ActivityApplication
 	 */
 	public List<ValidationError> validate() {
 		List<ValidationError> errors = new ArrayList<ValidationError>();
-		//Logger.debug("ActivityApplication validate method()");
 		try
 		{
 			if (this.getDate_start() != null && this.getDate_end() != null)
@@ -1044,7 +1043,6 @@ public class ActivityApplication
 	 */
 	public static void closeOut(ActivityApplicationCloseOut aaco, Long id, boolean interim, Map<String, String> m) throws Exception {
 		//Set status to proposed for new items
-		//Logger.error("Closing the activity application!");
 		ActivityApplication aa = ActivityApplication.findById(id);
 		if (!aa.getStatus().equals("Proposed") && !aa.getStatus().equals("Interim Close-out")) {
     		throw new Exception("Forbidden operation");
@@ -1063,12 +1061,10 @@ public class ActivityApplication
 		
         JPA.em().merge(aa);
 
-        //Logger.error("Processing location entries...");
 		//Persist any proposed activity location details
         if (aaco.getActivitylocations() != null) {
 	        Iterator<ActivityLocation> it = aaco.getActivitylocations().iterator();
 	        while(it.hasNext()) {
-	        	//Logger.error("Processing location...");
 	        	ActivityLocation al = it.next();
 	        	al.setAa(aa);
 	        	al.update();

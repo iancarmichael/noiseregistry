@@ -29,8 +29,6 @@ public class MailSettings {
 			session = (Session) envCtx.lookup("mail/Session");
 			return session;
 		} catch (NamingException e) {
-			//Logger.error("Unable to get mail session from JNDI");
-			//Logger.error(e.getMessage());
 		}
 		//no session from java naming context, so try using application config		
         Properties props = new Properties();

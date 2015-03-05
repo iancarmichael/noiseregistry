@@ -230,7 +230,7 @@ public class ActivityApplicationController extends Controller {
 		Form<ActivityApplication> filledForm = appForm.fill(linked);
 		
 		if (request().accepts("text/html")) {
-			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), null, null));
+			return ok(activityform.render(au, filledForm, Messages.get("activityform.title"), null, aa));
 		} else {
 			return badRequest("Unsupported content type");
 		}
@@ -384,8 +384,6 @@ public class ActivityApplicationController extends Controller {
 		
 		if (aa.getStatus().equals("Proposed") || aa.getStatus().equals("Interim Close-out")) {
 			//populate the close out partial model
-			//ActivityApplicationCloseOut aaco = new ActivityApplicationCloseOut();
-			//aaco.setId(aa.getId());
 			ActivityApplicationCloseOut aaco = ActivityApplicationCloseOut.findById(aa.getId());
 			aaco.setActivitylocations(aa.getActivitylocations());
 			aaco.populateActivityDefaults();
@@ -421,11 +419,6 @@ public class ActivityApplicationController extends Controller {
 				}
 			}
 		}
-//		Map<String, String> m = filledForm.data();
-//		for (Entry<String, String> entry : m.entrySet()) {
-//		    if (entry.getKey().contains("_actual") && entry.getValue().trim().compareTo("")==0) 
-//				filledForm.reject(new ValidationError(entry.getKey(), Messages.get("validation.required"), null));
-//		}
 	}
 	/**
 	 * Closes the application
@@ -457,10 +450,6 @@ public class ActivityApplicationController extends Controller {
 			//set the closing indicator to allow validation checks based on status during the bindFromRequest call...
 			aa.setClosing(true);
 			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.bindFromRequest();
-			//Logger.error(filledForm.toString());
-			
-			//Form<ActivityApplication> frm = appForm.bindFromRequest();
-			//actualsValidate(filledForm,frm);
 			
 			if (filledForm.hasErrors()) 
 			{
@@ -473,7 +462,6 @@ public class ActivityApplicationController extends Controller {
 	        	}
 			} else {
 				try {
-					//aa.addActuals(filledForm.data());
 					filledForm.get().closeOut(id, filledForm.data());
 
 					JPA.em().flush();  //make sure any persistence errors are raised before emailing
@@ -487,9 +475,7 @@ public class ActivityApplicationController extends Controller {
 		        		return badRequest("Unsupported content type");
 		        	}
 				} catch (Exception e) {
-					//e.printStackTrace();
 					return badRequest(activityformcloseout.render(au, aa, filledForm, id));
-					//return badRequest(e.getMessage());
 				}
 			}
 		} else {

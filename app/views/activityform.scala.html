@@ -103,13 +103,13 @@
 	    @form_section_openclose("seismic","activity_type.seismic","activitytype_id", "1",
 	    	List(
 	    		form_inputradio(appForm, "activitySeismic.survey_type", "activityform.field_heading.seismic_survey_type", "", 
-		    	Seq("OBC/OBN"->Messages("field_option.OBCOBN"),
+	    		Seq("OBC/OBN"->Messages("field_option.OBCOBN"),
 		    		"VSP"->Messages("field_option.VSP"),
 		    		"Site"->Messages("field_option.Site"),
 		    		"Regional"->Messages("field_option.Regional"),
 		    		"Reservoir"->Messages("field_option.Reservoir"),
-		    		"Other"->Messages("field_option.Other")
-		    	)),
+		    		"Other"->Messages("field_option.Other"))
+		    	),
 	        	form_inputtext(appForm, "activitySeismic.other_survey_type", "activityform.field_heading.seismic_othersurvey_type", "activityform.field_hint.seismic_othersurvey_type", "", "activitySeismic_survey_type-6-div"),
 		    	form_inputradio(appForm, "activitySeismic.data_type", "activityform.field_heading.seismic_data_type", "", 
 		    	Seq("2D"->Messages("field_option.2D"),

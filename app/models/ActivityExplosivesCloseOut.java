@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,7 +27,6 @@ public class ActivityExplosivesCloseOut extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activityexplosives")
     @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
@@ -35,17 +34,14 @@ public class ActivityExplosivesCloseOut extends DefaultableActivity
     
     @Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
-    @NotNull(message="validation.required")
 	protected Double tnt_equivalent_actual;
 	
     @Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
-    @NotNull(message="validation.required")
 	protected Integer sound_pressure_level_actual;
     
 	@Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
-	@NotNull(message="validation.required")
 	protected Integer sound_exposure_level_actual;
 
     /**

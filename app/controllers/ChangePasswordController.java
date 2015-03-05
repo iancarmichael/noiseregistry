@@ -34,7 +34,6 @@ public class ChangePasswordController  extends Controller {
 	@Transactional(readOnly=true)
 	@Security.Authenticated(SecuredController.class)
     public static Result index() {
-		//AppUserChangePassword au = new AppUserChangePassword();
         return ok(views.html.changepassword.render(AppUser.findByEmail(session("email")), passwordForm, Messages.get("changepasswordform.title")));
     }
 

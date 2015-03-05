@@ -61,7 +61,6 @@ public class LoginController extends Controller {
     @Transactional
     public static Result authenticate() {
     	Form<AppUserLogin> filledForm = loginForm.bindFromRequest();
-        //Logger.error("form="+filledForm.toString());
         if (filledForm.hasErrors()) {
         	//Return errors in a format suitable for the request...
         	if (request().accepts("text/html")) {

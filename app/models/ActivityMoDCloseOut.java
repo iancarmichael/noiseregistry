@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.NotBlank;
+//import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,15 +30,10 @@ public class ActivityMoDCloseOut extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitymod")
     @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
-    
-	@Column(length=20)
-	@NotBlank(message="validation.required")
-	protected String source;
 	
 	@JsonIgnore
 	@Transient
@@ -72,20 +67,6 @@ public class ActivityMoDCloseOut extends DefaultableActivity
 		this.aa = aa;
 	}
 	/**
-	 * Gets the source
-	 * @return
-	 */
-	public String getSource() {
-		return source;
-	}
-	/**
-	 * Sets the source
-	 * @param source
-	 */
-	public void setSource(String source) {
-		this.source = source;
-	}
-	/**
 	 * Sets the id
 	 * @param id
 	 */
@@ -98,16 +79,6 @@ public class ActivityMoDCloseOut extends DefaultableActivity
 	public ActivityMoDCloseOut() 
 	{
 		
-	}
-	/**
-	 * Alternate constructor
-	 * @param aa_p associated application 
-	 * @param map source
-	 */
-	public ActivityMoDCloseOut(ActivityApplication aa_p, Map<String, String> map) 
-	{
-		this.setAa(aa_p);
-		this.setSource((String)map.get("mod_source.id"));
 	}
 	/**
 	 * Saves the activity type to the database

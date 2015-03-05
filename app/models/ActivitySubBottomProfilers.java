@@ -1,5 +1,6 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -13,11 +14,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import play.db.jpa.JPA;
+import play.i18n.Messages;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,7 +33,6 @@ public class ActivitySubBottomProfilers extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitysubbottomprofilers")
     @JsonIgnore
     @OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
@@ -42,7 +43,6 @@ public class ActivitySubBottomProfilers extends DefaultableActivity
 	protected String source;
 	
 	@Min(value=1, message="validation.min")
-	@NotNull(message="validation.required")
 	protected Integer frequency;
 	
 	@Min(value=1, message="validation.min")
@@ -195,6 +195,38 @@ public class ActivitySubBottomProfilers extends DefaultableActivity
 	 */
 	public ActivitySubBottomProfilers() {
 		super();
+	}
+	/**
+	 * Get the source types as a list for use in options
+	 * @return
+	 */
+	public static LinkedHashMap<String, String> sourceOptions() {
+		LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+
+		options.put("Pinger", sourceValue("Pinger"));
+        options.put("Boomer", sourceValue("Boomer"));
+        options.put("Sparker", sourceValue("Sparker"));
+        options.put("Chirp", sourceValue("Chirp"));
+
+    	return options;
+	}
+	/**
+	 * Gets a message translated version as a string.  The list configured in this class
+	 * should match the values in the database 
+	 * @param s the source value as stored in the database
+	 * @return
+	 */
+	public static String sourceValue(String s)
+	{
+		if (s.compareTo("Pinger")==0)
+			return Messages.get("field_option.pinger");
+		if (s.compareTo("Boomer")==0)
+			return Messages.get("field_option.boomer");
+		if (s.compareTo("Sparker")==0)
+			return Messages.get("field_option.sparker");
+		if (s.compareTo("Chirp")==0)
+			return Messages.get("field_option.chirp");
+		return Messages.get("field_option.unknown");
 	}
 	@Override
 	public void populateDefaults() {

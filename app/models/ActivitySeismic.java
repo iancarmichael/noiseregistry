@@ -1,5 +1,6 @@
 package models;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.persistence.Column;
@@ -13,13 +14,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.db.jpa.JPA;
+import play.i18n.Messages;
 
 @Entity
 @Table(name="activityseismic")
@@ -31,7 +33,6 @@ public class ActivitySeismic extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activityseismic")
     @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
@@ -49,7 +50,6 @@ public class ActivitySeismic extends DefaultableActivity
 	protected String other_survey_type;
 
 	@Min(value=1, message="validation.min")
-	@NotNull(message="validation.required")
 	protected Integer max_airgun_volume;
 	
 	@Min(value=1, message="validation.min")
@@ -233,19 +233,71 @@ public class ActivitySeismic extends DefaultableActivity
 		
 	}
 	/**
-	 * Alternative constructor
-	 * @param aa_p associated application
-	 * @param map additional data
+	 * Get the survey types as a list for use in options
+	 * @return
 	 */
-	public ActivitySeismic(ActivityApplication aa_p, Map<String, String> map) 
+	public static LinkedHashMap<String, String> surveyTypeOptions() {
+		LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+
+		options.put("OBC/OBN", surveyTypeValue("OBC/OBN"));
+        options.put("VSP", surveyTypeValue("VSP"));
+        options.put("Site", surveyTypeValue("Site"));
+        options.put("Regional", surveyTypeValue("Regional"));
+        options.put("Reservoir", surveyTypeValue("Reservoir"));
+        options.put("Other", surveyTypeValue("Other"));
+
+    	return options;
+	}
+	/**
+	 * Gets a message translated version as a string.  The list configured in this class
+	 * should match the values in the database 
+	 * @param s the survey type value as stored in the database
+	 * @return
+	 */
+	public static String surveyTypeValue(String s)
 	{
-		this.setAa(aa_p);
-		this.setData_type((String)map.get("seismic_datatype.id"));
-		this.setMax_airgun_volume(new Integer((String)map.get("seismic_max_airgun")));
-		this.setOther_survey_type((String)map.get("seismic_othersurvey_type"));		
-		this.setSound_exposure_level(new Integer((String)map.get("")));
-		this.setSound_pressure_level(new Integer((String)map.get("seismic_sound_pressure")));
-		this.setSurvey_type((String)map.get("seismic_surveytype.id"));
+		if (s.compareTo("OBC/OBN")==0)
+			return Messages.get("field_option.OBCOBN");
+		if (s.compareTo("VSP")==0)
+			return Messages.get("field_option.VSP");
+		if (s.compareTo("Site")==0)
+			return Messages.get("field_option.Site");
+		if (s.compareTo("Regional")==0)
+			return Messages.get("field_option.Regional");
+		if (s.compareTo("Reservoir")==0)
+			return Messages.get("field_option.Reservoir");
+		if (s.compareTo("Other")==0)
+			return Messages.get("field_option.Other");
+		return Messages.get("field_option.unknown");
+	}
+	/**
+	 * Get the data types as a list for use in options
+	 * @return
+	 */
+	public static LinkedHashMap<String, String> dataTypeOptions() {
+		LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
+
+		options.put("2D", surveyTypeValue("2D"));
+        options.put("3D", surveyTypeValue("3D"));
+        options.put("4D", surveyTypeValue("4D"));
+        
+    	return options;
+	}
+	/**
+	 * Gets a message translated version as a string.  The list configured in this class
+	 * should match the values in the database 
+	 * @param s the data type value as stored in the database
+	 * @return
+	 */
+	public static String dataTypeValue(String s)
+	{
+		if (s.compareTo("2D")==0)
+			return Messages.get("field_option.2D");
+		if (s.compareTo("3D")==0)
+			return Messages.get("field_option.3D");
+		if (s.compareTo("4D")==0)
+			return Messages.get("field_option.4D");
+		return Messages.get("field_option.unknown");
 	}
 	@Override
 	public void populateDefaults() 

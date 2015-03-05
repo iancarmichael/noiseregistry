@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import play.db.jpa.JPA;
 
@@ -29,7 +29,6 @@ public class ActivityExplosives extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activityexplosives")
     @JsonIgnore
 	@OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
@@ -37,7 +36,6 @@ public class ActivityExplosives extends DefaultableActivity
     
     @Min(value=1, message="validation.min")
     @Max(value=500, message="validation.max")
-    @NotNull(message="validation.required")
 	protected Double tnt_equivalent;
     
     @Min(value=1, message="validation.min")

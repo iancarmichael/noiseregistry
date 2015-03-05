@@ -27,8 +27,6 @@ public class AppConfigSettings {
 			String res = (String) envCtx.lookup(jndiKey);
 			return res;
 		} catch (NamingException e) {
-			//Logger.debug("Unable to get value from JNDI using key " + jndiKey);
-			//Logger.error(e.getMessage());
 		}
 		String res = ConfigFactory.load().getString(configKey);
 		return res;

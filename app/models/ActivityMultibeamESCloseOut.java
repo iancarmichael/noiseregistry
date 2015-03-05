@@ -13,7 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 
 import play.db.jpa.JPA;
 
@@ -29,24 +29,20 @@ public class ActivityMultibeamESCloseOut extends DefaultableActivity
     @Column(columnDefinition = "serial")
     protected Long id;   
     
-    //@JsonBackReference("activity-activitymultibeames")
     @JsonIgnore
     @OneToOne(optional=false)
     @JoinColumn(name="activityapplication_id",referencedColumnName="id")
     protected ActivityApplication aa;
     
 	@Min(value=1, message="validation.min")
-	@NotNull(message="validation.required")
 	protected Integer frequency_actual;
 	
 	@Min(value=1, message="validation.min")
 	@Max(value=500, message="validation.max")
-	@NotNull(message="validation.required")
 	protected Integer sound_pressure_level_actual;
 	
 	@Min(value=1, message="validation.min")
 	@Max(value=500, message="validation.max")
-	@NotNull(message="validation.required")
 	protected Integer sound_exposure_level_actual;
 	
 	/**
