@@ -238,7 +238,7 @@ public class OrgUser
 		try
 		{
 			//Saving a rejection must include a reason
-			if (this.getStatus().equalsIgnoreCase("reject")) {
+			if (this.getStatus()!=null && this.getStatus().equalsIgnoreCase("reject")) {
 				if (this.getReject_reason()==null || this.getReject_reason().trim().equals("")) {
 					errors.add(new ValidationError("reject_reason",  "validation.required"));
 				}
@@ -246,6 +246,7 @@ public class OrgUser
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			Logger.error(e.getMessage());
 			errors.add(new ValidationError("",  Messages.get("error.something.went.wrong")));
 		}

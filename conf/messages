@@ -504,10 +504,10 @@ activityform.removelocation.title=Remove Location Entry
 activityform.heading.location_entry=Location Entry
 activityform.text.location_entry=Select the entry type
 activityform.field_heading.location_entry_type=Entry Type
-activityform.field_hint.location_entry_type=To add a succession of location points, enter the first latitude/longitude or quadrant/block point. \
-	Click 'Save Location'. \
-	The point will appear under the heading 'Locations'.  To add a second point repeat the first steps and \
-	the second point will appear below the first.  An unlimited number of points can be added. 
+activityform.field_hint.location_entry_type=\
+	To add a succession of locations, enter the first latitude/longitude point, quadrant/block, or polygon. \
+	Click Save Location. The location will appear under the heading Locations. To add a second location repeat \
+	the first steps and the second location will appear below the first. An unlimited number of locations can be added.
 activityform.field_hint.latlng=Enter in decimal degrees, between 2-7 decimal places.  Use a negative sign if longitude is West, for example 48.442 -1.234  
 activityform.field_heading.block_code=Quadrant/Block Number
 activityform.field_hint.block_code=Please include the greater working area as Quadrant/Block number, for example 113/29
@@ -517,7 +517,10 @@ activityform.field_hint.lat=Value between 48.00 and 64.00
 activityform.field_heading.lng=Longitude
 activityform.field_hint.lng=Value between -24.00 and 4.00
 activityform.field_heading.polygon=Polygon
-activityform.field_hint.polygon=To enter a polygon area enter a succession of latitude/longitude points, working around the shape in clockwise order.  To add more than three points click on the "Add Another Polygon Point" button. 
+activityform.field_hint.polygon=\
+	Please enter a succession of latitude/longitude corner points, working around the shape in clockwise order. \
+	Select "Add Another Polygon Point" to include extra points to a polygon. Only a simple polygon is required \
+	therefore a minimal number of points entered.
 activityform.add_polygon_point=Add Another Polygon Point
 
 ############## ACTIVITY FORM CANCELLATION ##################

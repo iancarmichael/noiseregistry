@@ -1038,11 +1038,10 @@ public class ActivityApplication
 	 * Closes out the application
 	 * @param aaco additional data submitted at close out
 	 * @param id the application to be closed
-	 * @param interim flag to idicate whether this is an interim close out
+	 * @param interim flag to indicate whether this is an interim close out
 	 * @throws Exception
 	 */
 	public static void closeOut(ActivityApplicationCloseOut aaco, Long id, boolean interim, Map<String, String> m) throws Exception {
-		//Set status to proposed for new items
 		ActivityApplication aa = ActivityApplication.findById(id);
 		if (!aa.getStatus().equals("Proposed") && !aa.getStatus().equals("Interim Close-out")) {
     		throw new Exception("Forbidden operation");

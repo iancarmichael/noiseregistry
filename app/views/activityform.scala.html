@@ -64,14 +64,6 @@
 					@form_displayinteger(aaPar.getDuration(), "activityform.field_heading.duration", "units.duration")
 				</tbody>
 			</table>	
-	    	<input type="hidden" name="@appForm("parent.id").name" id="@appForm("parent.id").id" value="@appForm("parent.id").value">
-			<input type="hidden" name="@appForm("noiseproducer.id").name" id="@appForm("noiseproducer.id").id" value="@appForm("noiseproducer.id").value" />	
-			<input type="hidden" name="@appForm("regulator.id").name" id="@appForm("regulator.id").id" value="@appForm("regulator.id").value" />	
-			<input type="hidden" name="@appForm("non_licensable").name" id="@appForm("non_licensable").id" value="@appForm("non_licensable").value" />	
-			<input type="hidden" name="@appForm("date_start").name" id="@appForm("date_start").id" value="@appForm("date_start").value" />	
-			<input type="hidden" name="@appForm("date_end").name" id="@appForm("date_end").id" value="@appForm("date_end").value" />	
-			<input type="hidden" name="@appForm("duration").name" id="@appForm("duration").id" value="@appForm("duration").value" />	
-			
 		} else {
 			
     		@form_inputradio(appForm, "noiseproducer.id", "activityform.field_heading.noiseproducer", "", helper.options(NoiseProducer.getOptions(appUser)), false, false, "radio-orgs", "noiseproducer")
@@ -177,6 +169,13 @@
 	    
 	    <!-- Hidden fields required for full population when editing -->
 	    <input type="hidden" name="@appForm("status").name" id="@appForm("status").id" value="@appForm("status").value">
+	   	<input type="hidden" name="@appForm("parent.id").name" id="@appForm("parent.id").id" value="@appForm("parent.id").value">
+		<input type="hidden" name="@appForm("noiseproducer.id").name" id="@appForm("noiseproducer.id").id" value="@appForm("noiseproducer.id").value" />	
+		<input type="hidden" name="@appForm("regulator.id").name" id="@appForm("regulator.id").id" value="@appForm("regulator.id").value" />	
+		<input type="hidden" name="@appForm("non_licensable").name" id="@appForm("non_licensable").id" value="@appForm("non_licensable").value" />	
+		<input type="hidden" name="@appForm("date_start").name" id="@appForm("date_start").id" value="@appForm("date_start").value" />	
+		<input type="hidden" name="@appForm("date_end").name" id="@appForm("date_end").id" value="@appForm("date_end").value" />	
+		<input type="hidden" name="@appForm("duration").name" id="@appForm("duration").id" value="@appForm("duration").value" />	
 	        	    	   	    
 	    <div style="clear:both">&nbsp;</div>
 		
