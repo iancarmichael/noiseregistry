@@ -69,7 +69,7 @@ footer.help=Help
 footer.cookies=Cookies
 footer.termsandconditions=Terms and Conditions
 footer.contact=Contact
-footer.built_by=Built by
+footer.built_by=Operated by
 footer.name_suffix=
 
 buttons.start_now=Start now
@@ -89,7 +89,7 @@ date.field-hint=For example, 08 04 2015
 #Static pages text
 welcome.message_before_button=\
 	<p class="lede">\n\
-	This service is in the early stage of development. It should be used only by members of the development team and user group.\n\
+	This service is in development. It should be used only by members of the development team and user group.\n\
 	</p>\n\
 	<p class="font-small">\n\
 	If you are a member of the Noise Registry development team or user group please follow start now:\n\
@@ -252,11 +252,115 @@ contact.message=\
 termsandconditions.message=\
 	<h1 class="heading-large">Terms and Conditions</h1>\n\
 	<section>\n\
-	<p class="lede">\n\
-	Terms and conditions for the Marine Noise Registry are below.\n\
+	<p class="font-small">\n\
+	The primary purpose of the MNR is to collect data on the distribution in time and space of activities generating low to mid frequency impulsive noise across UK seas.  These data will enable the creation of noise maps and will inform research to determine whether current levels of noise are having an adverse effect on the marine environment. It may also be used for planning and management purposes in the future.\n\
 	</p>\n\
 	<p class="font-small">\n\
-	Terms and conditions will appear here.\n\
+	The MNR collates data on proposed and actual activities in UK waters that generate impulsive noise. The majority of submissions to the MNR will be those licensed by the following regulatory bodies: Department of Energy and Climate Change (DECC), Marine Management Organisation (MMO), Marine Scotland (MS), Department of the Environment Northern Ireland (DoE NI) and Natural Resources Wales (NRW). The MNR will also collect data on relevant noise-generating activities that are not licensed  as voluntary notifications, including activities carried out by the Ministry of Defence (MoD).\n\
+	</p>\n\
+	<p class="lede">\n\
+	1.	Terminology\n\
+	</p>\n\
+	<p class="font-small">\n\
+	<strong>Data Host:</strong> The organisation responsible for managing the MNR, the Joint Nature Conservation Committee (JNCC).<br />\n\
+	<strong>Data Provider:</strong> Any organisation or individual providing data on proposed or actual noise events to the MNR.  This may be a developer or regulatory body.<br />\n\
+	<strong>Data User:</strong> Any organisation or individual making use of data or data products from the MNR, whether obtained via openly available means (data.gov.uk) or via Freedom of Information requests or other means.<br />\n\
+	<strong>Noise Event:</strong> An individual activity that creates impulsive noise covered by the Register such as impact pile driving or seismic surveys.<br /> \n\
+	<strong>Organisation:</strong> A developer/contractor/operator that proposes to carry out a noise generating activity.<br />\n\
+	<strong>Source Property:</strong> Actual or estimated information that describes the noise source such as source volume or maximum hammer energy.<br /> \n\
+	</p>\n\
+	<p class="lede">\n\
+	2.	Purpose\n\
+	</p>\n\
+	<p class="font-small">\n\
+	This document makes transparent how permission to use and pass on data obtained from the MNR will be managed, to:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* ensure data are managed responsibly; \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* assure Data Providers of this fact; and \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* enable Data Users to better understand the limitations of the data and the conditions under which they are available.\n\
+	</p>\n\
+	<p class="lede">\n\
+	3.	Data Storage\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Data received are stored securely in the MNR which is held by the Data Host, the Joint Nature Conservation Committee (JNCC). All data are held in line with the Data Protection Act and government information management procedures. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Information contained in the MNR is limited to those activities for which information can be readily obtained by the Data Host from developers and regulators of noise activities. It does not necessarily contain information on all relevant activities producing impulsive noise and it does not provide any information on ambient sound.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	The core information held by the MNR is a temporal and spatial record of activities producing low to mid frequency (10 Hz to 10 kHz) impulsive noise, comprising records of both proposed and actual (completed) noise events. The spatial scale used is UK oil and gas licensing blocks, which cover an area of 10 minutes latitude by 12 minutes longitude. Location data for proposed activities may also include longitude/latitude points and polygons . The temporal scale is one calendar day (24 hours). The duration of each activity is recorded only in terms of the number of days over which noise events will occur. The MNR also collects additional data such as source properties  for all activities, both proposed and actual , and greater survey detail regarding the types of equipment used. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Data Users are reminded that any proposed activity information obtained from the MNR is, for the majority of cases, a ‘worst case scenario’ representation of the potential occurrence of impulsive noise both temporally and spatially. The primary purpose of the collection of the proposed information is to allocate due dates for the submission of close out reports (actual activity information) to the MNR thus ensuring their prompt completion after the end of a noise event. However, this data could in the future allow for analysis of the differences between proposed and actual work; the findings may help with future noise management if required. \n\
+	</p>\n\
+	<p class="lede">\n\
+	4.	Data access\n\
+	</p>\n\
+	<p class="font-small">\n\
+	In line with Government policy, MNR data will made publically available. Although the raw data held within the MNR will not be open access to the general public, it is available on request and through FOI and EIR. Outputs will be made publically available on an annual basis. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Access from within the MNR to data is as follows:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Members of organisations can access activity submissions made on behalf of that organisation. They cannot view any submission made by another organisation.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Regulators can only access activity submissions for which they are the named regulatory body.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* JNCC and Defra can access all activity submissions, proposed and actual, in order to manage the MNR and produce the required outputs.\n\
+	</p>\n\
+	<p class="lede">\n\
+	5.	Data Sharing\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Maps of noise events in UK waters will be made available from data.gov.uk. The maps will show, for each oil and gas block, the best available data on the number of days per month, season and year during which at least one noise event occurred (this unit is referred to as a pulse block day). Regular outputs of such maps are expected annually beginning 2016. Outputs will contain appropriate caveats to reduce the risk of misinterpretation (for example by highlighting gaps in coverage).\n\
+	</p>\n\
+	<p class="font-small">\n\
+	More detailed information from individual applications and licences will not be shown on the maps but are held within the MNR for further/future analysis. The data held within the MNR is also likely to be extracted and fed into a European (or OSPAR) common registry in the future.\n\
+	</p>\n\
+	<p class="lede">\n\
+	6.	Terms and Conditions for users of material, data and/or information\n\
+	</p>\n\
+	<p class="font-small">\n\
+	All raw data held in the MNR are made available upon request for use under the open government licence. Terms and Conditions are set out below. Data Providers have given the Data Host their permission to hold a copy of their data within the MNR and to disseminate it according to the terms laid out in this Data Access/Use Policy. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	Conditions of use:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* There are no restrictions on who can request raw data and information held by the MNR.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Users are free to copy, publish, distribute, transmit and exploit the information commercially and non-commercially, for example by combining it with other information or by including it in their own product or application.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* Users must acknowledge the source of the data in any information products or publications, whether printed, electronic or broadcast, that are based wholly or in part on data and/or information extracted from the MNR as follows: ‘These data were extracted from the Marine Noise Registry [at http://mnr.jncc.gov.uk] on the DD/MM/YYYY. Data are collated in the Marine Noise Registry to fulfil the UK requirement for monitoring loud, low to mid frequency impulsive noise for MSFD D11.1. These data are made available under the Open Government Licence.  The Data Host and Data Providers bear no responsibility for any further analysis or interpretation of the material, data and/or information provided.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	Accuracy of information and disclaimer:\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host tries to ensure that any data and/or information are accurate, but gives no guarantee that any data and/or information are accurate, up to date or complete.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host accepts no liability for any loss or damage caused by inaccurate, out of date or incomplete data and/or information. All users should independently verify any data and/or information before relying upon it. \n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The data and/or information provided do not constitute any form of advice or recommendation and are not substitutes for the exercise of professional judgement. Users that lack the qualifications and/or experience to make that judgement should take professional advice.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	* The Data Host is not responsible for viruses, or other code that might be harmful, which may be picked up during access or download processes. Each user is responsible for implementing sufficient anti-virus and other security checks to ensure the safety of their systems.\n\
+	</p>\n\
+	<p class="font-small">\n\
+	<strong>IMPORTANT: By accessing the MNR you are agreeing to be bound by these Terms and Conditions. These Terms and Conditions govern the way you can use all material, data and/or information provided to you. Please read them carefully.</strong>\n\
 	</p>\n\
 	</section>
 	
