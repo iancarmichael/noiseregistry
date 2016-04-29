@@ -1219,6 +1219,10 @@ public class ActivityApplication
         this.unsetNotNeeded();
     	this.setNeeded();
     	
+    	if (this.parent != null && this.parent.getId() == null) {
+    		this.parent = null;
+    	}
+    	
     	JPA.em().merge(this);
     }
     /**

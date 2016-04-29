@@ -574,7 +574,11 @@ public class ActivityApplicationController extends Controller {
 			
 		} else {
 			ActivityApplication aa = filledForm.get();
-
+			
+			if (aa.getParent() != null && aa.getParent().getId() == null) {
+				aa.setParent(null);
+			}
+			
 			if (aa!=null)
 			{
 				aa.save();
