@@ -8,6 +8,7 @@
 			@if(orgType!="REGULATOR") {
 				<li><a href="@routes.OrganisationController.list()">@play.twirl.api.Html(Messages("actions.join_organisation"))</a></li>
 			}
+			<li><a href="@routes.ChangePasswordController.index()">@play.twirl.api.Html(Messages("actions.change_password"))</a></li>			
 		</ul>
 	</nav>
 	 
