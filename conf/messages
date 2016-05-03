@@ -180,44 +180,125 @@ cookies.message=\
 	<p>\n\
 	These pieces of information are used to improve services for you through:\n\
 	</p>\n\
-	<ul class="list-bullet text">\n\
-	<li>enabling a service to recognise your device so you don't have to give the same information several times during one task</li>\n\
-	<li>recognising that you may already have given a username and password so you don't need to do it for every web page requested</li>\n\
-	<li>measuring how many people are using services, so they can be made easier to use and there's enough capacity to ensure they are fast</li>\n\
+	<ul class="list list-bullet">\n\
+	<li>Enabling a service to recognise your device so you don't have to give the same information several times during one task</li>\n\
+	<li>Recognising that you may already have given a username and password so you don't need to do it for every web page requested</li>\n\
+	<li>Measuring how many people are using services, so they can be made easier to use and there's enough capacity to ensure they are fast</li>\n\
 	</ul>\n\
 	<p>\n\
 	You can manage these small files yourself and learn more about them through \n\
 	<a href="http://www.aboutcookies.org">Internet browser cookies - what they are and how to manage them</a>\n\
 	</p>\n\
 	<h2 class="heading-medium">Our use of cookies</h2>\n\
-	<p>\n\
-	A session cookie is used to ensure that choices are preserved during your visit to our site<br />\n\
-	Cookie Name: PLAY_SESSION<br />\n\
-	Typical content: randomly generated hexadecimal number and the registered email address of the user<br />\n\
-	Expires: when user exits browser<br />\n\
-	<br />\n\
-	A session cookie is used to ensure that the correct content is displayed following user login<br />\n\
-	Cookie Name: redirectTo<br />\n\
-	Typical content: url path of the content to be displayed following login<br />\n\
-	Expires: when the user exits the browser, or when the user successfully logs in to the service<br />\n\
-	<br />\n\
-	Google Analytics sets cookies to help us accurately estimate the number of visitors to the website and volumes of usage. This to ensure that the service is available when you want it and fast.<br />\n\
-	Cookie Name: _utma<br />\n\
-	Typical content: randomly generated number<br />\n\
-	Expires: 2 years<br />\n\
-	<br />\n\
-	Cookie Name: _utmb<br />\n\
-	Typical content: randomly generated number<br />\n\
-	Expires: 30 minutes<br />\n\
-	<br />\n\
-	Cookie Name: _utmc<br />\n\
-	Typical content: randomly generated number<br />\n\
-	Expires: when user exits browser<br />\n\
-	<br />\n\
-	Cookie Name: _utmz<br />\n\
-	Typical content: randomly generated number + info on how the site was reached (e.g. directly or via a link, organic search or paid search)<br />\n\
-	Expires: 6 months\n\
-	</p>\n\
+	<p>A session cookie is used to ensure that choices are preserved during your visit to our site</p>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>PLAY_SESSION</td>\n\
+                <td>Randomly generated hexadecimal number and the registered email address of the user</td>\n\
+                <td>When user exits browser</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+	<p><br/>A session cookie is used to ensure that the correct content is displayed following user login</p>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>redirectTo</td>\n\
+                <td>URL path of the content to be displayed following login</td>\n\
+                <td>When the user exits the browser, or when the user successfully logs in to the service</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <h3 class="heading-small">Universal Analytics</h3>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>_ga</td>\n\
+                <td>This helps us count how many people visit this site by tracking if you've visited before</td>\n\
+                <td>2 years</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_gat</td>\n\
+                <td>Used to manage the rate at which page view requests are made</td>\n\
+                <td>10 minutes</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <h3 class="heading-small">Google Analytics</h3>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>_utma</td>\n\
+                <td>Like _ga, this lets us know if you’ve visited before, so we can count how many of our visitors are new to this site or to a certain page</td>\n\
+                <td>2 years</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmb</td>\n\
+                <td>This works with _utmc to calculate the average length of time you spend on this site</td>\n\
+                <td>30 minutes</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmc</td>\n\
+                <td>This works with _utmb to calculate when you close your browser</td>\n\
+                <td>When you close your browser</td>\n\
+            </tr>\n\
+            <tr>\n\
+                <td>_utmz</td>\n\
+                <td>This tells us how you reached this site (eg from another website or a search engine)</td>\n\
+                <td>6 months</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
+    <p><br />You can <a class="external-link" href="https://tools.google.com/dlpage/gaoptout">opt out of Google Analytics cookies</a></p>\n\
+    <h3 class="heading-small">Our introductory message</h3>\n\
+    <p>\n\
+        You may see a pop-up welcome message when you first visit this site. We’ll store a cookie so that your computer knows you've seen it and knows not to show it again.\n\
+    </p>\n\
+    <table>\n\
+        <thead>\n\
+            <tr>\n\
+                <th>Name</th>\n\
+                <th>Purpose</th>\n\
+                <th>Expires</th>\n\
+            </tr>\n\
+        </thead>\n\
+        <tbody>\n\
+            <tr>\n\
+                <td>seen_cookie_message</td>\n\
+                <td>Saves a message to let us know that you’ve seen our cookie message</td>\n\
+                <td>1 month</td>\n\
+            </tr>\n\
+        </tbody>\n\
+    </table>\n\
 	</section>
 	
 contact.message=\
