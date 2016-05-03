@@ -424,19 +424,12 @@ termsandconditions.message=\
 ################################  HOME ITEMS ###############################################
 home.title=Welcome 
 home.intro=\
-	<p class="font-small">\n\
-	Please read the "Requirements of the Marine Noise Registry" (available soon) before submitting any \n\
-	activity notifications. This is accessed through the <a href="/help">Help</a> link at the bottom of all pages.\n\
-	</p>\n\
-	<p class="font-small">\n\
-	Please choose an action from the menu below:\n\
+	<p class="lede">\n\
+	To begin, choose an action from the menu below:\n\
 	</p>
 home.intro.regulator=\
-	<p class="font-small">\n\
-	Please choose an action from the menu below.\n\
-	</p>\n\
-	<p class="font-small">\n\
-	If you require help or guidance, select the <a href="/help">Help</a> link available at the bottom of all pages.\n\
+	<p class="lede">\n\
+	To begin, choose an action from the menu below:\n\
 	</p>
 
 ################################  ACTIVITY ITEMS ###############################################
