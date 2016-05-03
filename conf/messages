@@ -190,7 +190,7 @@ cookies.message=\
 	<a href="http://www.aboutcookies.org">Internet browser cookies - what they are and how to manage them</a>\n\
 	</p>\n\
 	<h2 class="heading-medium">Our use of cookies</h2>\n\
-	<p>A session cookie is used to ensure that choices are preserved during your visit to our site</p>\n\
+	<p></p>\n\
     <table>\n\
         <thead>\n\
             <tr>\n\
@@ -202,24 +202,12 @@ cookies.message=\
         <tbody>\n\
             <tr>\n\
                 <td>PLAY_SESSION</td>\n\
-                <td>Randomly generated hexadecimal number and the registered email address of the user</td>\n\
+                <td>A session cookie is used to ensure that choices are preserved during your visit to our site, contains a randomly generated hexadecimal number and the registered email address of the user</td>\n\
                 <td>When user exits browser</td>\n\
             </tr>\n\
-        </tbody>\n\
-    </table>\n\
-	<p><br/>A session cookie is used to ensure that the correct content is displayed following user login</p>\n\
-    <table>\n\
-        <thead>\n\
-            <tr>\n\
-                <th>Name</th>\n\
-                <th>Purpose</th>\n\
-                <th>Expires</th>\n\
-            </tr>\n\
-        </thead>\n\
-        <tbody>\n\
             <tr>\n\
                 <td>redirectTo</td>\n\
-                <td>URL path of the content to be displayed following login</td>\n\
+                <td>A session cookie is used to ensure that the correct content is displayed following user login, contains a URL path of the content to be displayed following login</td>\n\
                 <td>When the user exits the browser, or when the user successfully logs in to the service</td>\n\
             </tr>\n\
         </tbody>\n\
