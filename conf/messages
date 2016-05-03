@@ -212,6 +212,8 @@ cookies.message=\
             </tr>\n\
         </tbody>\n\
     </table>\n\
+    <h3 class="heading-small">Measuring website usage (Google Analytics)</h3>\n\
+    <p>We use Google Analytics software to collect information about how you use GOV.UK. We do this to help make sure the site is meeting the needs of its users and to help us make improvements.</p>\n\
     <h3 class="heading-small">Universal Analytics</h3>\n\
     <table>\n\
         <thead>\n\
