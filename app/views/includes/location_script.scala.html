@@ -14,12 +14,18 @@ var dpOptions = {
 	      			    	m = date.getMonth()+1;
 	      			    	if (s!="")
 	      			    		s+=", ";
-	      			        target.val(s+date.getDate()+"/"+m+"/"+date.getFullYear());
+	      			        target.val(s + pad(date.getDate(), 2) + "/" + m + "/" + pad(date.getFullYear()), 2);
 	      			    }
 	      			};
 	      			
 function datepicker_init() {
 	$('.activitylocations .closeoutdate').glDatePicker(dpOptions);
+}
+
+function pad(num, size) {
+	var out = num + ""; // force string
+	while (out.length < size) out = "0" + out;
+	return out;
 }
 
 datepicker_init();
