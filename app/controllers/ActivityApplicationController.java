@@ -557,7 +557,8 @@ public class ActivityApplicationController extends Controller {
 			if (request().accepts("text/html")) 
 			{
 				ActivityApplication aaParent = null;
-				if (filledForm.data().get("parent.id")!=null)
+				
+				if (filledForm.data().get("parent.id") != null && !filledForm.data().get("parent.id").isEmpty())
 				{
 					Long lPar = Long.parseLong((String)filledForm.data().get("parent.id"));
 					aaParent = ActivityApplication.findById(lPar);

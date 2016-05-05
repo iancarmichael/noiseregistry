@@ -56,6 +56,8 @@ import play.data.format.*;
 import play.data.validation.*;
 import play.db.jpa.*;
 import play.i18n.Messages;
+import validators.CheckNoiseProducer;
+import validators.CheckRegulator;
 
 /**
  * Named queries for ActivityApplication functions.  The names are scoped at the persistence unit
@@ -113,6 +115,7 @@ public class ActivityApplication
     @ManyToOne(optional=false)
     @JoinColumn(name="noiseproducer_id")
     @Valid 
+    @CheckNoiseProducer
     @NotNull(message="validation.required")
     @ApiModelProperty(position=2, required=true)
     protected NoiseProducer noiseproducer;
@@ -125,6 +128,7 @@ public class ActivityApplication
     @ManyToOne(optional=false)
     @JoinColumn(name="regulator_id")    
     @Valid
+    @CheckRegulator
     @NotNull(message="validation.required")
     @ApiModelProperty(position=3, required=true)
     protected Regulator regulator;

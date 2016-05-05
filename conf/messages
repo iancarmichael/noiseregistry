@@ -719,6 +719,8 @@ validation.appcloseout.noactivity=No activity has been recorded.  Please enter a
 	(latitude/longitude point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
 validation.noiseproducer.invalid=Invalid organisation
 validation.regulator.invalid=Invalid regulator
+validation.noiseproducer.null=No organisation selected, please select an organisation
+validation.regulator.null=No organisation selected, please select an organisation
 error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking
  
 
