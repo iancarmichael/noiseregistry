@@ -451,6 +451,10 @@ public class ActivityApplicationController extends Controller {
 			aa.setClosing(true);
 			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.bindFromRequest();
 			
+			if (filledForm.get().getActivitylocations() == null || filledForm.get().getActivitylocations().isEmpty()) {
+				filledForm.reject(new ValidationError("", Messages.get("validation.closeout.locations.empty")));
+			}
+			
 			if (filledForm.hasErrors()) 
 			{
 				if (request().accepts("text/html")) {
