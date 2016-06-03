@@ -102,20 +102,20 @@ welcome.message_before_button=\
 			inform the definition and assessment of Good Environmental Status.\n\
 		</p>\n\
 		<p class="font-small">\n\
-			Information held by the MNR will be used to produce impulsive noise event distribution maps annually \n\
-			beginning 2016 made available from <a href="http://data.gov.uk">data.gov.uk</a>.\n\
+			Information held by the MNR is used to produce impulsive noise event distribution maps. Maps will become \n\
+			available at the end of 2016 from  <a href="http://data.gov.uk">data.gov.uk</a>.\n\
 		</p>\n\
 		<p class="font-small">\n\
 			Data input to the MNR is required for the following activities occurring within UK seas either through \n\
 			licence condition or voluntarily input:\n\
 		</p>\n\
-		<ul class="list list-bullet font-small">\n\
+		<ul class="list list-bullet font-small" style="margin-bottom: 20px;">\n\
 			<li>Seismic surveys</li>\n\
 			<li>Sub bottom profiling</li>\n\
 			<li>Impact pile driving</li>\n\
 			<li>Explosive detonation</li>\n\
 			<li>Acoustic deterrent devices</li>\n\
-			<li>Multibeam echo-sounders (<12kHz)</li>\n\
+			<li>Multibeam echo-sounders (&le;12kHz)</li>\n\
 		</ul>\n\
 		<p class="font-small">\n\
 			For each activity, data input is completed via the completion of a proposed activity form (detailing \n\
@@ -425,11 +425,11 @@ termsandconditions.message=\
 home.title=Welcome 
 home.intro=\
 	<p class="lede">\n\
-	To begin, choose an action from the menu below:\n\
+	To begin, choose an action from the menu below. Help is available via a link at the bottom of each page.\n\
 	</p>
 home.intro.regulator=\
 	<p class="lede">\n\
-	To begin, choose an action from the menu below:\n\
+	To begin, choose an action from the menu below. Help is available via a link at the bottom of each page.\n\
 	</p>
 
 ################################  ACTIVITY ITEMS ###############################################
@@ -525,9 +525,9 @@ activityform.field_hint.seismic_othersurvey_type=Please give details
 activityform.field_heading.seismic_data_type=Data Type
 activityform.field_heading.seismic_max_airgun=Maximum Airgun Volume
 activityform.field_hint.seismic_max_airgun=An integer value
-activityform.field_heading.seismic_sound_pressure=Sound Pressure Level
+activityform.field_heading.seismic_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.seismic_sound_pressure=An integer value
-activityform.field_heading.seismic_sound_exposure=Sound Exposure Level
+activityform.field_heading.seismic_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.seismic_sound_exposure=An integer value
 activityform.field_heading.seismic_max_airgun_actual=Actual Maximum Airgun Volume
 activityform.field_hint.seismic_max_airgun_actual=An integer value
@@ -539,9 +539,9 @@ activityform.field_hint.seismic_sound_exposure_actual=An integer value
 activityform.field_heading.sbp_source=Source
 activityform.field_heading.sbp_frequency=Frequency
 activityform.field_hint.sbp_frequency=An integer value
-activityform.field_heading.sbp_sound_pressure=Sound Pressure Level
+activityform.field_heading.sbp_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.sbp_sound_pressure=An integer value
-activityform.field_heading.sbp_sound_exposure=Sound Exposure Level
+activityform.field_heading.sbp_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.sbp_sound_exposure=An integer value
 activityform.field_heading.sbp_frequency_actual=Actual Frequency
 activityform.field_hint.sbp_frequency_actual=An integer value
@@ -552,9 +552,9 @@ activityform.field_hint.sbp_sound_exposure_actual=An integer value
 
 activityform.field_heading.piling_max_hammer=Maximum Hammer Energy
 activityform.field_hint.piling_max_hammer=An integer value
-activityform.field_heading.piling_sound_pressure=Sound Pressure Level
+activityform.field_heading.piling_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.piling_sound_pressure=An integer value
-activityform.field_heading.piling_sound_exposure=Sound Exposure Level
+activityform.field_heading.piling_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.piling_sound_exposure=An integer value
 activityform.field_heading.piling_max_hammer_actual=Actual Maximum Hammer Energy
 activityform.field_hint.piling_max_hammer_actual=An integer value
@@ -565,9 +565,9 @@ activityform.field_hint.piling_sound_exposure_actual=An integer value
 
 activityform.field_heading.explosive_tnt=TNT Equivalent
 activityform.field_hint.explosive_tnt=To one decimal place
-activityform.field_heading.explosive_sound_pressure=Sound Pressure Level
+activityform.field_heading.explosive_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.explosive_sound_pressure=An integer value
-activityform.field_heading.explosive_sound_exposure=Sound Exposure Level
+activityform.field_heading.explosive_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.explosive_sound_exposure=An integer value
 activityform.field_heading.explosive_tnt_actual=Actual TNT Equivalent
 activityform.field_hint.explosive_tnt_actual=To one decimal place
@@ -578,9 +578,9 @@ activityform.field_hint.explosive_sound_exposure_actual=An integer value
 
 activityform.field_heading.acoustic_frequency=Frequency
 activityform.field_hint.acoustic_frequency=An integer value
-activityform.field_heading.acoustic_sound_pressure=Sound Pressure Level
+activityform.field_heading.acoustic_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.acoustic_sound_pressure=An integer value
-activityform.field_heading.acoustic_sound_exposure=Sound Exposure Level
+activityform.field_heading.acoustic_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.acoustic_sound_exposure=An integer value
 activityform.field_heading.acoustic_frequency_actual=Actual Frequency
 activityform.field_hint.acoustic_frequency_actual=An integer value
@@ -591,9 +591,9 @@ activityform.field_hint.acoustic_sound_exposure_actual=An integer value
 
 activityform.field_heading.mb_frequency=Frequency
 activityform.field_hint.mb_frequency=An integer value
-activityform.field_heading.mb_sound_pressure=Sound Pressure Level
+activityform.field_heading.mb_sound_pressure=Sound pressure level at 1 meter over frequency band 10Hz - 10KHz
 activityform.field_hint.mb_sound_pressure=An integer value
-activityform.field_heading.mb_sound_exposure=Sound Exposure Level
+activityform.field_heading.mb_sound_exposure=Sound exposure level at 1 meter over frequency band 10Hz – 10KHz
 activityform.field_hint.mb_sound_exposure=An integer value
 activityform.field_heading.mb_frequency_actual=Actual Frequency
 activityform.field_hint.mb_frequency_actual=An integer value
@@ -701,7 +701,7 @@ validation.required=Value must be entered
 validation.min=Value must be greater or equal to {0}
 validation.max=Value must be less than or equal to {0}
 validation.invalidrange=Value must be between {1} and {0}
-validation.duration.too_long=Duration is too long for the entered start and end dates
+validation.duration.too_long=Duration exceeds the number of days between the entered start and end date’
 validation.not.valid.start=The start date must be a valid date on or after 01 Jan 2000
 validation.not.valid.end=The end date must be a valid date
 validation.not.valid.closed=The date closed must be a valid date
@@ -719,8 +719,9 @@ validation.appcloseout.noactivity=No activity has been recorded.  Please enter a
 	(latitude/longitude point or Oil and Gas Block) and the corresponding dates on which the activity occurred.
 validation.noiseproducer.invalid=Invalid organisation
 validation.regulator.invalid=Invalid regulator
-validation.noiseproducer.null=No organisation selected, please select an organisation
-validation.regulator.null=No organisation selected, please select an organisation
+validation.noiseproducer.null=Please select an organisation
+validation.regulator.null=Please select an organisation
+validation.closeout.locations.empty=A location must be added before close-out
 error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking
  
 
@@ -876,30 +877,31 @@ organisationconfirmdelete.postname=Press the confirm button if you are sure you 
 
 userjoinrequest.mail.subject=Marine Noise Registry - User Application for Organisation Membership
 userjoinrequest.mail.salutation={0} Administrators,
-userjoinrequest.mail.preamble=<p>User {1} (email {2}) has applied for membership of your organisation. To grant membership, please visit the Marine Noise Registry.</p>
+userjoinrequest.mail.preamble=<p>User {1} (email {2}) has applied for membership to {0}. Please log onto the Marine Noise Registry to accept or reject membership.</p>
 userjoinrequest.mail.linktext=Marine Noise Registry
 userjoinrequest.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
 
 userremoval.mail.subject=Marine Noise Registry - User Removal
 userremoval.mail.salutation={0},
-userremoval.mail.preamble=<p>You have been removed from {0}.  You will no longer be able to view or complete activity notices on behalf of {0}.</p> 
+userremoval.mail.preamble=<p>You have been removed from {0}. You will no longer be able to view or complete activity notices on behalf of {0}. If this was an error please re-apply for membership or contact the organisation directly.</p> 
 userremoval.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
+userremoval.mail.linktext=Marine Noise Registry
 
 userremovaladmin.mail.subject=Marine Noise Registry - Organisation Membership Removal
-userremovaladmin.mail.salutation={0} Administrators,
-userremovaladmin.mail.preamble=<p>{0} has been successfully removed from the organisation {1} and will no longer be able to view or complete activity notices on behalf of {1}.</p>
+userremovaladmin.mail.salutation={0} administrators,
+userremovaladmin.mail.preamble=<p>{0} has been successfully removed from the organisation therefore will no longer be able to view or complete activity notices on behalf of {1}.</p>
 userremovaladmin.mail.linktext=Marine Noise Registry
 userremovaladmin.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
 
 useraccept.mail.subject=Marine Noise Registry - Organisation Membership Approved
 useraccept.mail.salutation={0},
-useraccept.mail.preamble=<p>Your membership for {0} has been approved.  You may now login and begin to create and complete activity notices for the organisation.</p> 
+useraccept.mail.preamble=<p>Your membership for {0} has been approved.  You may login and complete activity notices on behalf of the organisation by following the link below.</p> 
 useraccept.mail.linktext=Marine Noise Registry
 useraccept.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
 
 userreject.mail.subject=Marine Noise Registry - Organisation Membership Rejected 
 userreject.mail.salutation={0},
-userreject.mail.preamble=<p>Your membership for {0} has been rejected because: {1}.  If you believe this was in error, please contact the organisation to clarify the situation.</p>
+userreject.mail.preamble=<p>Your membership for {0} has been rejected because: {1}. If you believe this was in error, please contact the organisation to clarify the situation and re-apply for membership.</p>
 userreject.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 adminorganisations.title=Organisations
