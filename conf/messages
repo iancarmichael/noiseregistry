@@ -482,6 +482,7 @@ activities.tableheading_activity_type=Activity Type
 activities.tableheading_status=Status
 activities.tableheading_start_date=Start Date
 activities.tableheading_end_date=End Date
+activities.tableheading_earliest_start_date=Earliest Start Date
 activities.tableheading_closed_date=Closed Date
 activities.tableheading_report_due_date=Close-out Report Due Date
 activities.tableheading_regulator=Regulator
@@ -912,53 +913,25 @@ form.abort=You will lose all data entered.  Are you sure you wish to cancel?
 
 regulator.activity.proposed.mail.subject=Marine Noise Registry - Proposed Activity Submission
 regulator.activity.proposed.mail.salutation={0},
-regulator.activity.proposed.mail.preamble=<p>{0} has submitted the following proposed activity notice:<br />\n\
-	<br />\n\
-	AAN: {1}<br />\n\
-	Activity Type: {2}<br />\n\
-	Earliest Start Date: {3}<br />\n\
-	Close-Out Report Due: {4}<br />\n\
-	<br />\n\
-	For more information please visit the Marine Noise Registry.</p>
+regulator.activity.proposed.mail.preamble=<p>{0} has submitted a proposed activity form for the following activity:<br /><br />
 regulator.activity.proposed.mail.linktext=Proposed Activity
 regulator.activity.proposed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 regulator.activity.cancelled.mail.subject=Marine Noise Registry - Activity Cancellation
 regulator.activity.cancelled.mail.salutation={0},
-regulator.activity.cancelled.mail.preamble=<p>{0} has cancelled the following activity:<br />\n\
-	<br />\n\
-	AAN: {1}<br />\n\
-	Activity Type: {2}<br />\n\
-	Earliest Start Date: {3}<br />\n\
-	Close-Out Report Due: {4}<br />\n\
-	<br />\n\
-	For more information please visit the Marine Noise Registry.</p>
+regulator.activity.cancelled.mail.preamble=<p>{0} has cancelled the following activity:<br /><br />
 regulator.activity.cancelled.mail.linktext=Cancelled Activity
 regulator.activity.cancelled.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
 regulator.activity.closed.mail.subject=Marine Noise Registry - Close-out Report Submission
 regulator.activity.closed.mail.salutation={0},
-regulator.activity.closed.mail.preamble=<p>{0} has submitted a close-out report for the following activity:<br />\n\
-	<br />\n\
-	AAN: {1}<br />\n\
-	Activity Type: {2}<br />\n\
-	Earliest Start Date: {3}<br />\n\
-	Close-Out Report Due: {4}<br />\n\
-	<br />\n\
-	For more information please visit the Marine Noise Registry.</p>
+regulator.activity.closed.mail.preamble=<p>{0} has submitted a close-out report for the following activity:<br /><br />
 regulator.activity.closed.mail.linktext=Closed Activity
 regulator.activity.closed.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p> 
 
 regulator.activity.interim_close-out.mail.subject=Marine Noise Registry - Interim Close-out Data Submission
 regulator.activity.interim_close-out.mail.salutation={0},
-regulator.activity.interim_close-out.mail.preamble=<p>{0} has submitted interim close-out data for the following activity:<br />\n\
-	<br />\n\
-	AAN: {1}<br />\n\
-	Activity Type: {2}<br />\n\
-	Earliest Start Date: {3}<br />\n\
-	Close-Out Report Due: {4}<br />\n\
-	<br />\n\
-	For more information please visit the Marine Noise Registry.</p>
+regulator.activity.interim_close-out.mail.preamble=<p>{0} has submitted interim close-out data for the following activity:<br /><br />
 regulator.activity.interim_close-out.mail.linktext=Activity
 regulator.activity.interim_close-out.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
 
