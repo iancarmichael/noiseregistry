@@ -31,6 +31,7 @@ To start the JNCC application:
 	- Change to the directory entered in 3.6
 	- Run activator eclipse (this is only needed if the dependencies have been changed, or on first use)
 	- Run activator -Dconfig.file=conf/dev.conf ~run (needed every time application to be launched)
+	  - Run activator -Dconfig.file=conf/dev.conf -jvm-debug 9999 run (To debug with eclipse)
 
 This will take a bit of time (possibly up to half an hour) on the first run as it downloads all the dependencies, but when it completes you should be able to browse to 
 	http://localhost:9000
