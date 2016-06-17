@@ -32,6 +32,7 @@ actions.edit_draft_application=Edit draft activity
 actions.create_linked_application=Create linked activity
 actions.delete_draft_application=Delete draft activity
 actions.view_proposed_applications=View proposed activities/submit close-out report
+actions.view_proposed_applications_regulator=View proposed activities
 actions.view_completed_applications=View completed activities
 actions.create_new_application=Create new proposed activity
 actions.organisation_administration=Administer organisations
