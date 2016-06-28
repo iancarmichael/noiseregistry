@@ -14,7 +14,12 @@
 				}
 			}
 			@if(context!="PROPOSEDAPPLS") {
-				<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications"))</a></li>
+				@if(orgType=="REGULATOR") {
+					<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications_regulator"))</a></li>
+				}
+				@if(orgType=="NOISEPRODUCER") {
+					<li><a href="@routes.ActivityApplicationController.index()">@play.twirl.api.Html(Messages("actions.view_proposed_applications"))</a></li>
+				}
 			}
 			@if(context!="COMPLETEDAPPLS") {
 				<li><a href="@routes.ActivityApplicationController.findCompleted()">@play.twirl.api.Html(Messages("actions.view_completed_applications"))</a></li>

@@ -35,8 +35,8 @@
 
 		@helper.form(action = routes.OrganisationController.deleteuser(), 'id -> "form") {
 			<input type="hidden" name="id" value="@ou.getId().toString()">
-			<a href="@routes.OrganisationController.getuser(ou.getId().toString())">@play.twirl.api.Html(Messages("form.cancel"))</a>
         	<button class="button" type="submit" name="action" value="submit">@Messages("form.confirm")</button>
+        	<a href="@routes.OrganisationController.getuser(ou.getId().toString())">@play.twirl.api.Html(Messages("form.cancel"))</a>
         }
 	 		</div>
   		</div>

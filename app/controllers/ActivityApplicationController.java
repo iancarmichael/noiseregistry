@@ -451,6 +451,10 @@ public class ActivityApplicationController extends Controller {
 			aa.setClosing(true);
 			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.bindFromRequest();
 			
+			if (filledForm.get().getActivitylocations() == null || filledForm.get().getActivitylocations().isEmpty()) {
+				filledForm.reject(new ValidationError("", Messages.get("validation.closeout.locations.empty")));
+			}
+			
 			if (filledForm.hasErrors()) 
 			{
 				if (request().accepts("text/html")) {
@@ -557,7 +561,8 @@ public class ActivityApplicationController extends Controller {
 			if (request().accepts("text/html")) 
 			{
 				ActivityApplication aaParent = null;
-				if (filledForm.data().get("parent.id")!=null)
+				
+				if (filledForm.data().get("parent.id") != null && !filledForm.data().get("parent.id").isEmpty())
 				{
 					Long lPar = Long.parseLong((String)filledForm.data().get("parent.id"));
 					aaParent = ActivityApplication.findById(lPar);
@@ -574,7 +579,11 @@ public class ActivityApplicationController extends Controller {
 			
 		} else {
 			ActivityApplication aa = filledForm.get();
-
+			
+			if (aa.getParent() != null && aa.getParent().getId() == null) {
+				aa.setParent(null);
+			}
+			
 			if (aa!=null)
 			{
 				aa.save();
