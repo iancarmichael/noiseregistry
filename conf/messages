@@ -946,5 +946,5 @@ noiseproducer.activity.latecloseout.mail.subject=Marine Noise Registry - Late Ac
 noiseproducer.activity.latecloseout.mail.salutation={0},
 noiseproducer.activity.latecloseout.mail.preamble=<p>The following Activity notice(s) have not been closed and are now overdue:</p>
 noiseproducer.activity.latecloseout.mail.linktext=Activity
-noiseproducer.activity.latecloseout.mail.footer=<p>Regards,</p><p>Marine Noise Registry</p>  
+noiseproducer.activity.latecloseout.mail.footer=<p>If an activity has been cancelled please reply to this email with "Cancelled activity and the AAN" in the subject line.</p><p>Regards,</p><p>Marine Noise Registry</p>  
 
