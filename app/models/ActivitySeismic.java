@@ -3,6 +3,7 @@ package models;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 //import javax.validation.constraints.NotNull;
+
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.DefaultValue;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -39,11 +43,17 @@ public class ActivitySeismic extends DefaultableActivity
     protected ActivityApplication aa;
     
 	@Column(length=10)
-	@NotBlank(message="validation.required")
+	/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
+	@DefaultValue(value = "")
+	//@NotBlank(message="validation.required")
+	/** TODO: End Fix **/
 	protected String survey_type;
 	
 	@Column(length=2)
-	@NotBlank(message="validation.required")
+	/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
+	@DefaultValue(value = "")
+	//@NotBlank(message="validation.required")
+	/** TODO: End Fix **/
 	protected String data_type;
 	
 	@Column(length=50)
@@ -256,6 +266,10 @@ public class ActivitySeismic extends DefaultableActivity
 	 */
 	public static String surveyTypeValue(String s)
 	{
+		/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
+		if (s == null || s.isEmpty()) 
+			return "";
+		/** TODO: End Remove **/
 		if (s.compareTo("OBC/OBN")==0)
 			return Messages.get("field_option.OBCOBN");
 		if (s.compareTo("VSP")==0)
@@ -291,6 +305,10 @@ public class ActivitySeismic extends DefaultableActivity
 	 */
 	public static String dataTypeValue(String s)
 	{
+		/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
+		if (s == null || s.isEmpty()) 
+			return "";
+		/** TODO: End Remove **/
 		if (s.compareTo("2D")==0)
 			return Messages.get("field_option.2D");
 		if (s.compareTo("3D")==0)

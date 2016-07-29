@@ -963,12 +963,14 @@ public class ActivityApplication
 				}
 			}
 			
-			if (activitytype_id==ActivityTypes.Seismic_Survey.toLong()) {
-				if (getActivitySeismic().survey_type.compareToIgnoreCase("other")==0 && getActivitySeismic().other_survey_type.trim().compareTo("")==0)
-				{
-					errors.add(new ValidationError("activitySeismic.other_survey_type",  Messages.get("validation.required")));
-				}
-			}	
+			/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
+//			if (activitytype_id==ActivityTypes.Seismic_Survey.toLong()) {
+//				if (getActivitySeismic().survey_type.compareToIgnoreCase("other")==0 && getActivitySeismic().other_survey_type.trim().compareTo("")==0)
+//				{
+//					errors.add(new ValidationError("activitySeismic.other_survey_type",  Messages.get("validation.required")));
+//				}
+//			}	
+			/** TODO: Remove Temporary Change made, really should not exist *SeismicActiviyChange* **/
 			
 		}
 		catch (Exception e)
