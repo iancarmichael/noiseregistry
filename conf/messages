@@ -1,7 +1,7 @@
 # Template messages
 jncc.full_name=Joint Nature Conservation Committee
 jncc.abbrev_name=JNCC
-jncc.googleanalytics.code=UA-49672752-1
+jncc.googleanalytics.code=UA-81181748-1
 
 application.app_name=Marine Noise Registry
 application.service_name=Marine Noise Registry Service
@@ -9,7 +9,7 @@ application.service_name=Marine Noise Registry Service
 header.start_title=GOV.UK
 header.subtitle=Record noise activity in UK waters
 
-phasebanner.phase=ALPHA
+phasebanner.phase=BETA
 phasebanner.before_link=This is a new service - your 
 phasebanner.link_text=feedback
 phasebanner.after_link=will help us to improve it.
@@ -91,24 +91,13 @@ date.field-hint=For example, 08 04 2015
 #Static pages text
 welcome.message_before_button=\
 	<p class="lede">\n\
-		The Marine Noise Registry (MNR) is the UK’s option for monitoring impulsive, low to medium frequency \n\
-		(10Hz – 10kHz) marine, man-made noise. This approach is consistent with the UK Marine Strategy and \n\
-		implementation of the Marine Strategy Framework Directive.\n\
+		Defra and JNCC have developed the Marine Noise Registry (MNR) to record human activities in UK seas that produce \n\
+		loud, low to medium frequency (10Hz – 10kHz) impulsive noise. Developing the MNR was a commitment made in the \n\
+		<a href="https://www.gov.uk/government/publications/marine-strategy-part-one-uk-initial-assessment-and-good-environmental-status">UK Marine Strategy</a>.\n\
 	</p>\n\
 	<section>\n\
 		<p class="font-small">\n\
-			The initial purpose of monitoring man-made impulsive noise is to quantify the pressure on the environment, \n\
-			by making available an overview of relevant loud impulsive low and mid-frequency sound sources, throughout \n\
-			the year. This in turn will aid in the definition of a baseline level for impulsive noise in UK waters and \n\
-			inform the definition and assessment of Good Environmental Status.\n\
-		</p>\n\
-		<p class="font-small">\n\
-			Information held by the MNR is used to produce impulsive noise event distribution maps. Maps will become \n\
-			available at the end of 2016 from  <a href="http://data.gov.uk">data.gov.uk</a>.\n\
-		</p>\n\
-		<p class="font-small">\n\
-			Data input to the MNR is required for the following activities occurring within UK seas either through \n\
-			licence condition or voluntarily input:\n\
+			Activities include;\n\
 		</p>\n\
 		<ul class="list list-bullet font-small" style="margin-bottom: 20px;">\n\
 			<li>Seismic surveys</li>\n\
@@ -119,10 +108,19 @@ welcome.message_before_button=\
 			<li>Multibeam echo-sounders (&le;12kHz)</li>\n\
 		</ul>\n\
 		<p class="font-small">\n\
-			For each activity, data input is completed via the completion of a proposed activity form (detailing \n\
-			the planned activity) and a close-out report (an accurate account of where and when the activity had \n\
-			occurred). Data specifics include location, dates and source property data; frequency, maximum airgun \n\
-			volume, maximum hammer energy, TNT equivalent, sound pressure level and sound exposure level.\n\
+			Data input to the MNR is via completion of 2 simple forms, the first a proposed activity form (detailing \n\
+			the planned activity) and second a close-out report (an accurate account of where and when the activity had \n\
+			occurred). Data specifics include location, dates and source property data; frequency, maximum airgun volume, \n\
+			maximum hammer energy, TNT equivalent, sound pressure level and sound exposure level. \n\
+		</p>\n\
+		<p class="font-small">\n\
+			The initial purpose of monitoring man-made impulsive noise is to quantify the pressure on the environment by \n\
+			making available an overview of relevant impulsive sound sources, throughout the year. This in turn will aid \n\
+			in the definition of a baseline level for impulsive noise in UK waters. </p> \n\
+		<p class="font-small">\n\
+			Maps will be produced annually showing the spread of activities across UK seas and made available from: \n\
+			<a href="https://data.gov.uk/">https://data.gov.uk/</a>. Data contained within the MNR is available upon \n\
+			request from JNCC.\n\
 		</p>\n\
 		<p class="font-small">\n\
 			Select Start Now to enter the MNR and begin submission of activity data.\n\
@@ -703,7 +701,7 @@ validation.required=Value must be entered
 validation.min=Value must be greater or equal to {0}
 validation.max=Value must be less than or equal to {0}
 validation.invalidrange=Value must be between {1} and {0}
-validation.duration.too_long=Duration exceeds the number of days between the entered start and end date’
+validation.duration.too_long=Duration exceeds the number of days between the entered start and end date
 validation.not.valid.start=The start date must be a valid date on or after 01 Jan 2000
 validation.not.valid.end=The end date must be a valid date
 validation.not.valid.closed=The date closed must be a valid date
