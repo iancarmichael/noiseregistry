@@ -451,8 +451,12 @@ public class ActivityApplicationController extends Controller {
 			aa.setClosing(true);
 			Form<ActivityApplicationCloseOut> filledForm = appcloseoutForm.bindFromRequest();
 			
-			if (filledForm.get().getActivitylocations() == null || filledForm.get().getActivitylocations().isEmpty()) {
-				filledForm.reject(new ValidationError("", Messages.get("validation.closeout.locations.empty")));
+			try {
+				if (filledForm.get().getActivitylocations() == null || filledForm.get().getActivitylocations().isEmpty()) {
+					filledForm.reject(new ValidationError("", Messages.get("validation.closeout.locations.empty")));
+				}
+			} catch(Exception ex) {
+				filledForm.reject(new ValidationError("", Messages.get("validation.closeout.locations.error")));
 			}
 			
 			if (filledForm.hasErrors()) 
