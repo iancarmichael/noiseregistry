@@ -118,7 +118,8 @@ welcome.message_before_button=\
 			making available an overview of relevant impulsive sound sources, throughout the year. This in turn will aid \n\
 			in the definition of a baseline level for impulsive noise in UK waters. </p> \n\
 		<p class="font-small">\n\
-			Maps will be produced annually showing the spread of activities across UK seas and made available from: \n\
+			The MNR is used for data input only. For outputs from the MNR, JNCC will publish maps annually presenting \n\
+			the spread of activities across UK seas. Maps will be made available from: \n\
 			<a href="https://data.gov.uk/">https://data.gov.uk/</a>. Data contained within the MNR is available upon \n\
 			request from JNCC.\n\
 		</p>\n\
@@ -708,7 +709,7 @@ validation.not.valid.closed=The date closed must be a valid date
 validation.startafterend=The start date must be before the end date
 validation.invalidogbformat=This field must contain from 1 to 3 digits, forward slash (/) then 1 to 2 digits
 validation.entered_ogb_code.invalid=Invalid block entered
-validation.appcloseout.datesrequired=The activity dates must be entered
+validation.appcloseout.datesrequired=The activity dates must be entered and valid
 validation.activitybeforestart=The activity dates must be after the entered start date
 validation.activityafterend=The activity dates must be before the entered end date
 validation.activityforpolygon=Activity dates recorded against polygon entries are not supported
@@ -722,6 +723,7 @@ validation.regulator.invalid=Invalid regulator
 validation.noiseproducer.null=Please select an organisation
 validation.regulator.null=Please select an organisation
 validation.closeout.locations.empty=A location must be added before close-out
+validation.closeout.locations.error=The activity locations section contains some errors, please correct these and continue
 error.something.went.wrong=An unexpected error occurred - please report this, including any actions you were taking
  
 
@@ -909,6 +911,8 @@ adminorganisations.intro=You are administrator for the following organisations:
 adminorganisations.organisation_name=Organisation Name
 
 form.abort=You will lose all data entered.  Are you sure you wish to cancel?
+
+closeout.form.return=You will lose all data entered.  Are you sure you wish to return to the activity?
 
 regulator.activity.proposed.mail.subject=Marine Noise Registry - Proposed Activity Submission
 regulator.activity.proposed.mail.salutation={0},

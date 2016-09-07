@@ -65,7 +65,7 @@
 		    <input type="hidden" name="id" value="@activityapp.getId().toString()">  	
 		    <input name="interimcloseout" class="button" type="submit" value="@Messages("activityformcloseout.interim")">	
   			<input class="button" type="submit" value="@Messages("activityformcloseout.submit")">
-			<a href="@routes.ActivityApplicationController.read(activityapp.getId())">@play.twirl.api.Html(Messages("activityformcloseout.cancel"))</a>
+			<a onclick="return confirm('@Messages("closeout.form.return")')" href="@routes.ActivityApplicationController.read(activityapp.getId())">@play.twirl.api.Html(Messages("activityformcloseout.cancel"))</a>
 		}
 		
 	</main>
