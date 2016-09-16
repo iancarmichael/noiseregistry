@@ -637,6 +637,10 @@ activityformcloseout.field_hint.activitydate=Enter dates as DD/MM/YYYY separated
 
 activityform.submithelp=Save as draft to enable further editing. Save and submit when no further edits are required. When saved and submitted a close-out report due date is issued and other activity types can now be linked.
 
+activityform.error.start_date=Start date is not valid please enter a valid date
+activityform.error.end_date=End date is not valid please enter a valid date
+activityform.error.global_heading=There are errors with the submitted form, please correct them and then resubmit
+
 ############## LOCATION TYPES ##################
 location.type.latlng=Latitude/Longitude
 location.type.ogb=Oil and Gas Block Code
