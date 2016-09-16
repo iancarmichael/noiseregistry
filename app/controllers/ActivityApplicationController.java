@@ -1,12 +1,16 @@
 package controllers;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -711,12 +715,56 @@ public class ActivityApplicationController extends Controller {
 		}
 	}
 	
+	private static Date getDateFromFragments(String day, String month, String year) throws IllegalArgumentException {
+		Integer day_int = Integer.parseInt(day);
+		Integer month_int = Integer.parseInt(month);
+		Integer year_int = Integer.parseInt(year);
+					
+		Calendar cal = Calendar.getInstance();
+		cal.setLenient(false);
+		cal.set(Integer.parseInt(year), Integer.parseInt(month)-1, Integer.parseInt(day), 0, 0, 0);
+		
+		return cal.getTime();
+	}
+	
 	@Transactional
 	public static Result update(Long id) {
 		AppUser au = AppUser.getSystemUser(request().username());
 		Form<ActivityApplication>  filledForm = appForm.bindFromRequest();
 		
+		/** 
+		 * TODO: Fix this properly, date is reset to initial input date on update no mater what is put in the form 
+		 */
+		// TODO: Replace date input system with an actual real system, why would you take the date as separate
+		// form inputs for day, month, year should be the same as the rest of the app with a datepicker and one 
+		// entry restriction
+
+		// Grab the actual entry from the form for updates as the code below can't handle date updates, some issue
+		// in the binding that would take too long to unpick
+		Date startDate = null;
+		Date endDate = null;
+		
+		try {
+			startDate = getDateFromFragments(filledForm.data().get("date_start_day"), 
+					filledForm.data().get("date_start_month"), 
+					filledForm.data().get("date_start_year"));
+		} catch (Exception ex) {
+			filledForm.reject(new ValidationError("date_start", Messages.get("activityform.error.start_date")));
+		}
+		
+		try {	
+			endDate = getDateFromFragments(filledForm.data().get("date_end_day"), 
+					filledForm.data().get("date_end_month"), 
+					filledForm.data().get("date_end_year"));
+		} catch (Exception ex) {
+			filledForm.reject(new ValidationError("date_end", Messages.get("activityform.error.end_date")));
+		}
+		/**
+		 * END TODO
+		 */
+		
 		if(filledForm.hasErrors()) {
+			filledForm.reject(new ValidationError("", Messages.get("activityform.error.global_heading")));
 			if (request().accepts("text/html")) {
 				return badRequest(activityform.render(au, filledForm, Messages.get("activityform.title"), id, null));
 			} else if (request().accepts("application/json")) {
@@ -727,6 +775,20 @@ public class ActivityApplicationController extends Controller {
 			
 		} else {
 			ActivityApplication aa = filledForm.get();
+
+			/** 
+			 * TODO: Fix this properly, date is reset to initial input date on update no mater what is put in the form 
+			 */			
+			if (aa.getDate_start() != startDate) {
+				aa.setDate_start(startDate);
+			}
+			if (aa.getDate_end() != endDate) {
+				aa.setDate_end(endDate);
+			}
+			/**
+			 * END TODO
+			 */
+				
 			try {
 				aa.update(id);
 				JPA.em().flush();  //make sure any persistence errors are raised before emailing
